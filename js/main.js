@@ -10,9 +10,9 @@ const photos = [`photos/1.jpg`, `photos/2.jpg`, `photos/3.jpg`, `photos/4.jpg`, 
 
 const reviews = [
   {
-    avatar: avatars,
-    message: messages,
-    name: names
+    avatar: avatars[0] && avatars[1],
+    message: messages[0] && messages [1],
+    name: names[0] && names[1],
   }
 ];
 
@@ -28,5 +28,4 @@ const photosDescription = [
     comments: reviews
   }
 ];
-
 
