@@ -2,7 +2,12 @@
 
 //Напишите функцию для создания массива из 25 сгенерированных JS объектов. Каждый объект массива ‐ описание фотографии, опубликованной пользователем. Поля объекта:
 
-const creation = function () {};
+const creation = function () {
+  let photoDescription = [];
+  photoDescription.push(photo1);
+  photoDescription.push(photo2);
+  return photoDescription;
+};
 
 // Случайное число от 15 до 200 (для лайков)
 
@@ -12,6 +17,12 @@ function getRandom(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 getRandom(15, 200);
+
+// массив объектов — список комментариев
+let comments = [];
+for (let elem of reviews) {
+  comments.push(elem);
+}
 
 // 25 сгенерированных JS объектов
 const photo1 = {
