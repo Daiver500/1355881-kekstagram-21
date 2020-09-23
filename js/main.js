@@ -1,17 +1,8 @@
 "use strict";
 
-// Функция
+//Напишите функцию для создания массива из 25 сгенерированных JS объектов. Каждый объект массива ‐ описание фотографии, опубликованной пользователем. Поля объекта:
 
 const creation = function () {};
-
-// Массивы
-
-const names = [`Артем`, `Петя`, `Вася`, `Даша`, `Иван`, `Алексей`];
-const messages = [`В целом всё неплохо. Но не всё.`, `Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.`];
-const avatars = [`img/avatar-1.svg`, `img/avatar-2.svg`, `img/avatar-3.svg`, `img/avatar-4.svg`, `img/avatar-5.svg`, `img/avatar-6.svg`];
-const photos = [`photos/1.jpg`, `photos/2.jpg`, `photos/3.jpg`, `photos/4.jpg`, `photos/5.jpg`, `photos/6.jpg`, `photos/7.jpg`, `photos/8.jpg`, `photos/9.jpg`, `photos/10.jpg`,
-  `photos/11.jpg`, `photos/12.jpg`, `photos/13.jpg`, `photos/14.jpg`, `photos/15.jpg`, `photos/16.jpg`, `photos/17.jpg`, `photos/18.jpg`, `photos/19.jpg`,
-  `photos/20.jpg`, `photos/21.jpg`, `photos/22.jpg`, `photos/23.jpg`, `photos/24.jpg`, `photos/25.jpg`];
 
 // Случайное число от 15 до 200 (для лайков)
 
@@ -22,20 +13,181 @@ function getRandom(min, max) {
 }
 getRandom(15, 200);
 
-//Напишите функцию для создания массива из 25 сгенерированных JS объектов. Каждый объект массива ‐ описание фотографии, опубликованной пользователем. Поля объекта:
+// 25 сгенерированных JS объектов
+const photo1 = {
+  url: `photos/1.jpg`, // строка — адрес картинки вида photos/{{i}}.jpg, где {{i}} это число от 1 до 25. Адреса картинок не должны повторяться.
+  description: `Фото`, // строка — описание фотографии.
+  likes: getRandom(15, 200), // число — количество лайков, поставленных фотографии. Случайное число от 15 до 200
+  comments: reviews, // массив объектов — список комментариев, оставленных другими пользователями к этой фотографии. Количество комментариев к каждой фотографии вы определяете на своё усмотрение. Все комментарии генерируются случайным образом.
+};
 
-// Массив объектов
-const photoDescription = [
-  {
-    url: `photos/1.jpg`, // строка — адрес картинки вида photos/{{i}}.jpg, где {{i}} это число от 1 до 25. Адреса картинок не должны повторяться.
+const photo2 = {
+  url: `photos/2.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
 
-    description: `Фото`, // строка — описание фотографии.
+const photo3 = {
+  url: `photos/3.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
 
-    likes: getRandom(15, 200), // число — количество лайков, поставленных фотографии. Случайное число от 15 до 200
+const photo4 = {
+  url: `photos/4.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
 
-    comments: reviews, // массив объектов — список комментариев, оставленных другими пользователями к этой фотографии. Количество комментариев к каждой фотографии вы определяете на своё усмотрение. Все комментарии генерируются случайным образом.
-  }
-];
+const photo5 = {
+  url: `photos/5.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
+
+const photo6 = {
+  url: `photos/6.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
+
+const photo7 = {
+  url: `photos/7.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
+
+const photo8 = {
+  url: `photos/8.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
+
+const photo9 = {
+  url: `photos/9.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
+
+const photo10 = {
+  url: `photos/10.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
+
+const photo11 = {
+  url: `photos/11.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
+
+const photo12 = {
+  url: `photos/12.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
+
+const photo13 = {
+  url: `photos/13.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
+
+const photo14 = {
+  url: `photos/14.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
+
+const photo15 = {
+  url: `photos/15.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
+
+const photo16 = {
+  url: `photos/16.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
+
+const photo17 = {
+  url: `photos/17.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
+
+const photo18 = {
+  url: `photos/18.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
+
+const photo19 = {
+  url: `photos/19.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
+
+const photo20 = {
+  url: `photos/20.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
+
+const photo21 = {
+  url: `photos/21.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
+
+const photo22 = {
+  url: `photos/22.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
+
+const photo23 = {
+  url: `photos/23.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
+
+const photo24 = {
+  url: `photos/24.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
+
+const photo25 = {
+  url: `photos/25.jpg`,
+  description: `Фото`,
+  likes: getRandom(15, 200),
+  comments: reviews
+};
 
 // Массив объектов
 
