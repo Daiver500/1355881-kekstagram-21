@@ -1,115 +1,25 @@
 "use strict";
 
-//Напишите функцию для создания массива из 25 сгенерированных JS объектов. Каждый объект массива ‐ описание фотографии, опубликованной пользователем. Поля объекта:
-
-
 // Массив сообщений
 
-const messages = [
-  {
-    message: `В целом всё неплохо. Но не всё.`
-  },
-  {
-    message: `Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.`
-  }
-];
-
-// Рандомное сообщение
-
-const randomMessage = Math.floor(Math.random() * messages.length);
+const messages = [`Всё отлично!`,
+  `В целом всё неплохо. Но не всё.`,
+  `Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.`,
+  `Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.`,
+  `Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.`,
+  `Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!`];
 
 // Массив имен
 
-const names = [
-  {
-    name: `Артем`
-  },
-  {
-    name: `Петя`
-  },
-  {
-    name: `Вася`
-  },
-  {
-    name: `Даша`
-  },
-  {
-    name: `Иван`
-  },
-  {
-    name: `Алексей`
-  }
-];
-
-// Рандомное имя
-
-const randomName = Math.floor(Math.random() * names.length);
+const names = [`Артем`, `Петя`, `Вася`, `Даша`, `Иван`, `Алексей`];
 
 // Массив аватар
 
-const avatars = [
-  {
-    avatar: `img/avatar-1.svg`
-  },
-  {
-    avatar: `img/avatar-2.svg`
-  },
-  {
-    avatar: `img/avatar-3.svg`
-  },
-  {
-    avatar: `img/avatar-4.svg`
-  },
-  {
-    avatar: `img/avatar-5.svg`
-  },
-  {
-    avatar: `img/avatar-6.svg`
-  }
+const avatars = [`img/avatar-1.svg`, `img/avatar-2.svg`, `img/avatar-3.svg`, `img/avatar-4.svg`, `img/avatar-5.svg`, `img/avatar-6.svg`
 ];
 
-// Рандомный аватар
 
-const randomAvatar = Math.floor(Math.random() * avatars.length);
-
-// Массив объектов
-
-const reviews = [
-  {
-    avatar: `img/avatar-1.svg`,
-    message: `В целом всё неплохо. Но не всё.`,
-    name: `Артем`,
-  },
-  {
-    avatar: `img/avatar-2.svg`,
-    message: `Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.`,
-    name: `Петя`,
-  },
-  {
-    avatar: `img/avatar-3.svg`,
-    message: `В целом всё неплохо. Но не всё.`,
-    name: `Вася`,
-  },
-  {
-    avatar: `img/avatar-4.svg`,
-    message: `Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.`,
-    name: `Даша`,
-  },
-  {
-    avatar: `img/avatar-5.svg`,
-    message: `В целом всё неплохо. Но не всё.`,
-    name: `Иван`,
-  },
-  {
-    avatar: randomAvatar,
-    message: randomMessage,
-    name: randomName,
-  }
-];
-
-const randomReview = Math.floor(Math.random() * reviews.length);
-
-// Случайное число от 15 до 200 (для лайков)
+// Функция случайного числа от 15 до 200 (для лайков)
 
 function getRandom(min, max) {
   min = Math.ceil(min);
@@ -117,189 +27,21 @@ function getRandom(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-// 25 сгенерированных JS объектов (массив)
-const photos = [
-  {
-    url: `photos/1.jpg`, // строка — адрес картинки вида photos/{{i}}.jpg, где {{i}} это число от 1 до 25. Адреса картинок не должны повторяться.
-    description: `Фото`, // строка — описание фотографии.
-    likes: getRandom(15, 200), // число — количество лайков, поставленных фотографии. Случайное число от 15 до 200
-    comments: randomReview, // массив объектов — список комментариев, оставленных другими пользователями к этой фотографии. Количество комментариев к каждой фотографии вы определяете на своё усмотрение. Все комментарии генерируются случайным образом.
-  },
+getRandom(15, 200);
 
-  {
-    url: `photos/2.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-
-  {
-    url: `photos/3.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-
-  {
-    url: `photos/4.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-
-  {
-    url: `photos/5.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-
-  {
-    url: `photos/6.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-
-  {
-    url: `photos/7.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-
-  {
-    url: `photos/8.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-
-  {
-    url: `photos/9.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-
-  {
-    url: `photos/10.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-
-  {
-    url: `photos/11.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-
-  {
-    url: `photos/12.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-
-  {
-    url: `photos/13.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-
-  {
-    url: `photos/14.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-
-  {
-    url: `photos/15.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-
-  {
-    url: `photos/16.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-
-  {
-    url: `photos/17.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-
-  {
-    url: `photos/18.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-
-  {
-    url: `photos/19.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-
-  {
-    url: `photos/20.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-
-  {
-    url: `photos/21.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-
-  {
-    url: `photos/22.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-
-  {
-    url: `photos/23.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-
-  {
-    url: `photos/24.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-
-  {
-    url: `photos/25.jpg`,
-    description: `Фото`,
-    likes: getRandom(15, 200),
-    comments: randomReview,
-  },
-];
-
-const creationDescription = function () {
+// Функция создания массива из 25 объектов
+const createDescription = function (objects) {
   let photoDescription = [];
-  for (let photo of photos) {
-    photoDescription.push(photo);
+  for (let i = 0; i < objects; i++) {
+    photoDescription.push{
+      url:``,
+      description: ``,
+      likes: getRandom(15, 200),
+      comments: {}
+    };
   }
+  return photoDescription;
 };
 
+createDescription(25);
 
