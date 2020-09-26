@@ -1,32 +1,37 @@
 "use strict";
 
-// Массив сообщений
+// Рандом
 
-const messages = [
-`Всё отлично!`
-`В целом всё неплохо. Но не всё.`
-`Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.`
-`Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.`
-`Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.`
-`Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!`
-];
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
+// Функция рандомного вызова сообщения
 
-// Массив имен
+function randomMessages(messages) {
+  return messages[getRandomInt(0, messages.length - 1)];
+}
 
-const names = [`Артем`, `Петя`, `Вася`, `Даша`, `Иван`, `Алексей`];
+const messages = [`Всё отлично!`,
+  `В целом всё неплохо. Но не всё.`,
+  `Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.`,
+  `Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.`,
+  `Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.`,
+  `Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!`];
 
+// Функция рандомного вызова имени
 
-// Массив аватар
+function randomNames(names) {
+  return names[getRandomInt(0, names.length - 1)];
+}
 
-const avatars = [`img/avatar-1.svg`, `img/avatar-2.svg`, `img/avatar-3.svg`, `img/avatar-4.svg`, `img/avatar-5.svg`, `img/avatar-6.svg`
-];
+const names = [`Вася`, `Петя`, `Аня`, `Юля`, `Лена`, `Кекс`];
 
-// Рандомный аватар
+// Фукнция по аватарам
 
-const randomAvatar = Math.floor(Math.random() * avatars.length);
+const avatars = [`img/avatar-1.svg`, `img/avatar-2.svg`, `img/avatar-3.svg`, `img/avatar-4.svg`, `img/avatar-5.svg`, `img/avatar-6.svg`];
 
-// Рандомныое число
+// Функция рандомного числа для лайков
 
 function getRandom(min, max) {
   min = Math.ceil(min);
@@ -34,18 +39,31 @@ function getRandom(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-getRandom(15, 200);
+// Функция создания комментария
+
+const createCommentsArray = function (amount) {
+  const resultComments = [];
+  for (let i = 0; i <= amount; i++) {
+    resultComments.push({
+      avatar: `img/avatar-6.svg`,
+      message: randomMessages(messages),
+      name: randomNames(names),
+    });
+  }
+  return resultComments;
+};
 
 // Функция создания массива из 25 объектов
+
 const createDescription = function (objects) {
   let photoDescription = [];
   for (let i = 0; i < objects; i++) {
-    photoDescription.push{
-      url:``,
-      description: ``,
+    photoDescription.push({
+      url: `Фото`,
+      description: `Фото`,
       likes: getRandom(15, 200),
-      comments: {}
-    };
+      comments: createCommentsArray(0),
+    });
   }
   return photoDescription;
 };
