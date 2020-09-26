@@ -27,7 +27,11 @@ function randomNames(names) {
 
 const names = [`Вася`, `Петя`, `Аня`, `Юля`, `Лена`, `Кекс`];
 
-// Фукнция по аватарам
+// Рандомный аватар
+
+function randomAvatars(avatars) {
+  return avatars[getRandomInt(0, avatars.length - 1)];
+}
 
 const avatars = [`img/avatar-1.svg`, `img/avatar-2.svg`, `img/avatar-3.svg`, `img/avatar-4.svg`, `img/avatar-5.svg`, `img/avatar-6.svg`];
 
@@ -45,7 +49,7 @@ const createCommentsArray = function (amount) {
   const resultComments = [];
   for (let i = 0; i <= amount; i++) {
     resultComments.push({
-      avatar: `img/avatar-6.svg`,
+      avatar: randomAvatars(avatars),
       message: randomMessages(messages),
       name: randomNames(names),
     });
@@ -57,9 +61,9 @@ const createCommentsArray = function (amount) {
 
 const createDescription = function (objects) {
   let photoDescription = [];
-  for (let i = 0; i < objects; i++) {
+  for (let i = 0; i <= objects; i++) {
     photoDescription.push({
-      url: `Фото`,
+      url: `photos/${i}.jpg`,
       description: `Фото`,
       likes: getRandom(15, 200),
       comments: createCommentsArray(0),
