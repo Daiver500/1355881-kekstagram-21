@@ -73,3 +73,23 @@ const createDescription = function (objects) {
 };
 
 createDescription(25);
+
+// Обращение к шаблону
+
+let template = document.querySelector(`#pictures`).content;
+
+// Создание фукнции на основ шаблона
+
+let cardCreate = function () {
+  let element = template.cloneNode(true);
+
+  element.querySelector(`picture__likes`).textContent = getRandom(15, 200);
+  element.querySelector(`picture__comments`).textContent = randomMessages(messages);
+  element.querySelector(`img`).src = createDescription.url;
+  return element;
+};
+
+let pictures = document.querySelector(`.pictures`);
+let fragment = document.createDocumentFragment();
+fragment.appendChild(cardCreate());
+pictures.appendChild(fragment);
