@@ -78,7 +78,7 @@ createDescription(25);
 
 let template = document.querySelector(`#pictures`).content;
 
-// Создание фукнции на основ шаблона
+// Создание фукнции на основе шаблона
 
 let cardCreate = function () {
   let element = template.cloneNode(true);
@@ -89,7 +89,18 @@ let cardCreate = function () {
   return element;
 };
 
+// Добавление элемента через documentFragment
+
 let pictures = document.querySelector(`.pictures`);
 let fragment = document.createDocumentFragment();
 fragment.appendChild(cardCreate());
 pictures.appendChild(fragment);
+
+// Цикл для добавления элементов через documentFragment ???
+
+/** let pictures = document.querySelector(`.pictures`);
+let fragment = document.createDocumentFragment();
+for (var i = 0; i < 25; i++) {
+  fragment.appendChild(cardCreate());
+}
+pictures.appendChild(fragment);**/
