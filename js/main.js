@@ -1,16 +1,18 @@
 "use strict";
 
-// Рандом
+// Функция рандомного числа
 
-function getRandomInt(min, max) {
+function getRandom(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// Функция рандомного вызова сообщения
+// Функция рандомного вызова массива (сообщения, аватары, имена)
 
-function randomMessages(messages) {
-  return messages[getRandomInt(0, messages.length - 1)];
+function random(value) {
+  return value[getRandom(0, value.length - 1)];
 }
+
+// Массив сообщений
 
 const messages = [`Всё отлично!`,
   `В целом всё неплохо. Но не всё.`,
@@ -19,29 +21,13 @@ const messages = [`Всё отлично!`,
   `Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.`,
   `Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!`];
 
-// Функция рандомного вызова имени
-
-function randomNames(names) {
-  return names[getRandomInt(0, names.length - 1)];
-}
+// Массив имен
 
 const names = [`Вася`, `Петя`, `Аня`, `Юля`, `Лена`, `Кекс`];
 
-// Рандомный аватар
-
-function randomAvatars(avatars) {
-  return avatars[getRandomInt(0, avatars.length - 1)];
-}
+// Массив аватар
 
 const avatars = [`img/avatar-1.svg`, `img/avatar-2.svg`, `img/avatar-3.svg`, `img/avatar-4.svg`, `img/avatar-5.svg`, `img/avatar-6.svg`];
-
-// Функция рандомного числа для лайков
-
-function getRandom(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min;
-}
 
 // Функция создания комментария
 
@@ -49,9 +35,9 @@ const createCommentsArray = function (amount) {
   const resultComments = [];
   for (let i = 0; i <= amount; i++) {
     resultComments.push({
-      avatar: randomAvatars(avatars),
-      message: randomMessages(messages),
-      name: randomNames(names),
+      avatar: random(avatars),
+      message: random(messages),
+      name: random(names),
     });
   }
   return resultComments;
@@ -84,7 +70,7 @@ let cardCreate = function () {
   let element = template.cloneNode(true);
 
   element.querySelector(`picture__likes`).textContent = getRandom(15, 200);
-  element.querySelector(`picture__comments`).textContent = randomMessages(messages);
+  element.querySelector(`picture__comments`).textContent = random(messages);
   element.querySelector(`img`).src = createDescription.url;
   return element;
 };
