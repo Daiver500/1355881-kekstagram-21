@@ -35,7 +35,7 @@ const getRandomInt = function (min, max) {
 
 // Функция рандомного вызова массива (сообщения, имена)
 
-const getRandomArrayElement = function(array) {
+const getRandomArrayElement = function (array) {
   return array[getRandomInt(0, array.length - 1)];
 };
 
@@ -79,28 +79,28 @@ const template = document.querySelector(`#picture`)
 // Создание фукнции на основе шаблона
 
 const createCardElement = function (object) {
-  const element = template.cloneNode(true);
+  const cardElement = template.cloneNode(true);
 
-  element.querySelector(`.picture__likes`).textContent = object.likes;
-  element.querySelector(`.picture__comments`).textContent = ``;
-  element.querySelector(`img`).src = object.url;
-  return element;
+  cardElement.querySelector(`.picture__likes`).textContent = object.likes;
+  cardElement.querySelector(`.picture__comments`).textContent = object.comments;
+  cardElement.querySelector(`img`).src = object.url;
+  return cardElement;
 };
 
 // Добавление элемента через documentFragment
 
 const pictures = document.querySelector(`.pictures`);
 const fragment = document.createDocumentFragment();
-mocks.forEach((object) => {
-  fragment.append(createCardElement(object));
-})
+for (let i = 0; i < OBJECTS_AMOUNT; i++) {
+  fragment.appendChild(createCardElement(mocks[i]));
+}
 pictures.appendChild(fragment);
 
-// Цикл для добавления элементов через documentFragment ???
 
-/** const pictures = document.querySelector(`.pictures`);
+/*const pictures = document.querySelector(`.pictures`);
 const fragment = document.createDocumentFragment();
-for (let i = 0; i < photoDescription.length; i++) {
-  fragment.appendChild(createCardElement());
-}
-pictures.appendChild(fragment);**/
+mocks.forEach((object) => {
+  fragment.append(createCardElement(object));
+});
+pictures.appendChild(fragment);*/
+
