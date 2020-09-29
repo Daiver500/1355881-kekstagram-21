@@ -95,15 +95,15 @@ const createCardElement = function (object) {
   return cardElement;
 };
 
+const pictures = document.querySelector(`.pictures`);
+
 // Добавление элемента через documentFragment
-const renderPictures = function(arrayOfMocks) {
-  const pictures = document.querySelector(`.pictures`);
+const renderPictures = function (arrayOfMocks) {
   const fragment = document.createDocumentFragment();
-  // forEach
-  for (let i = 0; i < arrayOfMocks.length; i++) {
+  mocks.forEach(function (i) {
     fragment.appendChild(createCardElement(arrayOfMocks[i]));
-  }
+  });
   pictures.appendChild(fragment);
-}
+};
 
 renderPictures(mocks);
