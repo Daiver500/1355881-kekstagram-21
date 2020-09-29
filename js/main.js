@@ -62,7 +62,7 @@ createDescription(25);
 
 // Обращение к шаблону
 
-let template = document.querySelector(`#pictures`).content;
+let template = document.querySelector(`#picture`).content;
 
 // Создание фукнции на основе шаблона
 
