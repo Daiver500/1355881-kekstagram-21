@@ -9,7 +9,7 @@ const LIKES = {
 };
 const COMMENTS = {
   min: 1,
-  max: 5,
+  max: 10,
 };
 
 // Массив сообщений
@@ -25,7 +25,14 @@ const MESSAGES = [
 
 // Массив имен
 
-const NAMES = [`Вася`, `Петя`, `Аня`, `Юля`, `Лена`, `Кекс`];
+const NAMES = [
+  `Вася`,
+  `Петя`,
+  `Аня`,
+  `Юля`,
+  `Лена`,
+  `Кекс`
+];
 
 // Функция рандомного числа
 
@@ -41,9 +48,9 @@ const getRandomArrayElement = function (array) {
 
 // Функция создания массива комментариев
 
-const createCommentsArray = function (amount) {
-  let resultComments = [];
-  for (let i = 0; i <= amount; i++) {
+const createCommentsArray = function (array) {
+  const resultComments = [];
+  for (let i = 0; i <= array; i++) {
     resultComments.push({
       avatar: `img/avatar-${getRandomInt(1, 6)}.svg`,
       message: getRandomArrayElement(MESSAGES),
@@ -55,17 +62,17 @@ const createCommentsArray = function (amount) {
 
 // Функция создания массива из 25 объектов
 
-const createMocksArray = function (amount) {
-  const photoDescription = [];
-  for (let i = 1; i <= amount; i++) {
-    photoDescription.push({
+const createMocksArray = function (array) {
+  const resultMocks = [];
+  for (let i = 1; i <= array; i++) {
+    resultMocks.push({
       url: `photos/${i}.jpg`,
       description: `photo description`,
       likes: getRandomInt(LIKES.min, LIKES.max),
       comments: createCommentsArray(getRandomInt(COMMENTS.min, COMMENTS.max)),
     });
   }
-  return photoDescription;
+  return resultMocks;
 };
 
 const mocks = createMocksArray(OBJECTS_AMOUNT);
@@ -82,7 +89,7 @@ const createCardElement = function (object) {
   const cardElement = template.cloneNode(true);
 
   cardElement.querySelector(`.picture__likes`).textContent = object.likes;
-  cardElement.querySelector(`.picture__comments`).textContent = object.comments;
+  cardElement.querySelector(`.picture__comments`).textContent = createCommentsArray(getRandomInt(COMMENTS.min, COMMENTS.max)).length;
   cardElement.querySelector(`img`).src = object.url;
   return cardElement;
 };
@@ -95,12 +102,3 @@ for (let i = 0; i < OBJECTS_AMOUNT; i++) {
   fragment.appendChild(createCardElement(mocks[i]));
 }
 pictures.appendChild(fragment);
-
-
-/*const pictures = document.querySelector(`.pictures`);
-const fragment = document.createDocumentFragment();
-mocks.forEach((object) => {
-  fragment.append(createCardElement(object));
-});
-pictures.appendChild(fragment);*/
-
