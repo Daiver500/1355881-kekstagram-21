@@ -109,3 +109,32 @@ const renderPictures = function () {
 
 renderPictures(mocks);
 
+// Задание 3-2
+
+// Убираем класс hidden
+
+const bigPicture = document.querySelector(`.big-picture`);
+bigPicture.classList.remove(`hidden`);
+
+// Информация из первого элемента массива с данными:
+
+// Подставляем url как src изображения внутри блока.big-picture__img.
+
+const bigPictureImg = document.querySelector(`.big-picture__img`);
+const image = bigPictureImg.querySelector(`img`);
+image.src = mocks[0].url;
+
+// Подставляем количество лайков (likes) как текст .likes-count
+
+const likesCount = document.querySelector(`.likes-count`);
+likesCount.textContent = mocks[0].likes;
+
+console.log(mocks[0]);
+
+// УДобавляем класс hidden
+
+const socialCommentCount = document.querySelector(`.social__comment-count`);
+socialCommentCount.classList.add(`hidden`);
+
+const commentsLoader = document.querySelector(`.comments-loader`);
+commentsLoader.classList.add(`hidden`);
