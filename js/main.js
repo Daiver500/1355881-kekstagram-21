@@ -129,6 +129,19 @@ image.src = mocks[0].url;
 const likesCount = document.querySelector(`.likes-count`);
 likesCount.textContent = mocks[0].likes;
 
+// Подставляем текстовое содержание элемента .comments-count.
+
+const commentsCount = document.querySelector(`.comments-count`);
+commentsCount.textContent = mocks[0].comments.length;
+
+// Подставляем комментарии в блок .social__comments.
+
+const socialComments = document.querySelector(`.social__comments`);
+const socialComment = document.createElement(`li`);
+socialComment.className = `social-comment`;
+socialComments.append(socialComment);
+
+
 console.log(mocks[0]);
 
 // УДобавляем класс hidden
