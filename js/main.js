@@ -1,29 +1,20 @@
 "use strict";
 
-// Функция рандомного числа
+// Константы
+
 const OBJECTS_AMOUNT = 25;
 const LIKES = {
   min: 15,
   max: 200,
-}
+};
 const COMMENTS = {
-  min: 3,
-  max: 10,
-}
-
-const getRandomInt = function(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-// Функция рандомного вызова массива (сообщения, аватары, имена)
-
-const getRandomArrayElement = function(array) {
-  return array[getRandomInt(0, array.length - 1)];
-}
+  min: 1,
+  max: 5,
+};
 
 // Массив сообщений
 
-const messages = [
+const MESSAGES = [
   `Всё отлично!`,
   `В целом всё неплохо. Но не всё.`,
   `Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.`,
@@ -34,21 +25,29 @@ const messages = [
 
 // Массив имен
 
-const names = [`Вася`, `Петя`, `Аня`, `Юля`, `Лена`, `Кекс`];
+const NAMES = [`Вася`, `Петя`, `Аня`, `Юля`, `Лена`, `Кекс`];
 
-// Массив аватар
+// Функция рандомного числа
 
-const avatars = [`img/avatar-1.svg`, `img/avatar-2.svg`, `img/avatar-3.svg`, `img/avatar-4.svg`, `img/avatar-5.svg`, `img/avatar-6.svg`];
+const getRandomInt = function (min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
 
-// Функция создания комментария
+// Функция рандомного вызова массива (сообщения, имена)
+
+const getRandomArrayElement = function(array) {
+  return array[getRandomInt(0, array.length - 1)];
+};
+
+// Функция создания массива комментариев
 
 const createCommentsArray = function (amount) {
   let resultComments = [];
   for (let i = 0; i <= amount; i++) {
     resultComments.push({
-      avatar: `img/avatar-${getRandomInt(1,6)}.svg`,
-      message: getRandomArrayElement(messages),
-      name: getRandomArrayElement(names),
+      avatar: `img/avatar-${getRandomInt(1, 6)}.svg`,
+      message: getRandomArrayElement(MESSAGES),
+      name: getRandomArrayElement(NAMES),
     });
   }
   return resultComments;
@@ -70,14 +69,12 @@ const createMocksArray = function (amount) {
 };
 
 const mocks = createMocksArray(OBJECTS_AMOUNT);
-console.log(mocks);
 
 // Обращение к шаблону
 
 const template = document.querySelector(`#picture`)
 .content
 .querySelector(`.picture`);
-console.log(template);
 
 // Создание фукнции на основе шаблона
 
