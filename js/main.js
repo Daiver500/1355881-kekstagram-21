@@ -32,7 +32,7 @@ const avatars = [`img/avatar-1.svg`, `img/avatar-2.svg`, `img/avatar-3.svg`, `im
 // Функция создания комментария
 
 const createCommentsArray = function (amount) {
-  const resultComments = [];
+  let resultComments = [];
   for (let i = 0; i <= amount; i++) {
     resultComments.push({
       avatar: random(avatars),
@@ -62,14 +62,14 @@ createDescription(25);
 
 // Обращение к шаблону
 
-let template = document.querySelector(`#picture`)
+const template = document.querySelector(`#picture`)
 .content
 .querySelector(`.picture`);
 
 // Создание фукнции на основе шаблона
 
-let cardCreate = function () {
-  let element = template.cloneNode(true);
+const cardCreate = function () {
+  const element = template.cloneNode(true);
 
   element.querySelector(`picture__likes`).textContent = getRandom(15, 200);
   element.querySelector(`picture__comments`).textContent = random(messages);
@@ -79,16 +79,16 @@ let cardCreate = function () {
 
 // Добавление элемента через documentFragment
 
-let pictures = document.querySelector(`.pictures`);
-let fragment = document.createDocumentFragment();
+const pictures = document.querySelector(`.pictures`);
+const fragment = document.createDocumentFragment();
 fragment.appendChild(cardCreate());
 pictures.appendChild(fragment);
 
 // Цикл для добавления элементов через documentFragment ???
 
-/** let pictures = document.querySelector(`.pictures`);
-let fragment = document.createDocumentFragment();
-for (var i = 0; i < photoDescription.length; i++) {
+/** const pictures = document.querySelector(`.pictures`);
+const fragment = document.createDocumentFragment();
+for (let i = 0; i < photoDescription.length; i++) {
   fragment.appendChild(cardCreate());
 }
 pictures.appendChild(fragment);**/
