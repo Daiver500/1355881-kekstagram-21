@@ -48,9 +48,9 @@ const getRandomArrayElement = function (array) {
 
 // Функция создания массива комментариев
 
-const createCommentsArray = function (array) {
+const createCommentsArray = function (randomAmount) {
   const resultComments = [];
-  for (let i = 0; i <= array; i++) {
+  for (let i = 0; i < randomAmount; i++) {
     resultComments.push({
       avatar: `img/avatar-${getRandomInt(1, 6)}.svg`,
       message: getRandomArrayElement(MESSAGES),
@@ -62,9 +62,9 @@ const createCommentsArray = function (array) {
 
 // Функция создания массива из 25 объектов
 
-const createMocksArray = function (array) {
+const createMocksArray = function (objectsAmount) {
   const resultMocks = [];
-  for (let i = 1; i <= array; i++) {
+  for (let i = 1; i <= objectsAmount; i++) {
     resultMocks.push({
       url: `photos/${i}.jpg`,
       description: `photo description`,
@@ -76,6 +76,7 @@ const createMocksArray = function (array) {
 };
 
 const mocks = createMocksArray(OBJECTS_AMOUNT);
+console.log(mocks)
 
 // Обращение к шаблону
 
@@ -89,16 +90,20 @@ const createCardElement = function (object) {
   const cardElement = template.cloneNode(true);
 
   cardElement.querySelector(`.picture__likes`).textContent = object.likes;
-  cardElement.querySelector(`.picture__comments`).textContent = createCommentsArray(getRandomInt(COMMENTS.min, COMMENTS.max)).length;
+  cardElement.querySelector(`.picture__comments`).textContent = object.comments.length;
   cardElement.querySelector(`img`).src = object.url;
   return cardElement;
 };
 
 // Добавление элемента через documentFragment
-
-const pictures = document.querySelector(`.pictures`);
-const fragment = document.createDocumentFragment();
-for (let i = 0; i < OBJECTS_AMOUNT; i++) {
-  fragment.appendChild(createCardElement(mocks[i]));
+const renderPictures = function(arrayOfMocks) {
+  const pictures = document.querySelector(`.pictures`);
+  const fragment = document.createDocumentFragment();
+  // forEach
+  for (let i = 0; i < arrayOfMocks.length; i++) {
+    fragment.appendChild(createCardElement(arrayOfMocks[i]));
+  }
+  pictures.appendChild(fragment);
 }
-pictures.appendChild(fragment);
+
+renderPictures(mocks);
