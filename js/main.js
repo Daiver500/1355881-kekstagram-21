@@ -76,7 +76,7 @@ const createMocksArray = function (objectsAmount) {
 };
 
 const mocks = createMocksArray(OBJECTS_AMOUNT);
-console.log(mocks)
+console.log(mocks);
 
 // Обращение к шаблону
 
@@ -95,15 +95,17 @@ const createCardElement = function (object) {
   return cardElement;
 };
 
-const pictures = document.querySelector(`.pictures`);
-
 // Добавление элемента через documentFragment
-const renderPictures = function (arrayOfMocks) {
+
+const renderPictures = function () {
+  const pictures = document.querySelector(`.pictures`);
   const fragment = document.createDocumentFragment();
-  mocks.forEach(function (i) {
-    fragment.appendChild(createCardElement(arrayOfMocks[i]));
+  mocks.forEach(function (value) {
+    fragment.appendChild(createCardElement(value));
   });
   pictures.appendChild(fragment);
+  return fragment;
 };
 
 renderPictures(mocks);
+
