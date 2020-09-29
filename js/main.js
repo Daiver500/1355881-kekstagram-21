@@ -62,7 +62,9 @@ createDescription(25);
 
 // Обращение к шаблону
 
-let template = document.querySelector(`#picture`).content;
+let template = document.querySelector(`#picture`)
+.content
+.querySelector(`.picture`);
 
 // Создание фукнции на основе шаблона
 
@@ -86,7 +88,7 @@ pictures.appendChild(fragment);
 
 /** let pictures = document.querySelector(`.pictures`);
 let fragment = document.createDocumentFragment();
-for (var i = 0; i < 25; i++) {
+for (var i = 0; i < photoDescription.length; i++) {
   fragment.appendChild(cardCreate());
 }
 pictures.appendChild(fragment);**/
