@@ -8,9 +8,12 @@ const LIKES = {
   max: 200,
 };
 const COMMENTS = {
-  min: 1,
+  min: 5,
   max: 10,
 };
+
+const AVATAR_WIDTH = 35;
+const AVATAR_HEIGHT = 25;
 
 // Массив сообщений
 
@@ -108,8 +111,7 @@ const renderPictures = function () {
 };
 
 renderPictures(mocks);
-
-// Задание 3-2
+console.log(mocks[0]);
 
 // Убираем класс hidden
 
@@ -138,11 +140,27 @@ commentsCount.textContent = mocks[0].comments.length;
 
 const socialComments = document.querySelector(`.social__comments`);
 const socialComment = document.createElement(`li`);
-socialComment.className = `social-comment`;
+socialComment.classList.add(`social__comment`);
+
+const socialCommentsImg = document.createElement(`img`);
+socialCommentsImg.classList.add(`social__picture`);
+socialCommentsImg.src = mocks[0].comments[0].avatar;
+socialCommentsImg.alt = mocks[0].comments[0].name;
+socialCommentsImg.width = AVATAR_WIDTH;
+socialCommentsImg.height = AVATAR_HEIGHT;
+socialComment.append(socialCommentsImg);
+
+const socialCommentsText = document.createElement(`p`);
+socialCommentsText.classList.add(`social__text`);
+socialCommentsText.textContent = mocks[0].comments[0].message;
+socialComment.append(socialCommentsText);
+
 socialComments.append(socialComment);
 
+// Подставляем description строкой в блок .social__caption.
 
-console.log(mocks[0]);
+const socialCaption = document.querySelector(`.social__caption`);
+socialCaption.textContent = mocks[0].description;
 
 // УДобавляем класс hidden
 
