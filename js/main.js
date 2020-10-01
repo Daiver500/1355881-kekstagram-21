@@ -12,8 +12,10 @@ const COMMENTS = {
   max: 10,
 };
 
-const AVATAR_WIDTH = 35;
-const AVATAR_HEIGHT = 25;
+const AVATAR = {
+  width: 35,
+  height: 25,
+};
 
 // Массив сообщений
 
@@ -113,56 +115,84 @@ const renderPictures = function () {
 renderPictures(mocks);
 console.log(mocks[0]);
 
-// Убираем класс hidden
+// Не врубаюсь
 
 const bigPicture = document.querySelector(`.big-picture`);
-bigPicture.classList.remove(`hidden`);
+const createComments = (card) => {
+  const fragment = document.createDocumentFragment();
+  const socialComments = bigPicture.querySelector(`.social__comments`);
+  const comment = socialComments.querySelector(`li`);
+  socialComments.innerHTML = ``;
 
-// Информация из первого элемента массива с данными:
-
-// Подставляем url как src изображения внутри блока.big-picture__img.
-
-const bigPictureImg = document.querySelector(`.big-picture__img`);
-const image = bigPictureImg.querySelector(`img`);
-image.src = mocks[0].url;
-
-// Подставляем количество лайков (likes) как текст .likes-count
-
-const likesCount = document.querySelector(`.likes-count`);
-likesCount.textContent = mocks[0].likes;
-
-// Подставляем текстовое содержание элемента .comments-count.
-
-const commentsCount = document.querySelector(`.comments-count`);
-commentsCount.textContent = mocks[0].comments.length;
+  card.comments.forEach((item) => {
+    const li = comment.cloneNode(true);
+    li.querySelector(`.social__picture`).src = item.avatar;
+    li.querySelector(`.social__picture`).alt = item.name;
+    li.querySelector(`.social__picture`).width = AVATAR.width;
+    li.querySelector(`.social__picture`).height = AVATAR.height;
+    li.querySelector(`.social__text`).textContent = item.message;
+    fragment.append(li);
+  });
+  socialComments.append(fragment);
+};
 
 // Подставляем комментарии в блок .social__comments.
 
-const socialComments = document.querySelector(`.social__comments`);
-const socialComment = document.createElement(`li`);
-socialComment.classList.add(`social__comment`);
+// const socialComments = document.querySelector(`.social__comments`);
+// const socialComment = document.createElement(`li`);
+// socialComment.classList.add(`social__comment`);
 
-const socialCommentsImg = document.createElement(`img`);
-socialCommentsImg.classList.add(`social__picture`);
-socialCommentsImg.src = mocks[0].comments[0].avatar;
-socialCommentsImg.alt = mocks[0].comments[0].name;
-socialCommentsImg.width = AVATAR_WIDTH;
-socialCommentsImg.height = AVATAR_HEIGHT;
-socialComment.append(socialCommentsImg);
+// const socialCommentsImg = document.createElement(`img`);
+// socialCommentsImg.classList.add(`social__picture`);
+// socialCommentsImg.src = mocks[0].comments[0].avatar;
+// socialCommentsImg.alt = mocks[0].comments[0].name;
+// socialCommentsImg.width = AVATAR.width;
+// socialCommentsImg.height = AVATAR.height;
+// socialComment.append(socialCommentsImg);
 
-const socialCommentsText = document.createElement(`p`);
-socialCommentsText.classList.add(`social__text`);
-socialCommentsText.textContent = mocks[0].comments[0].message;
-socialComment.append(socialCommentsText);
+// const socialCommentsText = document.createElement(`p`);
+// socialCommentsText.classList.add(`social__text`);
+// socialCommentsText.textContent = mocks[0].comments[0].message;
+// socialComment.append(socialCommentsText);
 
-socialComments.append(socialComment);
+// socialComments.append(socialComment);
 
+// Убираем класс hidden
+// Информация из первого элемента массива с данными:
+// Подставляем url как src изображения внутри блока.big-picture__img.
+// Подставляем количество лайков (likes) как текст .likes-count
+// Подставляем текстовое содержание элемента .comments-count.
 // Подставляем description строкой в блок .social__caption.
 
-const socialCaption = document.querySelector(`.social__caption`);
-socialCaption.textContent = mocks[0].description;
+// const bigPicture = document.querySelector(`.big-picture`);
+// bigPicture.classList.remove(`hidden`);
 
-// УДобавляем класс hidden
+// const bigPictureImg = document.querySelector(`.big-picture__img`);
+// onst image = bigPictureImg.querySelector(`img`);
+// image.src = mocks[0].url;
+
+// const likesCount = document.querySelector(`.likes-count`);
+// likesCount.textContent = mocks[0].likes;
+
+// const socialCaption = document.querySelector(`.social__caption`);
+// socialCaption.textContent = mocks[0].description;
+
+// const commentsCount = document.querySelector(`.comments-count`);
+// commentsCount.textContent = mocks[0].comments.length;
+
+const showBigPicture = (mock) => {
+  bigPicture.classList.remove(`hidden`);
+
+  bigPicture.querySelector(`.big-picture__img img`).src = mock.url;
+  bigPicture.querySelector(`.likes-count`).textContent = mock.likes;
+  bigPicture.querySelector(`.comments-count`).textContent = mock.comments.length;
+  bigPicture.querySelector(`.social__caption`).textContent = mock.description;
+
+  createComments(mock);
+};
+showBigPicture(mocks[0]);
+
+// Добавляем класс hidden
 
 const socialCommentCount = document.querySelector(`.social__comment-count`);
 socialCommentCount.classList.add(`hidden`);
