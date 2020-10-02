@@ -115,9 +115,40 @@ const renderPictures = function () {
 renderPictures(mocks);
 console.log(mocks[0]);
 
-// Не врубаюсь
+// Убираем класс hidden
+// Информация из первого элемента массива с данными:
+// Подставляем url как src изображения внутри блока.big-picture__img.
+// Подставляем количество лайков (likes) как текст .likes-count
+// Подставляем текстовое содержание элемента .comments-count.
+// Подставляем description строкой в блок .social__caption.
 
 const bigPicture = document.querySelector(`.big-picture`);
+const bigPictureOpened = function (mockObjectOne) {
+  bigPicture.classList.remove(`hidden`);
+  const {url, likes, comments, description} = mockObjectOne;
+  document.querySelector(`.big-picture__img img`).src = url;
+  document.querySelector(`.likes-count`).textContent = likes;
+  document.querySelector(`.comments-count`).textContent = comments.length;
+  document.querySelector(`.social__caption`).textContent = description;
+  createSocialComment();
+};
+bigPictureOpened(mocks[0]);
+
+const createSocialComment = function () {
+  const socialComments = document.querySelector(`.social__comments`);
+  const socialComment = socialComments.querySelector(`li`);
+  const fragment = document.createDocumentFragment();
+  const li = socialComment.cloneNode(true);
+  socialComments.innerHTML = ``;
+  fragment.append(li);
+
+  for (let i = 0; i <= mocks.length; i++) {
+    socialComments.append(fragment);
+  }
+};
+createSocialComment();
+
+
 const createComments = (card) => {
   const fragment = document.createDocumentFragment();
   const socialComments = bigPicture.querySelector(`.social__comments`);
@@ -157,41 +188,6 @@ const createComments = (card) => {
 
 // socialComments.append(socialComment);
 
-// Убираем класс hidden
-// Информация из первого элемента массива с данными:
-// Подставляем url как src изображения внутри блока.big-picture__img.
-// Подставляем количество лайков (likes) как текст .likes-count
-// Подставляем текстовое содержание элемента .comments-count.
-// Подставляем description строкой в блок .social__caption.
-
-// const bigPicture = document.querySelector(`.big-picture`);
-// bigPicture.classList.remove(`hidden`);
-
-// const bigPictureImg = document.querySelector(`.big-picture__img`);
-// onst image = bigPictureImg.querySelector(`img`);
-// image.src = mocks[0].url;
-
-// const likesCount = document.querySelector(`.likes-count`);
-// likesCount.textContent = mocks[0].likes;
-
-// const socialCaption = document.querySelector(`.social__caption`);
-// socialCaption.textContent = mocks[0].description;
-
-// const commentsCount = document.querySelector(`.comments-count`);
-// commentsCount.textContent = mocks[0].comments.length;
-
-const showBigPicture = (mock) => {
-  bigPicture.classList.remove(`hidden`);
-
-  bigPicture.querySelector(`.big-picture__img img`).src = mock.url;
-  bigPicture.querySelector(`.likes-count`).textContent = mock.likes;
-  bigPicture.querySelector(`.comments-count`).textContent = mock.comments.length;
-  bigPicture.querySelector(`.social__caption`).textContent = mock.description;
-
-  createComments(mock);
-};
-showBigPicture(mocks[0]);
-
 // Добавляем класс hidden
 
 const socialCommentCount = document.querySelector(`.social__comment-count`);
@@ -199,3 +195,7 @@ socialCommentCount.classList.add(`hidden`);
 
 const commentsLoader = document.querySelector(`.comments-loader`);
 commentsLoader.classList.add(`hidden`);
+
+// Добавляем класс на body (для фиксации фона)
+
+document.querySelector(`body`).classList.add(`modal-open`);
