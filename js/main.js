@@ -229,6 +229,8 @@ const counter = function () {
 };
 counter(controlValue.value);
 
+// Не работает + по клику
+
 const imageStyleChange = function () {
   if (controlValue.value === `25`) {
     imageUploadPreview.style.transform = `scale(0.25)`;
@@ -245,8 +247,21 @@ const imageStyleChange = function () {
   return imageUploadPreview.style;
 };
 
+// Тут пока не понял, что надо делать кроме добавления обработчика
 
 const effectLevelPin = document.querySelector(`.effect-level__pin`);
 effectLevelPin.addEventListener(`mouseup`, function () {
+});
+
+// Валидация
+const SYMBOLS = {
+  min: 2,
+  max: 20
+};
+
+const hashTags = /^#[\w\d]*$/;
+
+const hashTag = document.querySelector(`.text__hashtags`);
+hashTag.addEventListener(`input`, function () {
 
 });
