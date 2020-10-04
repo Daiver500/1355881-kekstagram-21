@@ -165,3 +165,88 @@ commentsLoader.classList.add(`hidden`);
 // Добавляем класс на body (для фиксации фона)
 
 document.querySelector(`body`).classList.add(`modal-open`);
+
+// Загрузка изображения и показ формы редактирования
+
+const uploadImageFile = document.querySelector(`#upload-file`);
+const imageUploadOverlay = document.querySelector(`.img-upload__overlay`);
+const uploadCancel = document.querySelector(`#upload-cancel`);
+
+const modalEscPress = function (evt) {
+  if (evt.key === `Escape`) {
+    evt.preventDefault();
+    closeModal();
+  }
+};
+
+const openModal = function () {
+  imageUploadOverlay.classList.remove(`hidden`);
+  document.querySelector(`body`).classList.add(`modal-open`);
+  document.addEventListener(`keydown`, modalEscPress);
+};
+
+const closeModal = function () {
+  imageUploadOverlay.classList.add(`hidden`);
+  document.querySelector(`body`).classList.remove(`modal-open`);
+  document.removeEventListener(`keydown`, modalEscPress);
+  uploadImageFile = ``;
+};
+
+uploadImageFile.addEventListener(`change`, function () {
+  openModal();
+});
+
+uploadCancel.addEventListener(`click`, function () {
+  closeModal();
+});
+
+const scaleControlSmaller = document.querySelector(`.scale__control--smaller`);
+const scaleControlBigger = document.querySelector(`.scale__control--bigger`);
+const controlValue = document.querySelector(`.scale__control--value`);
+const imageUploadPreview = document.querySelector(`.img-upload__preview img`);
+
+const value = {
+  min: 25,
+  max: 100
+};
+
+controlValue.value = value.max;
+
+const counter = function () {
+  scaleControlSmaller.addEventListener(`click`, function () {
+    if (controlValue.value <= value.max && controlValue.value > value.min) {
+      controlValue.value -= value.min;
+    }
+    imageStyleChange(imageUploadPreview.style);
+  });
+  scaleControlBigger.addEventListener(`click`, function () {
+    if (controlValue.value >= value.min && controlValue.value < value.max) {
+      controlValue.value = value.min + value.min;
+    }
+    imageStyleChange(imageUploadPreview.style);
+  });
+  return controlValue.value;
+};
+counter(controlValue.value);
+
+const imageStyleChange = function () {
+  if (controlValue.value === `25`) {
+    imageUploadPreview.style.transform = `scale(0.25)`;
+  }
+  if (controlValue.value === `50`) {
+    imageUploadPreview.style.transform = `scale(0.50)`;
+  }
+  if (controlValue.value === `75`) {
+    imageUploadPreview.style.transform = `scale(0.75)`;
+  }
+  if (controlValue.value === `100`) {
+    imageUploadPreview.style.transform = `scale(1.00)`;
+  }
+  return imageUploadPreview.style;
+};
+
+
+const effectLevelPin = document.querySelector(`.effect-level__pin`);
+effectLevelPin.addEventListener(`mouseup`, function () {
+
+});
