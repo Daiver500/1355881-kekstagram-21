@@ -203,7 +203,6 @@ uploadCancel.addEventListener(`click`, function () {
 const scaleControlSmaller = document.querySelector(`.scale__control--smaller`);
 const scaleControlBigger = document.querySelector(`.scale__control--bigger`);
 const controlValue = document.querySelector(`.scale__control--value`);
-const imageUploadPreview = document.querySelector(`.img-upload__preview img`);
 
 const value = {
   min: 25,
@@ -247,21 +246,44 @@ const imageStyleChange = function () {
   return imageUploadPreview.style;
 };
 
-// Тут пока не понял, что надо делать кроме добавления обработчика
+// Тут пока не понял, что надо делать кроме добавления обработчика (2.1 и 2.2.)
+
+const imageUploadPreview = document.querySelector(`.img-upload__preview img`);
+const filterInputs = document.querySelectorAll(`.effects__list`);
+
+
+const filterChange = function (evt) {
+  imageUploadPreview.classList.add(evt.target.???);
+};
+
+for (let i = 0; i < filterInputs.length; i++) {
+  filterInputs[i].addEventListener(`change`, filterChange);
+}
 
 const effectLevelPin = document.querySelector(`.effect-level__pin`);
 effectLevelPin.addEventListener(`mouseup`, function () {
 });
 
+
 // Валидация
-const SYMBOLS = {
-  min: 2,
-  max: 20
-};
 
-const hashTags = /^#[\w\d]*$/;
+const SYMBOLS_MAX = 20;
+const SYMBOLS_MIN = 2;
 
+const hashTags = /^#[a-zA-Z\d]*$/;
 const hashTag = document.querySelector(`.text__hashtags`);
-hashTag.addEventListener(`input`, function () {
 
+hashTag.addEventListener(`input`, function () {
+  const valueLength = hashTag.value.length;
+  if (valueLength < SYMBOLS_MIN) {
+    hashTag.setCustomValidity(`Ещё ` + (SYMBOLS_MIN - valueLength) + ` симв.`);
+  } else if (valueLength > SYMBOLS_MAX) {
+    hashTag.setCustomValidity(`Удалите лишние ` + (valueLength - SYMBOLS_MAX) + ` симв.`);
+  } else {
+    hashTag.setCustomValidity(``);
+  }
+  if (hashTag.value !== hashTags) {
+    hashTag.setCustomValidity(`Неправильно`);
+  }
+  hashTag.reportValidity();
 });
