@@ -200,7 +200,7 @@ uploadCancel.addEventListener(`click`, function () {
   closeModal();
 });
 
-// Раздел 2.1 ТЗ
+// Раздел 2.1 ТЗ Не работает + по клику
 
 const scaleControlSmaller = document.querySelector(`.scale__control--smaller`);
 const scaleControlBigger = document.querySelector(`.scale__control--bigger`);
@@ -230,8 +230,6 @@ const counter = function () {
 };
 counter(controlValue.value);
 
-// Не работает + по клику
-
 const imageStyleChange = function () {
   if (controlValue.value === `25`) {
     imageUploadPreview.style.transform = `scale(0.25)`;
@@ -248,7 +246,7 @@ const imageStyleChange = function () {
   return imageUploadPreview.style;
 };
 
-// Тут пока не понял до конца, что надо делать (2.2.)
+// Не могу добавить класс из span конкретному элементу при переключении radio (2.2.)
 
 const imageUploadPreview = document.querySelector(`.img-upload__preview img`);
 const filterInputs = document.querySelectorAll(`.effects__list`);
@@ -285,11 +283,10 @@ effectLevelValue.addEventListener(`change`, function () {
   }
 });
 
+// Валидация Раздел 2.3 (всегда ошибка по RegExp)
 
-// Валидация Раздел 2.3
-
-const SYMBOLS_MAX = 20;
 const SYMBOLS_MIN = 2;
+const SYMBOLS_MAX = 20;
 
 const hashTags = /^#[a-zA-Z\d]*$/;
 const hashTag = document.querySelector(`.text__hashtags`);
