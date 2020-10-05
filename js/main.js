@@ -166,7 +166,7 @@ commentsLoader.classList.add(`hidden`);
 
 document.querySelector(`body`).classList.add(`modal-open`);
 
-// Загрузка изображения и показ формы редактирования
+// Загрузка изображения и показ формы редактирования 1.2 и 1.3.
 
 const uploadImageFile = document.querySelector(`#upload-file`);
 const imageUploadOverlay = document.querySelector(`.img-upload__overlay`);
@@ -199,6 +199,8 @@ uploadImageFile.addEventListener(`change`, function () {
 uploadCancel.addEventListener(`click`, function () {
   closeModal();
 });
+
+// Раздел 2.1 ТЗ
 
 const scaleControlSmaller = document.querySelector(`.scale__control--smaller`);
 const scaleControlBigger = document.querySelector(`.scale__control--bigger`);
@@ -246,7 +248,7 @@ const imageStyleChange = function () {
   return imageUploadPreview.style;
 };
 
-// Тут пока не понял, что надо делать кроме добавления обработчика (2.1 и 2.2.)
+// Тут пока не понял до конца, что надо делать (2.2.)
 
 const imageUploadPreview = document.querySelector(`.img-upload__preview img`);
 const filterInputs = document.querySelectorAll(`.effects__list`);
@@ -264,8 +266,27 @@ const effectLevelPin = document.querySelector(`.effect-level__pin`);
 effectLevelPin.addEventListener(`mouseup`, function () {
 });
 
+const effectLevelValue = document.querySelector(`.effect-level__value`);
+effectLevelValue.addEventListener(`change`, function () {
+  if (imageUploadPreview.classList.contains(`effects__preview--chrome`)) {
+    imageUploadPreview.style.filter = `grayscale(0..1)`;
+  }
+  if (imageUploadPreview.classList.contains(`effects__preview--sepia`)) {
+    imageUploadPreview.style.filter = `sepia(0..1)`;
+  }
+  if (imageUploadPreview.classList.contains(` effects__preview--marvin`)) {
+    imageUploadPreview.style.filter = `invert(0..100%)`;
+  }
+  if (imageUploadPreview.classList.contains(`effects__preview--phobos`)) {
+    imageUploadPreview.style.filter = `blur(0..3px)`;
+  }
+  if (imageUploadPreview.classList.contains(`effects__preview--heat`)) {
+    imageUploadPreview.style.filter = `brightness(1..3)`;
+  }
+});
 
-// Валидация
+
+// Валидация Раздел 2.3
 
 const SYMBOLS_MAX = 20;
 const SYMBOLS_MIN = 2;
@@ -286,4 +307,26 @@ hashTag.addEventListener(`input`, function () {
     hashTag.setCustomValidity(`Неправильно`);
   }
   hashTag.reportValidity();
+});
+
+// Раздел 2.4
+
+const commentsField = document.querySelector(`.text__description`);
+const COMMENTS_MAX = 120;
+
+commentsField.oninput = function () {
+  if (commentsField.value.length > COMMENTS_MAX) {
+    commentsField.setCustomValidity(`Неправильно`);
+  } else {
+    commentsField.setCustomValidity(``);
+  }
+  commentsField.reportValidity();
+};
+
+commentsField.addEventListener(`focusin`, function () {
+  document.removeEventListener(`keydown`, modalEscPress);
+});
+
+commentsField.addEventListener(`focusout`, function () {
+  document.addEventListener(`keydown`, modalEscPress);
 });
