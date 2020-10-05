@@ -252,8 +252,8 @@ const imageUploadPreview = document.querySelector(`.img-upload__preview img`);
 const filterInputs = document.querySelectorAll(`.effects__list`);
 
 
-const filterChange = function (evt) {
-  imageUploadPreview.classList.add(evt.target.???);
+const filterChange = function () {
+  imageUploadPreview.classList.add(`effects__preview--chrome`);
 };
 
 for (let i = 0; i < filterInputs.length; i++) {
