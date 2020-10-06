@@ -235,8 +235,6 @@ const value = {
   max: 100
 };
 
-controlValue.value = value.max;
-
 const counter = function () {
   scaleControlSmaller.addEventListener(`click`, function () {
     if (controlValue.value <= value.max && controlValue.value > value.min) {
