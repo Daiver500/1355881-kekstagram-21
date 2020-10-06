@@ -167,7 +167,7 @@ commentsLoader.classList.add(`hidden`);
 
 document.querySelector(`body`).classList.add(`modal-open`);
 
-// Закрываем превью фото с коментами
+// Закрываем превью фото с коментами (не работает ESC)
 
 const BigPictureCancel = document.querySelector(`.big-picture__cancel`);
 
