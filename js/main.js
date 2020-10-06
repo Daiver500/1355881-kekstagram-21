@@ -189,7 +189,7 @@ const closeModal = function () {
   imageUploadOverlay.classList.add(`hidden`);
   document.querySelector(`body`).classList.remove(`modal-open`);
   document.removeEventListener(`keydown`, modalEscPress);
-  uploadImageFile = ``;
+  uploadImageFile.value = ``;
 };
 
 uploadImageFile.addEventListener(`change`, function () {
