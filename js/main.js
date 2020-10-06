@@ -151,7 +151,6 @@ const bigPictureOpened = function (object) {
   document.querySelector(`.comments-count`).textContent = comments.length;
   document.querySelector(`.social__caption`).textContent = description;
   createSocialComment(mocks[0]);
-  bigPicture.addEventListener(`keydown`, bigPictureEscPress);
 };
 bigPictureOpened(mocks[0]);
 
@@ -169,7 +168,7 @@ document.querySelector(`body`).classList.add(`modal-open`);
 
 // Закрываем превью фото с коментами (не работает ESC)
 
-const BigPictureCancel = document.querySelector(`.big-picture__cancel`);
+const bigPictureCancel = document.querySelector(`.big-picture__cancel`);
 
 const bigPictureEscPress = function (evt) {
   if (evt.key === `Escape`) {
@@ -178,12 +177,14 @@ const bigPictureEscPress = function (evt) {
   }
 };
 
+document.addEventListener(`keydown`, bigPictureEscPress);
+
 const closeBigPicture = function () {
   bigPicture.classList.add(`hidden`);
   document.removeEventListener(`keydown`, bigPictureEscPress);
 };
 
-BigPictureCancel.addEventListener(`click`, function () {
+bigPictureCancel.addEventListener(`click`, function () {
   closeBigPicture();
 });
 
