@@ -151,6 +151,7 @@ const bigPictureOpened = function (object) {
   document.querySelector(`.comments-count`).textContent = comments.length;
   document.querySelector(`.social__caption`).textContent = description;
   createSocialComment(mocks[0]);
+  bigPicture.addEventListener(`keydown`, bigPictureEscPress);
 };
 bigPictureOpened(mocks[0]);
 
@@ -165,6 +166,28 @@ commentsLoader.classList.add(`hidden`);
 // Добавляем класс на body (для фиксации фона)
 
 document.querySelector(`body`).classList.add(`modal-open`);
+
+// Закрываем превью фото с коментами
+
+const BigPictureCancel = document.querySelector(`.big-picture__cancel`);
+
+const bigPictureEscPress = function (evt) {
+  if (evt.key === `Escape`) {
+    evt.preventDefault();
+    closeBigPicture();
+  }
+};
+
+const closeBigPicture = function () {
+  bigPicture.classList.add(`hidden`);
+  document.removeEventListener(`keydown`, bigPictureEscPress);
+};
+
+BigPictureCancel.addEventListener(`click`, function () {
+  closeBigPicture();
+});
+
+//  4.1.
 
 // Загрузка изображения и показ формы редактирования 1.2 и 1.3.
 
