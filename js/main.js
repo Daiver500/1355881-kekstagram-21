@@ -228,59 +228,67 @@ uploadCancel.addEventListener(`click`, function () {
 
 const scaleControlSmaller = document.querySelector(`.scale__control--smaller`);
 const scaleControlBigger = document.querySelector(`.scale__control--bigger`);
-const controlValue = document.querySelector(`.scale__control--value`);
+const scaleValue = document.querySelector(`.scale__control--value`);
+const imageUploadPreview = document.querySelector(`.img-upload__preview img`);
 
-const value = {
+let value = {
   min: 25,
   max: 100
 };
 
-const counter = function () {
-  scaleControlSmaller.addEventListener(`click`, function () {
-    if (controlValue.value <= value.max && controlValue.value > value.min) {
-      controlValue.value -= value.min;
-    }
-    imageStyleChange(imageUploadPreview.style);
-  });
-  scaleControlBigger.addEventListener(`click`, function () {
-    if (controlValue.value >= value.min && controlValue.value < value.max) {
-      controlValue.value = value.min + value.min;
-    }
-    imageStyleChange(imageUploadPreview.style);
-  });
-  return controlValue.value;
+const onMinusScaleClick = function () {
+  let scale = parseInt(scaleValue.value, 10);
+  if (scale <= value.max && scale > value.min) {
+    scale -= value.min;
+  }
+  imageStyleChange(scale);
 };
-counter(controlValue.value);
 
-const imageStyleChange = function () {
-  if (controlValue.value === `25`) {
-    imageUploadPreview.style.transform = `scale(0.25)`;
+scaleControlSmaller.addEventListener(`click`, onMinusScaleClick);
+
+const onPlusScaleClick = function () {
+  let scale = parseInt(scaleValue.value, 10);
+  if (scale >= value.min && scale < value.max) {
+    scale += value.min;
   }
-  if (controlValue.value === `50`) {
-    imageUploadPreview.style.transform = `scale(0.50)`;
+  imageStyleChange(scale);
+};
+
+scaleControlBigger.addEventListener(`click`, onPlusScaleClick);
+
+const imageStyleChange = function (number) {
+  switch (number) {
+    case 25:
+      imageUploadPreview.style.transform = `scale(0.25)`;
+      scaleValue.value = `${number}%`;
+      break;
+    case 50:
+      imageUploadPreview.style.transform = `scale(0.50)`;
+      scaleValue.value = `${number}%`;
+      break;
+    case 75:
+      imageUploadPreview.style.transform = `scale(0.75)`;
+      scaleValue.value = `${number}%`;
+      break;
+    case 100:
+      imageUploadPreview.style.transform = `scale(1.00)`;
+      scaleValue.value = `${number}%`;
+      break;
   }
-  if (controlValue.value === `75`) {
-    imageUploadPreview.style.transform = `scale(0.75)`;
-  }
-  if (controlValue.value === `100`) {
-    imageUploadPreview.style.transform = `scale(1.00)`;
-  }
-  return imageUploadPreview.style;
 };
 
 // Не могу добавить класс из span конкретному элементу при переключении radio (2.2.)
 
-const imageUploadPreview = document.querySelector(`.img-upload__preview img`);
-const filterInputs = document.querySelectorAll(`.effects__list`);
-
+const filterList = document.querySelector(`.effects__list`);
 
 const filterChange = function (evt) {
-  imageUploadPreview.classList.add(evt.target.filterInputs);
+  if (evt.target && evt.target.matches(`input[type="radio"]`)) {
+    imageUploadPreview.className = evt.target.className;
+  }
 };
 
-for (let i = 0; i < filterInputs.length; i++) {
-  filterInputs[i].addEventListener(`change`, filterChange);
-}
+filterList.addEventListener(`change`, filterChange);
+
 
 const effectLevelPin = document.querySelector(`.effect-level__pin`);
 effectLevelPin.addEventListener(`mouseup`, function () {
