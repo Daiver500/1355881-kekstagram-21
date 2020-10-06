@@ -283,7 +283,7 @@ const filterList = document.querySelector(`.effects__list`);
 
 const filterChange = function (evt) {
   if (evt.target && evt.target.matches(`input[type="radio"]`)) {
-    imageUploadPreview.className = evt.target.className;
+    imageUploadPreview.className = evt.target.value;
   }
 };
 
@@ -318,7 +318,7 @@ effectLevelValue.addEventListener(`change`, function () {
 const SYMBOLS_MIN = 2;
 const SYMBOLS_MAX = 20;
 
-const hashTags = /^#[a-zA-Z\d]*$/;
+const hashTags = /(^#[A-Za-z\w\d]$)/;
 const hashTag = document.querySelector(`.text__hashtags`);
 
 hashTag.addEventListener(`input`, function () {
@@ -330,8 +330,9 @@ hashTag.addEventListener(`input`, function () {
   } else {
     hashTag.setCustomValidity(``);
   }
-  if (hashTag.value !== hashTags) {
-    hashTag.setCustomValidity(`Неправильно`);
+  if (hashTags.test(hashTag.value)) {
+    console.log(`Не допустимое значение`);
+    hashTag.setCustomValidity(`Не верно`);
   }
   hashTag.reportValidity();
 });
