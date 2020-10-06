@@ -166,7 +166,7 @@ commentsLoader.classList.add(`hidden`);
 
 document.querySelector(`body`).classList.add(`modal-open`);
 
-// Закрываем превью фото с коментами (не работает ESC)
+// Закрываем превью фото с коментами
 
 const bigPictureCancel = document.querySelector(`.big-picture__cancel`);
 
@@ -276,8 +276,8 @@ const imageUploadPreview = document.querySelector(`.img-upload__preview img`);
 const filterInputs = document.querySelectorAll(`.effects__list`);
 
 
-const filterChange = function () {
-  imageUploadPreview.classList.add(`effects__preview--chrome`);
+const filterChange = function (evt) {
+  imageUploadPreview.classList.add(evt.target.filterInputs);
 };
 
 for (let i = 0; i < filterInputs.length; i++) {
