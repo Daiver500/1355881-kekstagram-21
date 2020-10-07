@@ -279,15 +279,16 @@ const imageStyleChange = function (number) {
 
 // Не могу добавить класс из span конкретному элементу при переключении radio (2.2.)
 
-const filterList = document.querySelector(`.effects__list`);
+const filterList = document.querySelector(`.effects__item`);
+const span = document.getElementsByClassName(`effects__preview`)[0];
 
 const filterChange = function (evt) {
-  if (evt.target && evt.target.matches(`input[type="radio"]`)) {
-    imageUploadPreview.className = evt.target.value;
+  if (evt.target && evt.target.matches(span)) {
+    imageUploadPreview.classList.add(`.effects__preview--sepia`);
   }
 };
 
-filterList.addEventListener(`change`, filterChange);
+filterList.addEventListener(`click`, filterChange);
 
 
 const effectLevelPin = document.querySelector(`.effect-level__pin`);
