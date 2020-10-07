@@ -166,28 +166,6 @@ commentsLoader.classList.add(`hidden`);
 
 document.querySelector(`body`).classList.add(`modal-open`);
 
-// Закрываем превью фото с коментами
-
-const bigPictureCancel = document.querySelector(`.big-picture__cancel`);
-
-const bigPictureEscPress = function (evt) {
-  if (evt.key === `Escape`) {
-    evt.preventDefault();
-    closeBigPicture();
-  }
-};
-
-document.addEventListener(`keydown`, bigPictureEscPress);
-
-const closeBigPicture = function () {
-  bigPicture.classList.add(`hidden`);
-  document.removeEventListener(`keydown`, bigPictureEscPress);
-};
-
-bigPictureCancel.addEventListener(`click`, function () {
-  closeBigPicture();
-});
-
 //  Раздел 4.1.
 
 // Загрузка изображения и показ формы редактирования 1.2 и 1.3.
@@ -224,7 +202,7 @@ uploadCancel.addEventListener(`click`, function () {
   closeModal();
 });
 
-// Раздел 2.1 ТЗ Не работает + по клику
+// Раздел 2.1
 
 const scaleControlSmaller = document.querySelector(`.scale__control--smaller`);
 const scaleControlBigger = document.querySelector(`.scale__control--bigger`);
@@ -277,44 +255,35 @@ const imageStyleChange = function (number) {
   }
 };
 
-// Не могу добавить класс из span конкретному элементу при переключении radio (2.2.)
+// 2.2
 
-const filterList = document.querySelector(`.effects__item`);
-const span = document.getElementsByClassName(`effects__preview`)[0];
-
-const filterChange = function (evt) {
-  if (evt.target && evt.target.matches(span)) {
-    imageUploadPreview.classList.add(`.effects__preview--sepia`);
-  }
+const getActiveEffect = function (target) {
+  const img = document.querySelector(`.img-upload__preview img`);
+  document.querySelectorAll(`.effects__radio`).forEach(function (input) {
+    input.checked = false;
+  });
+  const activeEffect = target.closest(`li`).querySelector(`.effects__radio`);
+  activeEffect.checked = true;
+  img.className = ``;
+  img.classList.add(`effects__preview--${activeEffect.value}`);
 };
 
-filterList.addEventListener(`click`, filterChange);
+const effectItems = document.querySelectorAll(`.effects-item`);
+effectItems.forEach(function (item) {
+  item.addEventListener(`click`, function (evt) {
+    const {target} = evt;
+    getActiveEffect(target);
+  });
+});
+
+// Фильтр ()
 
 
 const effectLevelPin = document.querySelector(`.effect-level__pin`);
 effectLevelPin.addEventListener(`mouseup`, function () {
 });
 
-const effectLevelValue = document.querySelector(`.effect-level__value`);
-effectLevelValue.addEventListener(`change`, function () {
-  if (imageUploadPreview.classList.contains(`effects__preview--chrome`)) {
-    imageUploadPreview.style.filter = `grayscale(0..1)`;
-  }
-  if (imageUploadPreview.classList.contains(`effects__preview--sepia`)) {
-    imageUploadPreview.style.filter = `sepia(0..1)`;
-  }
-  if (imageUploadPreview.classList.contains(` effects__preview--marvin`)) {
-    imageUploadPreview.style.filter = `invert(0..100%)`;
-  }
-  if (imageUploadPreview.classList.contains(`effects__preview--phobos`)) {
-    imageUploadPreview.style.filter = `blur(0..3px)`;
-  }
-  if (imageUploadPreview.classList.contains(`effects__preview--heat`)) {
-    imageUploadPreview.style.filter = `brightness(1..3)`;
-  }
-});
-
-// Валидация Раздел 2.3 (всегда ошибка по RegExp)
+// Валидация
 
 const SYMBOLS_MIN = 2;
 const SYMBOLS_MAX = 20;
@@ -338,10 +307,47 @@ hashTag.addEventListener(`input`, function () {
   hashTag.reportValidity();
 });
 
-// Раздел 2.4
-
-
 // Раздел 4.2.
+
+const smallPhotos = document.querySelectorAll(`.picture`);
+
+const addSmallPhotoClicker = function (smallphoto, content) {
+  smallphoto.addEventListener(`click`, function (evt) {
+    evt.preventDefault();
+    document.addEventListener(`keydown`, bigPictureEscPress);
+    bigPicture.classList.remove(`hidden`);
+    bigPictureOpened(content);
+  });
+};
+
+for (let i = 0; i < smallPhotos.length; i++) {
+  addSmallPhotoClicker(smallPhotos[i], mocks[i]);
+}
+
+// Закрываем превью фото с коментами
+
+
+const bigPictureCancel = document.querySelector(`.big-picture__cancel`);
+
+const bigPictureEscPress = function (evt) {
+  if (evt.key === `Escape`) {
+    evt.preventDefault();
+    closeBigPicture();
+  }
+};
+
+document.addEventListener(`keydown`, bigPictureEscPress);
+
+const closeBigPicture = function () {
+  bigPicture.classList.add(`hidden`);
+  document.removeEventListener(`keydown`, bigPictureEscPress);
+};
+
+bigPictureCancel.addEventListener(`click`, function () {
+  closeBigPicture();
+});
+
+// Поле ввода комментария
 
 const commentsField = document.querySelector(`.text__description`);
 const COMMENTS_MAX = 120;
