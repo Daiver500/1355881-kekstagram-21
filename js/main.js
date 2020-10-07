@@ -188,7 +188,7 @@ bigPictureCancel.addEventListener(`click`, function () {
   closeBigPicture();
 });
 
-//  4.1.
+//  Раздел 4.1.
 
 // Загрузка изображения и показ формы редактирования 1.2 и 1.3.
 
@@ -339,6 +339,9 @@ hashTag.addEventListener(`input`, function () {
 });
 
 // Раздел 2.4
+
+
+// Раздел 4.2.
 
 const commentsField = document.querySelector(`.text__description`);
 const COMMENTS_MAX = 120;
