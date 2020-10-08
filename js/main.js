@@ -257,20 +257,23 @@ const imageStyleChange = function (number) {
 
 // 2.2
 
-const getActiveEffect = function (target) {
+const effects = document.querySelector(`.effects`);
+
+const getActiveEffect = (target) => {
   const img = document.querySelector(`.img-upload__preview img`);
-  document.querySelectorAll(`.effects__radio`).forEach(function (input) {
+  effects.querySelectorAll(`.effects__radio`).forEach((input) => {
     input.checked = false;
   });
   const activeEffect = target.closest(`li`).querySelector(`.effects__radio`);
   activeEffect.checked = true;
   img.className = ``;
   img.classList.add(`effects__preview--${activeEffect.value}`);
+  console.log(activeEffect.value);
 };
 
-const effectItems = document.querySelectorAll(`.effects-item`);
-effectItems.forEach(function (item) {
-  item.addEventListener(`click`, function (evt) {
+const effectsItems = effects.querySelectorAll(`.effects-item`);
+effectsItems.forEach((item) => {
+  item.addEventListener(`click`, (evt) => {
     const {target} = evt;
     getActiveEffect(target);
   });
