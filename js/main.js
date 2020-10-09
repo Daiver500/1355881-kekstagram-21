@@ -1,3 +1,4 @@
+/* eslint-disable no-cond-assign */
 "use strict";
 
 // Константы
@@ -274,6 +275,13 @@ effects.addEventListener(`click`, filterChange);
 
 const effectLevelPin = document.querySelector(`.effect-level__pin`);
 effectLevelPin.addEventListener(`mouseup`, function () {
+});
+
+const effectLevelValue = document.querySelector(`.effect-level__value`);
+effectLevelValue.addEventListener(`change`, function () {
+  if (img.className = `effects__preview--sepia`) {
+    img.style.filter = `filter: sepia(0..1)`;
+  }
 });
 
 const liFirst = document.querySelector(`.effects__item:first-child`);
