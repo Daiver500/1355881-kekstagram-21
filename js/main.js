@@ -257,28 +257,17 @@ const imageStyleChange = function (number) {
 
 // 2.2
 
+const img = document.querySelector(`.img-upload__preview img`);
 const effects = document.querySelector(`.effects`);
 
-const getActiveEffect = (target) => {
-  const img = document.querySelector(`.img-upload__preview img`);
-  effects.querySelectorAll(`.effects__radio`).forEach((input) => {
-    input.checked = false;
-  });
-  const activeEffect = target.closest(`li`).querySelector(`.effects__radio`);
-  console.log(activeEffect.value);
-  activeEffect.checked = true;
-  img.className = ``;
-  img.classList.add(`effects__preview--${activeEffect.value}`);
-  console.log(activeEffect.value);
-  console.log(activeEffect);
+const filterChange = function (evt) {
+  if (evt.target.matches(`input[type="radio"]`)) {
+    img.className = ``;
+    img.className = `effects__preview--${evt.target.value}`;
+  }
 };
 
-const effectsItems = effects.querySelectorAll(`.effects-item`);
-effectsItems.forEach((item) => {
-  item.addEventListener(`click`, (evt) => {
-    getActiveEffect(evt.target);
-  });
-});
+effects.addEventListener(`click`, filterChange);
 
 // Фильтр ()
 
