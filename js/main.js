@@ -265,17 +265,18 @@ const getActiveEffect = (target) => {
     input.checked = false;
   });
   const activeEffect = target.closest(`li`).querySelector(`.effects__radio`);
+  console.log(activeEffect.value);
   activeEffect.checked = true;
   img.className = ``;
   img.classList.add(`effects__preview--${activeEffect.value}`);
   console.log(activeEffect.value);
+  console.log(activeEffect);
 };
 
 const effectsItems = effects.querySelectorAll(`.effects-item`);
 effectsItems.forEach((item) => {
   item.addEventListener(`click`, (evt) => {
-    const {target} = evt;
-    getActiveEffect(target);
+    getActiveEffect(evt.target);
   });
 });
 
