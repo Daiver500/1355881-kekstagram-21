@@ -269,11 +269,23 @@ const filterChange = function (evt) {
 
 effects.addEventListener(`click`, filterChange);
 
-// Фильтр ()
 
+// Фильтр ()
 
 const effectLevelPin = document.querySelector(`.effect-level__pin`);
 effectLevelPin.addEventListener(`mouseup`, function () {
+});
+
+const liFirst = document.querySelector(`.effects__item:first-child`);
+const Li = document.querySelector(`.effects__item:not(:first-child)`);
+const imgUploadEffectLevel = document.querySelector(`.img-upload__effect-level`);
+
+liFirst.addEventListener(`click`, function () {
+  imgUploadEffectLevel.classList.add(`hidden`);
+});
+
+Li.addEventListener(`click`, function () {
+  imgUploadEffectLevel.classList.remove(`hidden`);
 });
 
 // Валидация
@@ -281,7 +293,7 @@ effectLevelPin.addEventListener(`mouseup`, function () {
 const SYMBOLS_MIN = 2;
 const SYMBOLS_MAX = 20;
 
-const hashTags = /(^#[A-Za-z\w\d]$)/;
+const hashTags = /(^#[\w\d]$)/;
 const hashTag = document.querySelector(`.text__hashtags`);
 
 hashTag.addEventListener(`input`, function () {
