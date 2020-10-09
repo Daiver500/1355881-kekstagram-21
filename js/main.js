@@ -320,8 +320,8 @@ const addSmallPhotoClicker = function (smallphoto, content) {
   smallphoto.addEventListener(`click`, function (evt) {
     evt.preventDefault();
     document.addEventListener(`keydown`, bigPictureEscPress);
-    bigPicture.classList.remove(`hidden`);
     bigPictureOpened(content);
+    createSocialComment(content);
   });
 };
 
