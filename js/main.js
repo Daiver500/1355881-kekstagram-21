@@ -341,7 +341,7 @@ hashTag.addEventListener(`input`, function () {
       console.log(`Да`);
     }
     if (item.length > SYMBOLS_MAX) {
-      hashTag.setCustomValidity(`Удалите ` + (SYMBOLS_MIN - valueLength) + ` симв.`);
+      hashTag.setCustomValidity(`Удалите ` + (SYMBOLS_MAX - item.length) + ` симв.`);
     }
     if (item.value > 5) {
       hashTag.setCustomValidity(`Нет`);
