@@ -330,22 +330,27 @@ hashTag.addEventListener(`input`, function () {
   const valueLength = hashTag.value.length;
   if (valueLength < SYMBOLS_MIN) {
     hashTag.setCustomValidity(`Ещё ` + (SYMBOLS_MIN - valueLength) + ` симв.`);
-  } else if (valueLength > SYMBOLS_MAX) {
-    hashTag.setCustomValidity(`Удалите лишние ` + (valueLength - SYMBOLS_MAX) + ` симв.`);
   } else {
     hashTag.setCustomValidity(``);
   }
-  `#one #two `.split(``).forEach((item) => {
+  hashTag.reportValidity();
+
+  `#one #two`.split(` `).forEach((item) => {
     console.log(item);
     if (hashTags.test(item)) {
-     console.log(`Верно`);
-    } else if (item > 5 || item === item || hashTag.textContent !== `#`) {
-      hashTag.setCustomValidity(`Не верно`);
-    } else {
-      hashTag.setCustomValidity(`Не верно`);
+      console.log(`Да`);
     }
+    if (item.length > SYMBOLS_MAX) {
+      hashTag.setCustomValidity(`Удалите ` + (SYMBOLS_MIN - valueLength) + ` симв.`);
+    }
+    if (item.value > 5) {
+      hashTag.setCustomValidity(`Нет`);
+    }
+    if (item === item) {
+      hashTag.setCustomValidity(`Нет`);
+    }
+    hashTag.reportValidity();
   });
-  hashTag.reportValidity();
 });
 
 hashTag.addEventListener(`focusin`, function () {
@@ -402,8 +407,9 @@ const commentsField = document.querySelector(`.text__description`);
 const COMMENTS_MAX = 120;
 
 commentsField.oninput = function () {
+  const valueLength = commentsField.value.length;
   if (commentsField.value.length > COMMENTS_MAX) {
-    commentsField.setCustomValidity(`Неправильно`);
+    commentsField.setCustomValidity(`Удалите ` + (COMMENTS_MAX - valueLength) + ` симв.`);
   } else {
     commentsField.setCustomValidity(``);
   }
