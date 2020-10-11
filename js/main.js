@@ -276,15 +276,15 @@ effects.addEventListener(`click`, filterChange);
 const effectLevelPin = document.querySelector(`.effect-level__pin`);
 effectLevelPin.addEventListener(`mouseup`, function () {
 });
+const effectLevelValue = document.querySelector(`.effect-level__value`);
 
-effectLevelPin.value = {
+effectLevelValue.value = {
   min: 0,
   max: 100
 };
 
-img.style.filter = effectLevelPin.value + 0.02 * ???;
+effectLevelValue.value = effectLevelValue.value + ??? * ???;
 
-const effectLevelValue = document.querySelector(`.effect-level__value`);
 effectLevelValue.addEventListener(`change`, function () {
   if (img.className = `effects__preview--chrome`) {
     img.style.filter = `filter: grayscale(0..1)`;
