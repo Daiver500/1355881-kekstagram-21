@@ -203,7 +203,7 @@ uploadCancel.addEventListener(`click`, function () {
   closeModal();
 });
 
-// Раздел 2.1
+// Масштаб:
 
 const scaleControlSmaller = document.querySelector(`.scale__control--smaller`);
 const scaleControlBigger = document.querySelector(`.scale__control--bigger`);
@@ -256,7 +256,7 @@ const imageStyleChange = function (number) {
   }
 };
 
-// 2.2
+// Эффект на изображение
 
 const img = document.querySelector(`.img-upload__preview img`);
 const effects = document.querySelector(`.effects`);
@@ -271,7 +271,7 @@ const filterChange = function (evt) {
 effects.addEventListener(`click`, filterChange);
 
 
-// Фильтр ()
+// Интенсивность эффекта
 
 const effectLevelPin = document.querySelector(`.effect-level__pin`);
 effectLevelPin.addEventListener(`mouseup`, function () {
@@ -281,7 +281,7 @@ const effectLevelValue = document.querySelector(`.effect-level__value`);
 effectLevelValue.addEventListener(`change`, function () {
   if (img.className = `effects__preview--chrome`) {
     img.style.filter = `filter: grayscale(0..1)`;
-  };
+  }
   if (img.className = `effects__preview--sepia`) {
     img.style.filter = `filter: sepia(0..1)`;
   }
@@ -308,7 +308,7 @@ Li.addEventListener(`click`, function () {
   imgUploadEffectLevel.classList.remove(`hidden`);
 });
 
-// Валидация
+// Валидация поля для хэштегов
 
 const SYMBOLS_MIN = 2;
 const SYMBOLS_MAX = 20;
