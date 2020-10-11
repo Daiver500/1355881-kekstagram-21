@@ -283,7 +283,10 @@ effectLevelValue.value = {
   max: 100
 };
 
-effectLevelValue.value = effectLevelValue.value + ??? * ???;
+effectLevelValue.value = ???; // меняется по перемещению effectLevelPin;
+img.style.filter.value = effectLevelValue.value + ????; //меняется по изменению effectLevelValue.value ;
+
+// В зависимости от примененного класса применяется фильтр
 
 effectLevelValue.addEventListener(`change`, function () {
   if (img.className = `effects__preview--chrome`) {
