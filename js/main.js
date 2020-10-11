@@ -277,6 +277,13 @@ const effectLevelPin = document.querySelector(`.effect-level__pin`);
 effectLevelPin.addEventListener(`mouseup`, function () {
 });
 
+effectLevelPin.value = {
+  min: 0,
+  max: 100
+};
+
+img.style.filter = effectLevelPin.value + 0.02 * ???;
+
 const effectLevelValue = document.querySelector(`.effect-level__value`);
 effectLevelValue.addEventListener(`change`, function () {
   if (img.className = `effects__preview--chrome`) {
