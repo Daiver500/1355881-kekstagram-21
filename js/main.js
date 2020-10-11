@@ -339,6 +339,8 @@ hashTag.addEventListener(`input`, function () {
     console.log(item);
     if (hashTags.test(item)) {
      console.log(`Верно`);
+    } else if (item > 5 || item === item || hashTag.textContent !== `#`) {
+      hashTag.setCustomValidity(`Не верно`);
     } else {
       hashTag.setCustomValidity(`Не верно`);
     }
