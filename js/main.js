@@ -284,24 +284,24 @@ effectLevelValue.value = {
 };
 
 effectLevelValue.value  // меняется по перемещению effectLevelPin;
-img.style.filter.value  // меняется по изменению effectLevelValue.value ;
+img.style.filter  // меняется по изменению effectLevelValue.value ;
 
 // В зависимости от примененного класса применяется фильтр
 
 effectLevelValue.addEventListener(`change`, function () {
-  if (img.className = `effects__preview--chrome`) {
+  if (img.className === `effects__preview--chrome`) {
     img.style.filter = `filter: grayscale(0..1)`;
   }
-  if (img.className = `effects__preview--sepia`) {
+  if (img.className === `effects__preview--sepia`) {
     img.style.filter = `filter: sepia(0..1)`;
   }
-  if (img.className = `effects__preview--marvin`) {
+  if (img.className === `effects__preview--marvin`) {
     img.style.filter = `filter: invert(0..100%)`;
   }
-  if (img.className = `effects__preview--phobos`) {
+  if (img.className === `effects__preview--phobos`) {
     img.style.filter = `filter: blur(0..3px)`;
   }
-  if (img.className = `effects__preview--heat`) {
+  if (img.className === `effects__preview--heat`) {
     img.style.filter = `filter: brightness(1..3)`;
   }
 });
