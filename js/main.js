@@ -9,8 +9,8 @@ const LIKES = {
   max: 200,
 };
 const COMMENTS = {
-  min: 5,
-  max: 10,
+  min: 1,
+  max: 5,
 };
 
 const AVATAR = {
@@ -283,8 +283,8 @@ effectLevelValue.value = {
   max: 100
 };
 
-effectLevelValue.value = 1; // меняется по перемещению effectLevelPin;
-img.style.filter.value = effectLevelValue.value + 1; //меняется по изменению effectLevelValue.value ;
+effectLevelValue.value  // меняется по перемещению effectLevelPin;
+img.style.filter.value  // меняется по изменению effectLevelValue.value ;
 
 // В зависимости от примененного класса применяется фильтр
 
