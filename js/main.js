@@ -283,8 +283,8 @@ effectLevelValue.value = {
   max: 100
 };
 
-effectLevelValue.value = ???; // меняется по перемещению effectLevelPin;
-img.style.filter.value = effectLevelValue.value + ????; //меняется по изменению effectLevelValue.value ;
+effectLevelValue.value = 1; // меняется по перемещению effectLevelPin;
+img.style.filter.value = effectLevelValue.value + 1; //меняется по изменению effectLevelValue.value ;
 
 // В зависимости от примененного класса применяется фильтр
 
