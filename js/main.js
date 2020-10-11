@@ -279,8 +279,20 @@ effectLevelPin.addEventListener(`mouseup`, function () {
 
 const effectLevelValue = document.querySelector(`.effect-level__value`);
 effectLevelValue.addEventListener(`change`, function () {
+  if (img.className = `effects__preview--chrome`) {
+    img.style.filter = `filter: grayscale(0..1)`;
+  };
   if (img.className = `effects__preview--sepia`) {
     img.style.filter = `filter: sepia(0..1)`;
+  }
+  if (img.className = `effects__preview--marvin`) {
+    img.style.filter = `filter: invert(0..100%)`;
+  }
+  if (img.className = `effects__preview--phobos`) {
+    img.style.filter = `filter: blur(0..3px)`;
+  }
+  if (img.className = `effects__preview--heat`) {
+    img.style.filter = `filter: brightness(1..3)`;
   }
 });
 
@@ -301,7 +313,7 @@ Li.addEventListener(`click`, function () {
 const SYMBOLS_MIN = 2;
 const SYMBOLS_MAX = 20;
 
-const hashTags = /(^#[\w\d]$)/;
+const hashTags = /(^#[\w\d]*$)/;
 const hashTag = document.querySelector(`.text__hashtags`);
 
 hashTag.addEventListener(`input`, function () {
@@ -313,11 +325,23 @@ hashTag.addEventListener(`input`, function () {
   } else {
     hashTag.setCustomValidity(``);
   }
-  if (hashTags.test(hashTag.value)) {
-    console.log(`Не допустимое значение`);
-    hashTag.setCustomValidity(`Не верно`);
-  }
+  `#one #two `.split(``).forEach((item) => {
+    console.log(item);
+    if (hashTags.test(item)) {
+     console.log(`Верно`);
+    } else {
+      hashTag.setCustomValidity(`Не верно`);
+    }
+  });
   hashTag.reportValidity();
+});
+
+hashTag.addEventListener(`focusin`, function () {
+  document.removeEventListener(`keydown`, modalEscPress);
+});
+
+hashTag.addEventListener(`focusout`, function () {
+  document.addEventListener(`keydown`, modalEscPress);
 });
 
 // Раздел 4.2.
