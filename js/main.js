@@ -210,7 +210,7 @@ const scaleControlBigger = document.querySelector(`.scale__control--bigger`);
 const scaleValue = document.querySelector(`.scale__control--value`);
 const imageUploadPreview = document.querySelector(`.img-upload__preview img`);
 
-let value = {
+const value = {
   min: 25,
   max: 100
 };
@@ -271,7 +271,7 @@ const filterChange = function (evt) {
 effects.addEventListener(`click`, filterChange);
 
 
-// Интенсивность эффекта
+// Интенсивность эффекта !!!
 
 const effectLevelPin = document.querySelector(`.effect-level__pin`);
 effectLevelPin.addEventListener(`mouseup`, function () {
@@ -320,34 +320,40 @@ Li.addEventListener(`click`, function () {
 
 // Валидация поля для хэштегов
 
-const SYMBOLS_MIN = 2;
-const SYMBOLS_MAX = 20;
+const HASTAGS = {
+  min: 2,
+  max: 20
+};
 
-const hashTags = /(^#[\w\d]*$)/;
+const hashTags = /^([#]{1})([0-9a-zа-яё]{1,19})$/g;
 const hashTag = document.querySelector(`.text__hashtags`);
 
-hashTag.addEventListener(`input`, function () {
-  const valueLength = hashTag.value.length;
-  if (valueLength < SYMBOLS_MIN) {
-    hashTag.setCustomValidity(`Ещё ` + (SYMBOLS_MIN - valueLength) + ` симв.`);
-  } else {
-    hashTag.setCustomValidity(``);
-  }
-  hashTag.reportValidity();
+document.querySelector(`.img-upload__form`).addEventListener(`submit`, function () {
 
-  `#one #two`.split(` `).forEach((item) => {
+  const hashTagsArray = hashtag.value.split(` `);
+  const idx = hashTagsArray.indexOf(item);
+
+  hashTagsArray.forEach((item) => {
+    const valueLength = item.length;
     console.log(item);
+
     if (hashTags.test(item)) {
       console.log(`Да`);
     }
-    if (item.length > SYMBOLS_MAX) {
-      hashTag.setCustomValidity(`Удалите ` + (SYMBOLS_MAX - item.length) + ` симв.`);
+
+    if (valueLength < HASHTAGS.min) {
+      hashTag.setCustomValidity(`Ещё ` + (HASHTAGS.min - valueLength) + ` симв.`);
     }
-    if (item.value > 5) {
+    if (valueLength > HASHTAGS.max) {
+      hashTag.setCustomValidity(`Удалите ` + (HASHTAGS.max - valueLength) + ` симв.`);
+    }
+    if (hashTagsArray.length > 5) {
       hashTag.setCustomValidity(`Нет`);
     }
-    if (item === item) {
+    if (idx === item) {
       hashTag.setCustomValidity(`Нет`);
+    } else {
+      hashTag.setCustomValidity(``);
     }
     hashTag.reportValidity();
   });
