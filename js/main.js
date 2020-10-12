@@ -320,44 +320,47 @@ Li.addEventListener(`click`, function () {
 
 // Валидация поля для хэштегов
 
-const HASTAGS = {
+const HASHTAGS_LENGTH = {
   min: 2,
   max: 20
 };
 
-const hashTags = /^([#]{1})([0-9a-zа-яё]{1,19})$/g;
 const hashTag = document.querySelector(`.text__hashtags`);
+const hashTags = /^([#]{1})([0-9a-zа-яё]{1,19})$/g;
 
-document.querySelector(`.img-upload__form`).addEventListener(`submit`, function () {
-
-  const hashTagsArray = hashtag.value.split(` `);
-  const idx = hashTagsArray.indexOf(item);
-
+hashTag.addEventListener(`input`, function () {
+  const hashTagsArray = hashTag.value.split(` `);
   hashTagsArray.forEach((item) => {
+    hashTag.value.toLowerCase();
+    const idx = hashTagsArray.indexOf(item);
     const valueLength = item.length;
     console.log(item);
-
     if (hashTags.test(item)) {
-      console.log(`Да`);
-    }
-
-    if (valueLength < HASHTAGS.min) {
-      hashTag.setCustomValidity(`Ещё ` + (HASHTAGS.min - valueLength) + ` симв.`);
-    }
-    if (valueLength > HASHTAGS.max) {
-      hashTag.setCustomValidity(`Удалите ` + (HASHTAGS.max - valueLength) + ` симв.`);
-    }
-    if (hashTagsArray.length > 5) {
-      hashTag.setCustomValidity(`Нет`);
-    }
-    if (idx === item) {
-      hashTag.setCustomValidity(`Нет`);
+      console.log(`gogogo`);
+    } else if (valueLength < HASHTAGS_LENGTH.min) {
+      hashTag.setCustomValidity(`Нет 1`);
+    } else if (valueLength > HASHTAGS_LENGTH.max) {
+      hashTag.setCustomValidity(`Нет 2`);
+    } else if (hashTagsArray.length > 5) {
+      hashTag.setCustomValidity(`Нет 3`);
+    } else if (idx === 0) {
+      hashTag.setCustomValidity(`Нет 4`);
     } else {
       hashTag.setCustomValidity(``);
     }
     hashTag.reportValidity();
   });
 });
+
+/* if (!hashTags.test(item)) {
+  hashTag.setCustomValidity(`Нет`);
+}
+if (hashTagsArray.length > 5) {
+  hashTag.setCustomValidity(`Нет`);
+}
+if (idx === item) {
+  hashTag.setCustomValidity(`Нет`);
+}*/
 
 hashTag.addEventListener(`focusin`, function () {
   document.removeEventListener(`keydown`, modalEscPress);
