@@ -328,16 +328,35 @@ const HASHTAGS_LENGTH = {
 };
 
 const hashTag = document.querySelector(`.text__hashtags`);
-const hashTags = /^([#]{1})([0-9a-zа-яё]{1,19})$/g;
+const pattern = /^([#]{1})([0-9a-zа-яё]{1,19})$/g;
+1.Описать константы
+2.Написать функцию получения хэштегов
+ hashTag.value.toLowerCase().split(` `);
+3.Убрать пробелы (функция в скайпе)
+4.Функция валидации
+а. принимает в себя массив хештегов
+б. проверка на количество 5 штук
+в. перебираем  for each  полученный массив хэщтегов
+г. хештего с решетки (см скайп !start with)
+д. хештег неможет ьыть из 1 символа (hashtag.length <2)
+е. хештег не может быть больше 20 hashtag.length > 20
+ж. if (!item.match(pattern))
+з. Не должны повторяться хештеги (array.indexOf(hashtag, index + 1) !== -1)
+5.Функция обработчик
+
+if (!hashtag.validity.valid) {
+  hashtags.style.outline = '2px solid red';
+} else {
+  hashtags.style.outline = 'none';
+}
 
 hashTag.addEventListener(`input`, function () {
-  const hashTagsArray = hashTag.value.split(` `);
-  hashTagsArray.forEach((item) => {
-    hashTag.value.toLowerCase();
-    const idx = hashTagsArray.indexOf(item);
+  const hashTagsArray = hashTag.value.toLowerCase().split(` `);
+  hashTagsArray.forEach((item, idx) => {
+    // const idx = hashTagsArray.indexOf(item);
     const valueLength = item.length;
     console.log(item);
-    if (hashTags.test(item)) {
+    if (!item.match(pattern)) {
       console.log(`gogogo`);
     } else if (valueLength < HASHTAGS_LENGTH.min) {
       hashTag.setCustomValidity(`Нет 1`);
