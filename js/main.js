@@ -155,6 +155,8 @@ const bigPictureOpened = function (object) {
 };
 bigPictureOpened(mocks[0]);
 
+bigPicture.classList.add(`hidden`);
+
 // Добавляем класс hidden
 
 const socialCommentCount = document.querySelector(`.social__comment-count`);
@@ -331,6 +333,8 @@ const HASHTAGS_LENGTH = {
 
 const hashTagsInput = document.querySelector(`.text__hashtags`);
 const pattern = /^([#]{1})([0-9a-zа-яё]{1,19})$/;
+// /^([#]{1})([0-9a-zа-яё]{1,19})$/;
+
 const hashTagsMax = 5;
 
 // 2.Написать функцию получения хэштегов
@@ -351,6 +355,7 @@ const doValidationOfHashtags = function (arrayOfHashtags) {
   console.log(arrayOfHashtags);
   arrayOfHashtags.forEach((item, index) => { // проверяем forEach каждый элемент "чистого массива"
     const valueLength = item.length;
+    console.log(arrayOfHashtags.indexOf(item, index + 1) !== -1);
     if (!item.startsWith(`#`)) { // проверяем начало хэштега с #
       hashTagsInput.setCustomValidity(`Нет 3`);
     } else if (valueLength < HASHTAGS_LENGTH.min) { // проверяем на min значение
@@ -366,8 +371,8 @@ const doValidationOfHashtags = function (arrayOfHashtags) {
     } else {
       hashTagsInput.setCustomValidity(``);
     }
+    hashTagsInput.reportValidity();
   });
-  hashTagsInput.reportValidity();
 };
 
 // 5.Функция обработчик
