@@ -330,12 +330,12 @@ const HASHTAGS_LENGTH = {
 };
 
 const hashTagsInput = document.querySelector(`.text__hashtags`);
-const pattern = /^([#]{1})([0-9a-zа-яё]{1,19})$/g;
+const pattern = /^([#]{1})([0-9a-zа-яё]{1,19})$/;
 const hashTagsMax = 5;
 
 // 2.Написать функцию получения хэштегов
-const createHashTagsArray = function () {
-  hashTagsInput.value.toLowerCase().split(` `);
+const createHashTagsArray = function (hashTagsString) {
+  return hashTagsString.split(` `);
 };
 
 // 3.Написать функцию уборки  пробелов в новом массиве
@@ -347,34 +347,33 @@ const createNewHashtagsArrayWithoutSpaces = function (allHashtags) {
 };
 
 // 4.Функция валидации
-const doValidationOfHashtags = function () {
-  if (createNewHashtagsArrayWithoutSpaces.length > hashTagsMax) {
-    hashTagsInput.setCustomValidity(`Нет 1`); // проверка на количество 5 штук
-  }
-  createNewHashtagsArrayWithoutSpaces.forEach((item, index) => { // проверяем forEach каждый элемент "чистого массива"
+const doValidationOfHashtags = function (arrayOfHashtags) {
+  console.log(arrayOfHashtags);
+  arrayOfHashtags.forEach((item, index) => { // проверяем forEach каждый элемент "чистого массива"
     const valueLength = item.length;
-    console.log(item);
-    if (!item.match(pattern)) {
-      hashTagsInput.setCustomValidity(`Нет 2`);
-    } else if (!hashTagsInput.startsWith(`#`)) { // проверяем начало хэштега с #
+    if (!item.startsWith(`#`)) { // проверяем начало хэштега с #
       hashTagsInput.setCustomValidity(`Нет 3`);
     } else if (valueLength < HASHTAGS_LENGTH.min) { // проверяем на min значение
       hashTagsInput.setCustomValidity(`Нет 4`);
     } else if (valueLength > HASHTAGS_LENGTH.max) { // проверяем на max значение
       hashTagsInput.setCustomValidity(`Нет 5`);
-    } else if (createNewHashtagsArrayWithoutSpaces.indexOf(item, index + 1) !== -1) { // проверяем на одинаковые элементы
+    } else if (!item.match(pattern)) {
+      hashTagsInput.setCustomValidity(`Нет 2`);
+    } else if (arrayOfHashtags.length > hashTagsMax) {
+      hashTagsInput.setCustomValidity(`Нет 1`);
+    } else if (arrayOfHashtags.indexOf(item, index + 1) !== -1) { // проверяем на одинаковые элементы
       hashTagsInput.setCustomValidity(`Нет 6`);
     } else {
       hashTagsInput.setCustomValidity(``);
     }
-    hashTagsInput.reportValidity();
   });
+  hashTagsInput.reportValidity();
 };
 
 // 5.Функция обработчик
 
 const hashTagsInputKeyupHandler = function () {
-  const inputValue = hashTagsInput.value.toLowerCase();
+  const inputValue = hashTagsInput.value.trim().toLowerCase();
   const dirtyHashTags = createHashTagsArray(inputValue);
   const cleanHashTags = createNewHashtagsArrayWithoutSpaces(dirtyHashTags);
   doValidationOfHashtags(cleanHashTags);
