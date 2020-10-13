@@ -322,72 +322,77 @@ Li.addEventListener(`click`, function () {
 
 // Валидация поля для хэштегов
 
+// 1.Описать константы
+
 const HASHTAGS_LENGTH = {
   min: 2,
   max: 20
 };
 
-const hashTag = document.querySelector(`.text__hashtags`);
+const hashTagsInput = document.querySelector(`.text__hashtags`);
 const pattern = /^([#]{1})([0-9a-zа-яё]{1,19})$/g;
-1.Описать константы
-2.Написать функцию получения хэштегов
- hashTag.value.toLowerCase().split(` `);
-3.Убрать пробелы (функция в скайпе)
-4.Функция валидации
-а. принимает в себя массив хештегов
-б. проверка на количество 5 штук
-в. перебираем  for each  полученный массив хэщтегов
-г. хештего с решетки (см скайп !start with)
-д. хештег неможет ьыть из 1 символа (hashtag.length <2)
-е. хештег не может быть больше 20 hashtag.length > 20
-ж. if (!item.match(pattern))
-з. Не должны повторяться хештеги (array.indexOf(hashtag, index + 1) !== -1)
-5.Функция обработчик
+const hashTagsMax = 5;
 
-if (!hashtag.validity.valid) {
-  hashtags.style.outline = '2px solid red';
-} else {
-  hashtags.style.outline = 'none';
-}
+// 2.Написать функцию получения хэштегов
+const createHashTagsArray = function () {
+  hashTagsInput.value.toLowerCase().split(` `);
+};
 
-hashTag.addEventListener(`input`, function () {
-  const hashTagsArray = hashTag.value.toLowerCase().split(` `);
-  hashTagsArray.forEach((item, idx) => {
-    // const idx = hashTagsArray.indexOf(item);
+// 3.Написать функцию уборки  пробелов в новом массиве
+const createNewHashtagsArrayWithoutSpaces = function (allHashtags) {
+  const tags = allHashtags.filter((hashtag) => {
+    return hashtag !== ``;
+  });
+  return tags;
+};
+
+// 4.Функция валидации
+const doValidationOfHashtags = function () {
+  if (createNewHashtagsArrayWithoutSpaces.length > hashTagsMax) {
+    hashTagsInput.setCustomValidity(`Нет 1`); // проверка на количество 5 штук
+  }
+  createNewHashtagsArrayWithoutSpaces.forEach((item, index) => { // проверяем forEach каждый элемент "чистого массива"
     const valueLength = item.length;
     console.log(item);
     if (!item.match(pattern)) {
-      console.log(`gogogo`);
-    } else if (valueLength < HASHTAGS_LENGTH.min) {
-      hashTag.setCustomValidity(`Нет 1`);
-    } else if (valueLength > HASHTAGS_LENGTH.max) {
-      hashTag.setCustomValidity(`Нет 2`);
-    } else if (hashTagsArray.length > 5) {
-      hashTag.setCustomValidity(`Нет 3`);
-    } else if (idx === 0) {
-      hashTag.setCustomValidity(`Нет 4`);
+      hashTagsInput.setCustomValidity(`Нет 2`);
+    } else if (!hashTagsInput.startsWith(`#`)) { // проверяем начало хэштега с #
+      hashTagsInput.setCustomValidity(`Нет 3`);
+    } else if (valueLength < HASHTAGS_LENGTH.min) { // проверяем на min значение
+      hashTagsInput.setCustomValidity(`Нет 4`);
+    } else if (valueLength > HASHTAGS_LENGTH.max) { // проверяем на max значение
+      hashTagsInput.setCustomValidity(`Нет 5`);
+    } else if (createNewHashtagsArrayWithoutSpaces.indexOf(item, index + 1) !== -1) { // проверяем на одинаковые элементы
+      hashTagsInput.setCustomValidity(`Нет 6`);
     } else {
-      hashTag.setCustomValidity(``);
+      hashTagsInput.setCustomValidity(``);
     }
-    hashTag.reportValidity();
+    hashTagsInput.reportValidity();
   });
-});
+};
 
-/* if (!hashTags.test(item)) {
-  hashTag.setCustomValidity(`Нет`);
-}
-if (hashTagsArray.length > 5) {
-  hashTag.setCustomValidity(`Нет`);
-}
-if (idx === item) {
-  hashTag.setCustomValidity(`Нет`);
-}*/
+// 5.Функция обработчик
 
-hashTag.addEventListener(`focusin`, function () {
+const hashTagsInputKeyupHandler = function () {
+  const inputValue = hashTagsInput.value.toLowerCase();
+  const dirtyHashTags = createHashTagsArray(inputValue);
+  const cleanHashTags = createNewHashtagsArrayWithoutSpaces(dirtyHashTags);
+  doValidationOfHashtags(cleanHashTags);
+
+  if (!hashTagsInput.validity.valid) {
+    hashTagsInput.style.outline = `2px solid red`;
+  } else {
+    hashTagsInput.style.outline = `none`;
+  }
+};
+
+hashTagsInput.addEventListener(`keyup`, hashTagsInputKeyupHandler);
+
+hashTagsInput.addEventListener(`focusin`, function () {
   document.removeEventListener(`keydown`, modalEscPress);
 });
 
-hashTag.addEventListener(`focusout`, function () {
+hashTagsInput.addEventListener(`focusout`, function () {
   document.addEventListener(`keydown`, modalEscPress);
 });
 
