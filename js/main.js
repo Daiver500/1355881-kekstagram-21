@@ -310,6 +310,8 @@ const liFirst = document.querySelector(`.effects__item:first-child`);
 const Li = document.querySelector(`.effects__item:not(:first-child)`);
 const imgUploadEffectLevel = document.querySelector(`.img-upload__effect-level`);
 
+imgUploadEffectLevel.classList.add(`hidden`);
+
 liFirst.addEventListener(`click`, function () {
   imgUploadEffectLevel.classList.add(`hidden`);
 });
