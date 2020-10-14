@@ -366,14 +366,27 @@ const doValidationOfHashtags = function (arrayOfHashtags) {
       hashTagsInput.setCustomValidity(`Нет 2`);
     } else if (arrayOfHashtags.length > hashTagsMax) {
       hashTagsInput.setCustomValidity(`Нет 1`);
-    } else if (arrayOfHashtags.indexOf(item, index + 1) !== -1) { // проверяем на одинаковые элементы
-      hashTagsInput.setCustomValidity(`Нет 6`);
+    // } else if (arrayOfHashtags.indexOf(item, index + 1) !== -1) { // проверяем на одинаковые элементы
+      // hashTagsInput.setCustomValidity(`Нет 6`);
     } else {
       hashTagsInput.setCustomValidity(``);
     }
     hashTagsInput.reportValidity();
   });
+  for (let i = 0; i < arrayOfHashtags.length; i++) {
+    if (arrayOfHashtags[i] === arrayOfHashtags[i + 1]) {
+      hashTagsInput.setCustomValidity(`Нет 6`);
+    } else if (arrayOfHashtags[i] === arrayOfHashtags[i + 2]) {
+      hashTagsInput.setCustomValidity(`Нет 7`);
+    } else if (arrayOfHashtags[i] === arrayOfHashtags[i + 3]) {
+      hashTagsInput.setCustomValidity(`Нет 8`);
+    } else if (arrayOfHashtags[i] === arrayOfHashtags[i + 4]) {
+      hashTagsInput.setCustomValidity(`Нет 9`);
+    }
+    hashTagsInput.reportValidity();
+  }
 };
+
 
 // 5.Функция обработчик
 
