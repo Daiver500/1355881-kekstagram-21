@@ -1,3 +1,4 @@
+/* eslint-disable no-cond-assign */
 "use strict";
 
 // Константы
@@ -8,8 +9,8 @@ const LIKES = {
   max: 200,
 };
 const COMMENTS = {
-  min: 5,
-  max: 10,
+  min: 1,
+  max: 5,
 };
 
 const AVATAR = {
@@ -154,6 +155,8 @@ const bigPictureOpened = function (object) {
 };
 bigPictureOpened(mocks[0]);
 
+bigPicture.classList.add(`hidden`);
+
 // Добавляем класс hidden
 
 const socialCommentCount = document.querySelector(`.social__comment-count`);
@@ -165,3 +168,297 @@ commentsLoader.classList.add(`hidden`);
 // Добавляем класс на body (для фиксации фона)
 
 document.querySelector(`body`).classList.add(`modal-open`);
+
+//  Раздел 4.1.
+
+// Загрузка изображения и показ формы редактирования 1.2 и 1.3.
+
+const uploadImageFile = document.querySelector(`#upload-file`);
+const imageUploadOverlay = document.querySelector(`.img-upload__overlay`);
+const uploadCancel = document.querySelector(`#upload-cancel`);
+
+const modalEscPress = function (evt) {
+  if (evt.key === `Escape`) {
+    evt.preventDefault();
+    closeModal();
+  }
+};
+
+const openModal = function () {
+  imageUploadOverlay.classList.remove(`hidden`);
+  document.querySelector(`body`).classList.add(`modal-open`);
+  document.addEventListener(`keydown`, modalEscPress);
+};
+
+const closeModal = function () {
+  imageUploadOverlay.classList.add(`hidden`);
+  document.querySelector(`body`).classList.remove(`modal-open`);
+  document.removeEventListener(`keydown`, modalEscPress);
+  uploadImageFile.value = ``;
+};
+
+uploadImageFile.addEventListener(`change`, function () {
+  openModal();
+});
+
+uploadCancel.addEventListener(`click`, function () {
+  closeModal();
+});
+
+// Масштаб:
+
+const scaleControlSmaller = document.querySelector(`.scale__control--smaller`);
+const scaleControlBigger = document.querySelector(`.scale__control--bigger`);
+const scaleValue = document.querySelector(`.scale__control--value`);
+const imageUploadPreview = document.querySelector(`.img-upload__preview img`);
+
+const value = {
+  min: 25,
+  max: 100
+};
+
+const onMinusScaleClick = function () {
+  let scale = parseInt(scaleValue.value, 10);
+  if (scale <= value.max && scale > value.min) {
+    scale -= value.min;
+  }
+  imageStyleChange(scale);
+};
+
+scaleControlSmaller.addEventListener(`click`, onMinusScaleClick);
+
+const onPlusScaleClick = function () {
+  let scale = parseInt(scaleValue.value, 10);
+  if (scale >= value.min && scale < value.max) {
+    scale += value.min;
+  }
+  imageStyleChange(scale);
+};
+
+scaleControlBigger.addEventListener(`click`, onPlusScaleClick);
+
+const imageStyleChange = function (number) {
+  switch (number) {
+    case 25:
+      imageUploadPreview.style.transform = `scale(0.25)`;
+      scaleValue.value = `${number}%`;
+      break;
+    case 50:
+      imageUploadPreview.style.transform = `scale(0.50)`;
+      scaleValue.value = `${number}%`;
+      break;
+    case 75:
+      imageUploadPreview.style.transform = `scale(0.75)`;
+      scaleValue.value = `${number}%`;
+      break;
+    case 100:
+      imageUploadPreview.style.transform = `scale(1.00)`;
+      scaleValue.value = `${number}%`;
+      break;
+  }
+};
+
+// Эффект на изображение
+
+const img = document.querySelector(`.img-upload__preview img`);
+const effects = document.querySelector(`.effects`);
+
+const filterChange = function (evt) {
+  if (evt.target.matches(`input[type="radio"]`)) {
+    img.className = ``;
+    img.className = `effects__preview--${evt.target.value}`;
+  }
+};
+
+effects.addEventListener(`click`, filterChange);
+
+
+// Интенсивность эффекта !!!
+
+const effectLevelPin = document.querySelector(`.effect-level__pin`);
+effectLevelPin.addEventListener(`mouseup`, function () {
+});
+const effectLevelValue = document.querySelector(`.effect-level__value`);
+
+effectLevelValue.value = {
+  min: 0,
+  max: 100
+};
+
+effectLevelValue.value  // меняется по перемещению effectLevelPin;
+img.style.filter  // меняется по изменению effectLevelValue.value ;
+
+// В зависимости от примененного класса применяется фильтр
+
+effectLevelValue.addEventListener(`change`, function () {
+  if (img.className === `effects__preview--chrome`) {
+    img.style.filter = `filter: grayscale(0..1)`;
+  }
+  if (img.className === `effects__preview--sepia`) {
+    img.style.filter = `filter: sepia(0..1)`;
+  }
+  if (img.className === `effects__preview--marvin`) {
+    img.style.filter = `filter: invert(0..100%)`;
+  }
+  if (img.className === `effects__preview--phobos`) {
+    img.style.filter = `filter: blur(0..3px)`;
+  }
+  if (img.className === `effects__preview--heat`) {
+    img.style.filter = `filter: brightness(1..3)`;
+  }
+});
+
+const liFirst = document.querySelector(`.effects__item:first-child`);
+const Li = document.querySelector(`.effects__item:not(:first-child)`);
+const imgUploadEffectLevel = document.querySelector(`.img-upload__effect-level`);
+
+imgUploadEffectLevel.classList.add(`hidden`);
+
+liFirst.addEventListener(`click`, function () {
+  imgUploadEffectLevel.classList.add(`hidden`);
+});
+
+Li.addEventListener(`click`, function () {
+  imgUploadEffectLevel.classList.remove(`hidden`);
+});
+
+// Валидация поля для хэштегов
+
+// 1.Описать константы
+
+const HASHTAGS_LENGTH = {
+  min: 2,
+  max: 20
+};
+
+const hashTagsInput = document.querySelector(`.text__hashtags`);
+const pattern = /^([#]{1})([0-9a-zа-яё]{1,19})$/;
+// /^([#]{1})([0-9a-zа-яё]{1,19})$/;
+
+const hashTagsMax = 5;
+
+// 2.Написать функцию получения хэштегов
+const createHashTagsArray = function (hashTagsString) {
+  return hashTagsString.split(` `);
+};
+
+// 3.Написать функцию уборки  пробелов в новом массиве
+const createNewHashtagsArrayWithoutSpaces = function (allHashtags) {
+  const tags = allHashtags.filter((hashtag) => {
+    return hashtag !== ``;
+  });
+  return tags;
+};
+
+// 4.Функция валидации
+const doValidationOfHashtags = function (arrayOfHashtags) {
+  console.log(arrayOfHashtags);
+  arrayOfHashtags.forEach((item, index) => { // проверяем forEach каждый элемент "чистого массива"
+    const valueLength = item.length;
+    console.log(arrayOfHashtags.indexOf(item, index + 1) !== -1);
+    if (!item.startsWith(`#`)) { // проверяем начало хэштега с #
+      hashTagsInput.setCustomValidity(`Нет 3`);
+    } else if (valueLength < HASHTAGS_LENGTH.min) { // проверяем на min значение
+      hashTagsInput.setCustomValidity(`Нет 4`);
+    } else if (valueLength > HASHTAGS_LENGTH.max) { // проверяем на max значение
+      hashTagsInput.setCustomValidity(`Нет 5`);
+    } else if (!item.match(pattern)) {
+      hashTagsInput.setCustomValidity(`Нет 2`);
+    } else if (arrayOfHashtags.length > hashTagsMax) {
+      hashTagsInput.setCustomValidity(`Нет 1`);
+    } else if (arrayOfHashtags.indexOf(item, index + 1) !== -1) { // проверяем на одинаковые элементы
+      hashTagsInput.setCustomValidity(`Нет 6`);
+    } else {
+      hashTagsInput.setCustomValidity(``);
+    }
+    hashTagsInput.reportValidity();
+  });
+};
+
+// 5.Функция обработчик
+
+const hashTagsInputKeyupHandler = function () {
+  const inputValue = hashTagsInput.value.trim().toLowerCase();
+  const dirtyHashTags = createHashTagsArray(inputValue);
+  const cleanHashTags = createNewHashtagsArrayWithoutSpaces(dirtyHashTags);
+  doValidationOfHashtags(cleanHashTags);
+
+  if (!hashTagsInput.validity.valid) {
+    hashTagsInput.style.outline = `2px solid red`;
+  } else {
+    hashTagsInput.style.outline = `none`;
+  }
+};
+
+hashTagsInput.addEventListener(`keyup`, hashTagsInputKeyupHandler);
+
+hashTagsInput.addEventListener(`focusin`, function () {
+  document.removeEventListener(`keydown`, modalEscPress);
+});
+
+hashTagsInput.addEventListener(`focusout`, function () {
+  document.addEventListener(`keydown`, modalEscPress);
+});
+
+// Раздел 4.2.
+
+const smallPhotos = document.querySelectorAll(`.picture`);
+
+const addSmallPhotoClicker = function (smallphoto, content) {
+  smallphoto.addEventListener(`click`, function (evt) {
+    evt.preventDefault();
+    document.addEventListener(`keydown`, bigPictureEscPress);
+    bigPictureOpened(content);
+    createSocialComment(content);
+  });
+};
+
+for (let i = 0; i < smallPhotos.length; i++) {
+  addSmallPhotoClicker(smallPhotos[i], mocks[i]);
+}
+
+// Закрываем превью фото с коментами
+
+
+const bigPictureCancel = document.querySelector(`.big-picture__cancel`);
+
+const bigPictureEscPress = function (evt) {
+  if (evt.key === `Escape`) {
+    evt.preventDefault();
+    closeBigPicture();
+  }
+};
+
+document.addEventListener(`keydown`, bigPictureEscPress);
+
+const closeBigPicture = function () {
+  bigPicture.classList.add(`hidden`);
+  document.removeEventListener(`keydown`, bigPictureEscPress);
+};
+
+bigPictureCancel.addEventListener(`click`, function () {
+  closeBigPicture();
+});
+
+// Поле ввода комментария
+
+const commentsField = document.querySelector(`.text__description`);
+const COMMENTS_MAX = 120;
+
+commentsField.oninput = function () {
+  const valueLength = commentsField.value.length;
+  if (commentsField.value.length > COMMENTS_MAX) {
+    commentsField.setCustomValidity(`Удалите ` + (COMMENTS_MAX - valueLength) + ` симв.`);
+  } else {
+    commentsField.setCustomValidity(``);
+  }
+  commentsField.reportValidity();
+};
+
+commentsField.addEventListener(`focusin`, function () {
+  document.removeEventListener(`keydown`, modalEscPress);
+});
+
+commentsField.addEventListener(`focusout`, function () {
+  document.addEventListener(`keydown`, modalEscPress);
+});
