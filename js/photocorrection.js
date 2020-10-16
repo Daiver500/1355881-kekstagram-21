@@ -73,15 +73,49 @@
   // Интенсивность эффекта !!! НЕ ГОТОВО (DRAG AND DROP)
 
   const effectLevelPin = document.querySelector(`.effect-level__pin`);
-  effectLevelPin.addEventListener(`mouseup`, function () {
-  });
-  const effectLevelValue = document.querySelector(`.effect-level__value`);
 
+  effectLevelPin.addEventListener(`mousedown`, function (evt) {
+    evt.preventDefault();
+    let startCoords = {
+      x: evt.clientX,
+      // y: evt.clientY
+    };
+
+    const onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      let shift = {
+        x: startCoords.x - moveEvt.clientX,
+        // y: startCoords.y - moveEvt.clientY
+      };
+
+      startCoords = {
+        x: moveEvt.clientX,
+        // y: moveEvt.clientY
+      };
+
+      const X = {
+        min: 0,
+        max: 450
+      };
+
+      // effectLevelPin.style.top = (effectLevelPin.offsetTop - shift.y) + `px`;
+      effectLevelPin.style.left = (effectLevelPin.offsetLeft - shift.x) + `px`;
+
+      if (x > max_x - obj_width) x = max_x - obj_width;
+      if (x < min_x) x = min_x;
+    };
+
+    document.addEventListener(`mousemove`, onMouseMove);
+    document.addEventListener(`mouseup`, onMouseUp);
+  });
+
+
+  const effectLevelValue = document.querySelector(`.effect-level__value`);
   effectLevelValue.value = {
     min: 0,
     max: 100
   };
-
   effectLevelValue.value; // меняется по перемещению effectLevelPin;
   img.style.filter; // меняется по изменению effectLevelValue.value ;
 
@@ -106,16 +140,18 @@
   });
 
   const liFirst = document.querySelector(`.effects__item:first-child`);
-  const Li = document.querySelector(`.effects__item:not(:first-child)`);
+  const Li = document.querySelectorAll(`.effects__item`);
   const imgUploadEffectLevel = document.querySelector(`.img-upload__effect-level`);
 
   imgUploadEffectLevel.classList.add(`hidden`);
 
-  liFirst.addEventListener(`click`, function () {
-    imgUploadEffectLevel.classList.add(`hidden`);
+  Li.forEach(function (item) {
+    item.addEventListener(`click`, function () {
+      imgUploadEffectLevel.classList.remove(`hidden`);
+    });
   });
 
-  Li.addEventListener(`click`, function () {
-    imgUploadEffectLevel.classList.remove(`hidden`);
+  liFirst.addEventListener(`click`, function () {
+    imgUploadEffectLevel.classList.add(`hidden`);
   });
 })();
