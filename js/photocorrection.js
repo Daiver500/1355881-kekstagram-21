@@ -69,13 +69,42 @@
 
   effects.addEventListener(`click`, filterChange);
 
+  /* pin.addEventListener(`mousedown`, function (evt) {
+    evt.preventDefault();
+    let startCoords = evt.clientX - slider.offsetLeft - (pin.offsetWidth);
 
-  // Интенсивность эффекта !!! НЕ ГОТОВО (DRAG AND DROP)
+    const onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+      const moveAt = function (range) {
+        pin.style.left = range + `px`;
+      };
 
-  const effectLevelPin = document.querySelector(`.effect-level__pin`);
-  const effectLevelLine = document.querySelector(`.effect-level__line`);
+      startCoords = moveEvt.clientX - slider.offsetLeft - (pin.offsetWidth);
 
-  effectLevelPin.addEventListener(`mousedown`, function (evt) {
+      if (startCoords > 0 && startCoords < 450) {
+        moveAt(startCoords);
+      } else {
+        moveAt(startCoords > 0 ? 450 : 0);
+      }
+    };
+
+    const onMouseUp = function (moveUp) {
+      moveUp.preventDefault();
+      document.removeEventListener(`mousemove`, onMouseMove);
+      document.removeEventListener(`mouseup`, onMouseUp);
+
+    };
+    document.addEventListener(`mousemove`, onMouseMove);
+    document.addEventListener(`mouseup`, onMouseUp);
+  }); */
+
+
+  // Интенсивность эффекта и ползунок
+
+  const pin = document.querySelector(`.effect-level__pin`);
+  const slider = document.querySelector(`.img-upload__effect-level`);
+
+  pin.addEventListener(`mousedown`, function (evt) {
     evt.preventDefault();
     let startCoords = {
       x: evt.clientX,
@@ -84,26 +113,35 @@
     const onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
 
-      let shift = {
-        x: startCoords.x - moveEvt.clientX,
+      const moveAt = function (range) {
+        pin.style.left = range + `px`;
       };
 
-      startCoords = {
-        x: moveEvt.clientX,
+      startCoords = moveEvt.clientX - slider.offsetLeft - (pin.offsetWidth) * 3;
+
+      const X = {
+        min: 0,
+        max: 450
       };
 
-      effectLevelPin.style.left = (effectLevelPin.offsetLeft - shift.x) + `px`;
+      if (startCoords > X.min && startCoords < X.max) {
+        moveAt(startCoords);
+      } else if (startCoords > X.min) {
+        moveAt(X.max);
+      } else {
+        moveAt(X.min);
+      }
+    };
 
     const onMouseUp = function (moveUp) {
       moveUp.preventDefault();
-
       document.removeEventListener(`mousemove`, onMouseMove);
       document.removeEventListener(`mouseup`, onMouseUp);
-    };
 
+    };
     document.addEventListener(`mousemove`, onMouseMove);
     document.addEventListener(`mouseup`, onMouseUp);
-  };
+  });
 
   const effectLevelValue = document.querySelector(`.effect-level__value`);
   effectLevelValue.value = {
