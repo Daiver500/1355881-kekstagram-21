@@ -73,12 +73,12 @@
   // Интенсивность эффекта !!! НЕ ГОТОВО (DRAG AND DROP)
 
   const effectLevelPin = document.querySelector(`.effect-level__pin`);
+  const effectLevelLine = document.querySelector(`.effect-level__line`);
 
   effectLevelPin.addEventListener(`mousedown`, function (evt) {
     evt.preventDefault();
     let startCoords = {
       x: evt.clientX,
-      // y: evt.clientY
     };
 
     const onMouseMove = function (moveEvt) {
@@ -86,30 +86,24 @@
 
       let shift = {
         x: startCoords.x - moveEvt.clientX,
-        // y: startCoords.y - moveEvt.clientY
       };
 
       startCoords = {
         x: moveEvt.clientX,
-        // y: moveEvt.clientY
       };
 
-      const X = {
-        min: 0,
-        max: 450
-      };
-
-      // effectLevelPin.style.top = (effectLevelPin.offsetTop - shift.y) + `px`;
       effectLevelPin.style.left = (effectLevelPin.offsetLeft - shift.x) + `px`;
 
-      if (x > max_x - obj_width) x = max_x - obj_width;
-      if (x < min_x) x = min_x;
+    const onMouseUp = function (moveUp) {
+      moveUp.preventDefault();
+
+      document.removeEventListener(`mousemove`, onMouseMove);
+      document.removeEventListener(`mouseup`, onMouseUp);
     };
 
     document.addEventListener(`mousemove`, onMouseMove);
     document.addEventListener(`mouseup`, onMouseUp);
-  });
-
+  };
 
   const effectLevelValue = document.querySelector(`.effect-level__value`);
   effectLevelValue.value = {
