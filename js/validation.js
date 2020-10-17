@@ -32,7 +32,6 @@
 
   // 4.Функция валидации
   const doValidationOfHashtags = function (arrayOfHashtags) {
-    console.log(arrayOfHashtags);
     arrayOfHashtags.forEach((item, index) => { // проверяем forEach каждый элемент "чистого массива"
       const valueLength = item.length;
       console.log(arrayOfHashtags.indexOf(item, index + 1) !== -1);

@@ -4,6 +4,23 @@
 
 (function () {
 
+  // Эффект на изображение
+
+  const img = document.querySelector(`.img-upload__preview img`);
+  const effects = document.querySelector(`.effects`);
+
+  const filterChange = function (evt) {
+    if (evt.target.matches(`input[type="radio"]`)) {
+      img.className = ``;
+      setDefaultDepth();
+      img.className = `effects__preview--${evt.target.value}`;
+    }
+  };
+
+  effects.addEventListener(`click`, filterChange);
+
+  // Интенсивность эффекта и ползунок
+
   const DEFAULT_EFFECT_LEVEL = 100;
 
   const MaxEffectsValues = {
@@ -11,7 +28,7 @@
     sepia: 1,
     marvin: 100,
     phobos: 3,
-    heat: [1, 3],
+    heat: [1, 2],
   };
 
   const effectLevel = document.querySelector(`.effect-level`);
@@ -19,38 +36,37 @@
   const effectLevelLine = effectLevel.querySelector(`.effect-level__line`);
   const effectLevelDepth = effectLevel.querySelector(`.effect-level__depth`);
   const effectLevelValue = effectLevel.querySelector(`.effect-level__value`);
-  const imageUploadPreview = document.querySelector(`.img-upload__preview`);
 
   const setDefaultDepth = function () {
     effectLevelPin.style.left = DEFAULT_EFFECT_LEVEL + `%`;
     effectLevelDepth.style.width = DEFAULT_EFFECT_LEVEL + `%`;
     effectLevelValue.value = DEFAULT_EFFECT_LEVEL;
+    window.scale.imageUploadPreview.style.filter = ``;
   };
 
 
   const setNewEffectDepth = function (levelValue) {
-    console.log(`func`)
     const value = levelValue / 100;
 
-    if (imageUploadPreview.className.match(`effects__preview--`)) {
-      switch (imageUploadPreview.className) {
+    if (window.scale.imageUploadPreview.className.match(`effects__preview--`)) {
+      switch (window.scale.imageUploadPreview.className) {
         case `effects__preview--chrome`:
-          imageUploadPreview.style.filter = `grayscale(${MaxEffectsValues.chrome * value})`;
+          window.scale.imageUploadPreview.style.filter = `grayscale(${MaxEffectsValues.chrome * value})`;
           break;
         case `effects__preview--sepia`:
-          imageUploadPreview.style.filter = `sepia(${MaxEffectsValues.sepia * value})`;
+          window.scale.imageUploadPreview.style.filter = `sepia(${MaxEffectsValues.sepia * value})`;
           break;
         case `effects__preview--marvin`:
-          imageUploadPreview.style.filter = `invert(${levelValue}%)`;
+          window.scale.imageUploadPreview.style.filter = `invert(${levelValue}%)`;
           break;
         case `effects__preview--phobos`:
-          imageUploadPreview.style.filter = `blur(${MaxEffectsValues.phobos * value}px)`;
+          window.scale.imageUploadPreview.style.filter = `blur(${MaxEffectsValues.phobos * value}px)`;
           break;
         case `effects__preview--heat`:
-          imageUploadPreview.style.filter = `brightness()`;
+          window.scale.imageUploadPreview.style.filter = `brightness(${MaxEffectsValues.heat[1] * value + MaxEffectsValues.heat[0]})`;
           break;
         default:
-          imageUploadPreview.style.filter = ``;
+          window.scale.imageUploadPreview.style.filter = ``;
       }
     }
   };
@@ -59,7 +75,6 @@
 
     const lineWidth = effectLevelLine.offsetWidth;
     let startCoordinates = evt.clientX;
-    console.log(startCoordinates);
 
     const oneEffectLevelPinMove = function (moveEvt) {
       moveEvt.preventDefault();
@@ -70,13 +85,11 @@
       startCoordinates = moveEvt.clientX;
 
       if (!(pinX < 0 || pinX > lineWidth)) {
-        console.log(`in if`);
         const pinPoint = pinX / lineWidth;
         effectLevelPin.style.left = pinX + `px`;
-        // effectLevelValue.value = Math.round(pinPoint * 100);
-        console.log(effectLevelValue.value);
+        effectLevelValue.value = Math.round(pinPoint * 100);
         effectLevelDepth.style.width = Math.round(pinPoint * 100) + `%`;
-        setNewEffectDepth(Math.round(pinPoint * 100));
+        setNewEffectDepth(effectLevelValue.value);
       }
     };
     const oneffectLevelPinMouseUp = function (upEvt) {
@@ -93,4 +106,19 @@
 
   effectLevelPin.addEventListener(`mousedown`, onEffectsLevelPinMouseDown);
 
+  const liFirst = document.querySelector(`.effects__item:first-child`);
+  const Li = document.querySelectorAll(`.effects__item`);
+  const imgUploadEffectLevel = document.querySelector(`.img-upload__effect-level`);
+
+  imgUploadEffectLevel.classList.add(`hidden`);
+
+  Li.forEach(function (item) {
+    item.addEventListener(`click`, function () {
+      imgUploadEffectLevel.classList.remove(`hidden`);
+    });
+  });
+
+  liFirst.addEventListener(`click`, function () {
+    imgUploadEffectLevel.classList.add(`hidden`);
+  });
 })();

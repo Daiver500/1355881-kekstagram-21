@@ -36,7 +36,6 @@
   };
 
   renderPictures(window.mockscreation.mocks);
-  console.log(window.mockscreation.mocks[0]);
 
   const createSocialComment = function (object) {
     const fragment = document.createDocumentFragment();
