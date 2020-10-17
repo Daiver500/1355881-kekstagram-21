@@ -76,7 +76,7 @@
 
   pin.addEventListener(`mousedown`, function (evt) {
     evt.preventDefault();
-    let startCoords = evt.clientX - slider.offsetLeft - (pin.offsetWidth);
+    let startCoords = evt.pageX - slider.offsetLeft - (pin.offsetWidth)*2;
 
     const onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
@@ -84,74 +84,30 @@
         pin.style.left = range + `px`;
       };
 
-      startCoords = moveEvt.clientX - slider.offsetLeft - (pin.offsetWidth);
-
+      startCoords = moveEvt.pageX - slider.offsetLeft - (pin.offsetWidth)*2;
       if (startCoords > 0 && startCoords < 450) {
         moveAt(startCoords);
       } else {
         moveAt(startCoords > 0 ? 450 : 0);
       }
     };
-
     const onMouseUp = function (moveUp) {
       moveUp.preventDefault();
       document.removeEventListener(`mousemove`, onMouseMove);
       document.removeEventListener(`mouseup`, onMouseUp);
-
     };
     document.addEventListener(`mousemove`, onMouseMove);
     document.addEventListener(`mouseup`, onMouseUp);
   });
 
-
-  // Интенсивность эффекта и ползунок
-
-   /* pin.addEventListener(`mousedown`, function (evt) {
-    evt.preventDefault();
-    let startCoords = {
-      x: evt.clientX,
-    };
-
-    const onMouseMove = function (moveEvt) {
-      moveEvt.preventDefault();
-
-      const moveAt = function (range) {
-        pin.style.left = range + `px`;
-      };
-
-      startCoords = moveEvt.clientX - slider.offsetLeft - (pin.offsetWidth) * 3;
-
-      const X = {
-        min: 0,
-        max: 450
-      };
-
-      if (startCoords > X.min && startCoords < X.max) {
-        moveAt(startCoords);
-      } else if (startCoords > X.min) {
-        moveAt(X.max);
-      } else {
-        moveAt(X.min);
-      }
-    };
-
-    const onMouseUp = function (moveUp) {
-      moveUp.preventDefault();
-      document.removeEventListener(`mousemove`, onMouseMove);
-      document.removeEventListener(`mouseup`, onMouseUp);
-
-    };
-    document.addEventListener(`mousemove`, onMouseMove);
-    document.addEventListener(`mouseup`, onMouseUp);
-  }); */
-
   const effectLevelValue = document.querySelector(`.effect-level__value`);
 
-  effectLevelValue.value; // меняется по перемещению effectLevelPin;
-  img.style.filter; // меняется по изменению effectLevelValue.value ;
+  effectLevelValue.value = {
+    min: 0,
+    max: 100
+  };
 
   // В зависимости от примененного класса применяется фильтр
-
   effectLevelValue.addEventListener(`change`, function () {
     if (img.className === `effects__preview--chrome`) {
       img.style.filter = `filter: grayscale(0..1)`;
@@ -164,9 +120,6 @@
     }
     if (img.className === `effects__preview--phobos`) {
       img.style.filter = `filter: blur(0..3px)`;
-    }
-    if (img.className === `effects__preview--heat`) {
-      img.style.filter = `filter: brightness(1..3)`;
     }
   });
 
