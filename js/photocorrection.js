@@ -69,7 +69,12 @@
 
   effects.addEventListener(`click`, filterChange);
 
-  /* pin.addEventListener(`mousedown`, function (evt) {
+  // Интенсивность эффекта и ползунок
+
+  const pin = document.querySelector(`.effect-level__pin`);
+  const slider = document.querySelector(`.img-upload__effect-level`);
+
+  pin.addEventListener(`mousedown`, function (evt) {
     evt.preventDefault();
     let startCoords = evt.clientX - slider.offsetLeft - (pin.offsetWidth);
 
@@ -96,15 +101,12 @@
     };
     document.addEventListener(`mousemove`, onMouseMove);
     document.addEventListener(`mouseup`, onMouseUp);
-  }); */
+  });
 
 
   // Интенсивность эффекта и ползунок
 
-  const pin = document.querySelector(`.effect-level__pin`);
-  const slider = document.querySelector(`.img-upload__effect-level`);
-
-  pin.addEventListener(`mousedown`, function (evt) {
+   /* pin.addEventListener(`mousedown`, function (evt) {
     evt.preventDefault();
     let startCoords = {
       x: evt.clientX,
@@ -141,7 +143,7 @@
     };
     document.addEventListener(`mousemove`, onMouseMove);
     document.addEventListener(`mouseup`, onMouseUp);
-  });
+  }); */
 
   const effectLevelValue = document.querySelector(`.effect-level__value`);
 
