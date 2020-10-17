@@ -29,7 +29,7 @@
 
 
   const setNewEffectDepth = function (levelValue) {
-    console.log(`func`)
+    console.log(`func`);
     const value = levelValue / 100;
 
     if (imageUploadPreview.className.match(`effects__preview--`)) {
