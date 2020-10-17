@@ -72,9 +72,44 @@
   // Интенсивность эффекта и ползунок
 
   const pin = document.querySelector(`.effect-level__pin`);
-  const slider = document.querySelector(`.img-upload__effect-level`);
 
   pin.addEventListener(`mousedown`, function (evt) {
+    evt.preventDefault();
+
+    let startCoords = {
+      x: evt.clientX,
+    };
+
+    const onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      const shift = {
+        x: startCoords.x - moveEvt.clientX,
+      };
+
+      startCoords = {
+        x: moveEvt.clientX,
+      };
+
+      pin.style.left = (pin.offsetLeft - shift.x) + `px`;
+    };
+
+    const onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+
+      document.removeEventListener(`mousemove`, onMouseMove);
+      document.removeEventListener(`mouseup`, onMouseUp);
+    };
+
+    document.addEventListener(`mousemove`, onMouseMove);
+    document.addEventListener(`mouseup`, onMouseUp);
+  });
+
+  /*
+      const pin = document.querySelector(`.effect-level__pin`);
+      const slider = document.querySelector(`.img-upload__effect-level`);
+
+    pin.addEventListener(`mousedown`, function (evt) {
     evt.preventDefault();
     let startCoords = evt.pageX - slider.offsetLeft - (pin.offsetWidth)*2;
 
@@ -98,7 +133,7 @@
     };
     document.addEventListener(`mousemove`, onMouseMove);
     document.addEventListener(`mouseup`, onMouseUp);
-  });
+  });*/
 
   const effectLevelValue = document.querySelector(`.effect-level__value`);
 
