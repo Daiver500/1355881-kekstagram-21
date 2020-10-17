@@ -144,10 +144,7 @@
   });
 
   const effectLevelValue = document.querySelector(`.effect-level__value`);
-  effectLevelValue.value = {
-    min: 0,
-    max: 100
-  };
+
   effectLevelValue.value; // меняется по перемещению effectLevelPin;
   img.style.filter; // меняется по изменению effectLevelValue.value ;
 
