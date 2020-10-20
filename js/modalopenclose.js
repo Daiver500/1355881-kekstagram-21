@@ -6,9 +6,8 @@
   const imageUploadOverlay = document.querySelector(`.img-upload__overlay`);
   const uploadCancel = document.querySelector(`#upload-cancel`);
 
-
   const modalEscPress = function (evt) {
-    if (evt.Keycode === 27) {
+    if (evt.key === `Escape`) {
       closeModal();
       evt.preventDefault();
     }
@@ -17,6 +16,9 @@
   (function () {
     window.modalopenclose = {
       modalEscPress
+    };
+    window.modalopenclose = {
+      uploadImageFile
     };
   })();
 

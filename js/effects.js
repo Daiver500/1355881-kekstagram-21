@@ -44,6 +44,11 @@
     window.scale.imageUploadPreview.style.filter = ``;
   };
 
+  (function () {
+    window.effects = {
+      setDefaultDepth
+    };
+  })();
 
   const setNewEffectDepth = function (levelValue) {
     const value = levelValue / 100;

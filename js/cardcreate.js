@@ -37,16 +37,22 @@
 
   renderPictures(window.mockscreation.mocks);
 
-  /* const form = document.querySelector(`.img-upload__form`);
+  // 6.1
+
+  const form = document.querySelector(`.img-upload__form`);
   const imageUploadOverlay = document.querySelector(`.img-upload__overlay`);
 
   form.addEventListener(`submit`, function (evt) {
     window.upload(new FormData(form), function (response) {
       imageUploadOverlay.classList.add(`hidden`);
-      window.modalopenclose.uploadImageFile.value = ``;
+
     });
+    window.modalopenclose.uploadImageFile.value = ``;
+    window.validation.hashTagsInput.textContent = ``;
+    window.validation.commentsField.textContent = ``;
+    window.effects.setDefaultDepth();
     evt.preventDefault();
-  }); */
+  });
 
   const createSocialComment = function (object) {
     const fragment = document.createDocumentFragment();
@@ -115,7 +121,7 @@
   const bigPictureCancel = document.querySelector(`.big-picture__cancel`);
 
   const bigPictureEscPress = function (evt) {
-    if (evt.Keycode === 27) {
+    if (evt.key === `Escape`) {
       evt.preventDefault();
       closeBigPicture();
     }
