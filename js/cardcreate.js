@@ -37,6 +37,17 @@
 
   renderPictures(window.mockscreation.mocks);
 
+  /* const form = document.querySelector(`.img-upload__form`);
+  const imageUploadOverlay = document.querySelector(`.img-upload__overlay`);
+
+  form.addEventListener(`submit`, function (evt) {
+    window.upload(new FormData(form), function (response) {
+      imageUploadOverlay.classList.add(`hidden`);
+      window.modalopenclose.uploadImageFile.value = ``;
+    });
+    evt.preventDefault();
+  }); */
+
   const createSocialComment = function (object) {
     const fragment = document.createDocumentFragment();
     const socialComments = document.querySelector(`.social__comments`);
@@ -104,8 +115,10 @@
   const bigPictureCancel = document.querySelector(`.big-picture__cancel`);
 
   const bigPictureEscPress = function (evt) {
-    window.main.isEscEvent(evt, closeBigPicture);
-    evt.preventDefault();
+    if (evt.Keycode === 27) {
+      evt.preventDefault();
+      closeBigPicture();
+    }
   };
 
   document.addEventListener(`keydown`, bigPictureEscPress);

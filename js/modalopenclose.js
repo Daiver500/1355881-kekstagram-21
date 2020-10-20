@@ -8,9 +8,17 @@
 
 
   const modalEscPress = function (evt) {
-    window.main.isEscEvent(evt, closeModal);
-    evt.preventDefault();
+    if (evt.Keycode === 27) {
+      closeModal();
+      evt.preventDefault();
+    }
   };
+
+  (function () {
+    window.modalopenclose = {
+      modalEscPress
+    };
+  })();
 
 
   const openModal = function () {
