@@ -23,7 +23,7 @@
     return cardElement;
   };
 
-  // 6.2
+  // 6.1
   const successHandler = function (cards) {
     const renderPictures = function () {
       const pictures = document.querySelector(`.pictures`);
@@ -121,23 +121,9 @@
       closeBigPicture();
     });
   };
+  window.load(successHandler);
 
-
-  // 6.1
-
-  const errorHandler = function (errorMessage) {
-    const node = document.createElement(`div`);
-    node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: red;`;
-    node.style.position = `absolute`;
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = `30px`;
-
-    node.textContent = errorMessage;
-    document.body.insertAdjacentElement(`afterbegin`, node);
-  };
-
-  window.load(successHandler, errorHandler);
+  // 6.2
 
   const form = document.querySelector(`.img-upload__form`);
   const imageUploadOverlay = document.querySelector(`.img-upload__overlay`);
@@ -153,4 +139,22 @@
     evt.preventDefault();
   };
   form.addEventListener(`submit`, submitHandler);
+
+  const onErrorUpload = document.querySelector(`#error`);
+  const errorHandlerUpload = function () {
+    let element = document.createElement(`div`);
+    element.append(onErrorUpload.content.cloneNode(true));
+    document.main.insertAdjacentElement(`afterbegin`, element);
+  };
+
+  const onSucessUpload = document.querySelector(`#success`);
+  const successHandlerUpload = function () {
+    let element = document.createElement(`div`);
+    element.append(onSucessUpload.content.cloneNode(true));
+    document.main.insertAdjacentElement(`afterbegin`, element);
+  };
+
+  window.load(successHandlerUpload, errorHandlerUpload);
 })();
+
+
