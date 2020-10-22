@@ -145,13 +145,17 @@
   const submitHandler = function (evt) {
     window.upload(new FormData(form), function () {
       imageUploadOverlay.classList.add(`hidden`);
+      successHandlerUpload();
+      window.effects.setDefaultDepth();
+      if (!window.upload) {
+        errorHandlerUpload();
+      }
     });
-    window.modalopenclose.uploadImageFile.value = ``;
-    window.validation.hashTagsInput.textContent = ``;
-    window.validation.commentsField.textContent = ``;
-    window.effects.setDefaultDepth();
-
     evt.preventDefault();
+    window.modalopenclose.uploadImageFile.value = ``;
+    // window.effects.setDefaultDepth();
+    // window.validation.hashTagsInput.textContent = ``;
+    // window.validation.commentsField.textContent = ``;
   };
   form.addEventListener(`submit`, submitHandler);
 
@@ -165,36 +169,32 @@
     fragment.appendChild(successElement);
     main.appendChild(fragment);
     console.log(fragment);
+
+    const successButton = document.querySelector(`.success__button`);
+
+    const successClose = function () {
+      successButton.addEventListener(`click`, function () {
+        main.removeChild(successElement);
+      });
+      window.addEventListener(`click`, function () {
+        main.removeChild(successElement);
+      });
+    };
+    successClose();
+
+
+    const sucessEscPress = function (evt) {
+      if (evt.key === `Escape`) {
+        evt.preventDefault();
+        main.removeChild(successElement);
+      }
+    };
+    document.body.addEventListener(`keydown`, sucessEscPress);
   };
-  successHandlerUpload();
 
-  const successButton = document.querySelector(`.success__button`);
-  const successInner = document.querySelector(`.success`);
-
-  const successClose = function () {
-    successButton.addEventListener(`click`, function () {
-      successInner.classList.add(`hidden`);
-    });
-    window.addEventListener(`click`, function () {
-      successInner.classList.add(`hidden`);
-    });
-  };
-  successClose();
-
-
-  const sucessEscPress = function (evt) {
-    if (evt.key === `Escape`) {
-      evt.preventDefault();
-      successInner.classList.add(`hidden`);
-    }
-  };
-
-  document.body.addEventListener(`keydown`, sucessEscPress);
-
-  /* const onErrorUpload = document.querySelector(`#error`)
+  const onErrorUpload = document.querySelector(`#error`)
   .content
   .querySelector(`.error`);
-
 
   const errorHandlerUpload = function () {
     const fragment = document.createDocumentFragment();
@@ -202,32 +202,29 @@
     fragment.appendChild(errorElement);
     main.appendChild(fragment);
     console.log(fragment);
+
+    const errorButton = document.querySelector(`.error__button`);
+
+    const errorClose = function () {
+      errorButton.addEventListener(`click`, function () {
+        main.removeChild(errorElement);
+      });
+      window.addEventListener(`click`, function () {
+        main.removeChild(errorElement);
+      });
+    };
+    errorClose();
+
+
+    const errorEscPress = function (evt) {
+      if (evt.key === `Escape`) {
+        evt.preventDefault();
+        main.removeChild(errorElement);
+      }
+    };
+
+    document.body.addEventListener(`keydown`, errorEscPress);
   };
-  errorHandlerUpload();
-
-  const errorButton = document.querySelector(`.error__button`);
-  const errorInner = document.querySelector(`.error`);
-
-  const errorClose = function () {
-    errorButton.addEventListener(`click`, function () {
-      errorInner.classList.add(`hidden`);
-    });
-    window.addEventListener(`click`, function () {
-      errorInner.classList.add(`hidden`);
-    });
-  };
-  errorClose();
-
-
-  const errorEscPress = function (evt) {
-    if (evt.key === `Escape`) {
-      evt.preventDefault();
-      errorInner.classList.add(`hidden`);
-    }
-  };
-
-  document.body.addEventListener(`keydown`, errorEscPress);*/
-
 
 })();
 
