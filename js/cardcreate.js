@@ -139,18 +139,34 @@
   // 6.2
 
   const main = document.querySelector(`main`);
+  const form = document.querySelector(`.img-upload__form`);
+  const imageUploadOverlay = document.querySelector(`.img-upload__overlay`);
+
+  const submitHandler = function (evt) {
+    window.upload(new FormData(form), function () {
+      imageUploadOverlay.classList.add(`hidden`);
+    });
+    window.modalopenclose.uploadImageFile.value = ``;
+    window.validation.hashTagsInput.textContent = ``;
+    window.validation.commentsField.textContent = ``;
+    window.effects.setDefaultDepth();
+
+    evt.preventDefault();
+  };
+  form.addEventListener(`submit`, submitHandler);
 
   const onSuccessUpload = document.querySelector(`#success`)
-.content
-.querySelector(`.success`);
+  .content
+  .querySelector(`.success`);
 
   const successHandlerUpload = function () {
     const fragment = document.createDocumentFragment();
     const successElement = onSuccessUpload.cloneNode(true);
     fragment.appendChild(successElement);
     main.appendChild(fragment);
+    console.log(fragment);
   };
-
+  successHandlerUpload();
 
   const successButton = document.querySelector(`.success__button`);
   const successInner = document.querySelector(`.success`);
@@ -163,6 +179,8 @@
       successInner.classList.add(`hidden`);
     });
   };
+  successClose();
+
 
   const sucessEscPress = function (evt) {
     if (evt.key === `Escape`) {
@@ -173,9 +191,9 @@
 
   document.body.addEventListener(`keydown`, sucessEscPress);
 
-  const onErrorUpload = document.querySelector(`#error`)
-.content
-.querySelector(`.error`);
+  /* const onErrorUpload = document.querySelector(`#error`)
+  .content
+  .querySelector(`.error`);
 
 
   const errorHandlerUpload = function () {
@@ -183,7 +201,9 @@
     const errorElement = onErrorUpload.cloneNode(true);
     fragment.appendChild(errorElement);
     main.appendChild(fragment);
+    console.log(fragment);
   };
+  errorHandlerUpload();
 
   const errorButton = document.querySelector(`.error__button`);
   const errorInner = document.querySelector(`.error`);
@@ -196,6 +216,7 @@
       errorInner.classList.add(`hidden`);
     });
   };
+  errorClose();
 
 
   const errorEscPress = function (evt) {
@@ -205,25 +226,9 @@
     }
   };
 
-  document.body.addEventListener(`keydown`, errorEscPress);
+  document.body.addEventListener(`keydown`, errorEscPress);*/
 
 
-  const form = document.querySelector(`.img-upload__form`);
-  const imageUploadOverlay = document.querySelector(`.img-upload__overlay`);
-
-  const submitHandler = function (evt) {
-    window.upload(new FormData(form), function () {
-      imageUploadOverlay.classList.add(`hidden`);
-    });
-    window.modalopenclose.uploadImageFile.value = ``;
-    window.validation.hashTagsInput.textContent = ``;
-    window.validation.commentsField.textContent = ``;
-    window.effects.setDefaultDepth();
-    evt.preventDefault();
-
-  };
-
-  form.addEventListener(`submit`, submitHandler);
 })();
 
 
