@@ -154,7 +154,7 @@
     document.main.insertAdjacentElement(`afterbegin`, element);
   };
 
-  window.load(successHandlerUpload, errorHandlerUpload);
+  window.upload(successHandlerUpload, errorHandlerUpload);
 })();
 
 
