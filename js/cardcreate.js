@@ -59,7 +59,7 @@
     const bigPictureOpened = function (object) {
       bigPicture.classList.remove(`hidden`);
       const {url, likes, comments, description} = object;
-      // bigPicture.querySelector(`.big-picture__img img`).src = url;
+      bigPicture.querySelector(`.big-picture__img img`).src = url;
       bigPicture.querySelector(`.likes-count`).textContent = likes;
       bigPicture.querySelector(`.comments-count`).textContent = comments;
       bigPicture.querySelector(`.social__caption`).textContent = description;
@@ -138,6 +138,30 @@
 
   // 6.2
 
+  const onSuccessUpload = document.querySelector(`#success`)
+.content
+.querySelector(`.success`);
+
+  const successHandlerUpload = function () {
+    const fragment = document.createDocumentFragment();
+    const successElement = onSuccessUpload.cloneNode(true);
+    fragment.appendChild(successElement);
+    document.body.appendChild(fragment);
+  };
+
+  const onErrorUpload = document.querySelector(`#error`)
+.content
+.querySelector(`.error`);
+
+
+  const errorHandlerUpload = function () {
+    const fragment = document.createDocumentFragment();
+    const errorElement = onErrorUpload.cloneNode(true);
+    fragment.appendChild(errorElement);
+    document.body.appendChild(fragment);
+  };
+
+
   const form = document.querySelector(`.img-upload__form`);
   const imageUploadOverlay = document.querySelector(`.img-upload__overlay`);
 
@@ -151,33 +175,9 @@
     window.effects.setDefaultDepth();
     evt.preventDefault();
   };
+
   form.addEventListener(`submit`, submitHandler);
 
-
-  const onSuccessUpload = document.querySelector(`#success`)
-  .content
-  .querySelector(`.success`);
-
-  const successHandlerUpload = function () {
-    const element = document.createDocumentFragment();
-    const successElement = onSuccessUpload.cloneNode(true);
-    element.append(successElement);
-    document.main.insertAdjacentElement(`afterbegin`, element);
-  };
-
-  successHandlerUpload();
-
-  const onErrorUpload = document.querySelector(`#error`)
-  .content
-  .querySelector(`.error`);
-
-
-  const errorHandlerUpload = function () {
-    const element = document.createDocumentFragment();
-    const errorElement = onErrorUpload.cloneNode(true);
-    element.append(errorElement);
-    document.main.insertAdjacentElement(`afterbegin`, element);
-  };
 })();
 
 
