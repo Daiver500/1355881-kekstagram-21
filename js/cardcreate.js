@@ -59,7 +59,7 @@
     const bigPictureOpened = function (object) {
       bigPicture.classList.remove(`hidden`);
       const {url, likes, comments, description} = object;
-      bigPicture.querySelector(`.big-picture__img img`).src = url;
+      // bigPicture.querySelector(`.big-picture__img img`).src = url;
       bigPicture.querySelector(`.likes-count`).textContent = likes;
       bigPicture.querySelector(`.comments-count`).textContent = comments;
       bigPicture.querySelector(`.social__caption`).textContent = description;
@@ -121,7 +121,20 @@
       closeBigPicture();
     });
   };
-  window.load(successHandler);
+
+  const errorHandler = function (errorMessage) {
+    const node = document.createElement(`div`);
+    node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: red;`;
+    node.style.position = `absolute`;
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = `30px`;
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement(`afterbegin`, node);
+  };
+
+  window.load(successHandler, errorHandler);
 
   // 6.2
 
@@ -140,21 +153,31 @@
   };
   form.addEventListener(`submit`, submitHandler);
 
-  const onErrorUpload = document.querySelector(`#error`);
-  const errorHandlerUpload = function () {
-    let element = document.createElement(`div`);
-    element.append(onErrorUpload.content.cloneNode(true));
-    document.main.insertAdjacentElement(`afterbegin`, element);
-  };
 
-  const onSucessUpload = document.querySelector(`#success`);
+  const onSuccessUpload = document.querySelector(`#success`)
+  .content
+  .querySelector(`.success`);
+
   const successHandlerUpload = function () {
-    let element = document.createElement(`div`);
-    element.append(onSucessUpload.content.cloneNode(true));
+    const element = document.createDocumentFragment();
+    const successElement = onSuccessUpload.cloneNode(true);
+    element.append(successElement);
     document.main.insertAdjacentElement(`afterbegin`, element);
   };
 
-  window.upload(successHandlerUpload, errorHandlerUpload);
+  successHandlerUpload();
+
+  const onErrorUpload = document.querySelector(`#error`)
+  .content
+  .querySelector(`.error`);
+
+
+  const errorHandlerUpload = function () {
+    const element = document.createDocumentFragment();
+    const errorElement = onErrorUpload.cloneNode(true);
+    element.append(errorElement);
+    document.main.insertAdjacentElement(`afterbegin`, element);
+  };
 })();
 
 
