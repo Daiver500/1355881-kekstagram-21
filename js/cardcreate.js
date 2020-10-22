@@ -138,6 +138,8 @@
 
   // 6.2
 
+  const main = document.querySelector(`main`);
+
   const onSuccessUpload = document.querySelector(`#success`)
 .content
 .querySelector(`.success`);
@@ -146,8 +148,30 @@
     const fragment = document.createDocumentFragment();
     const successElement = onSuccessUpload.cloneNode(true);
     fragment.appendChild(successElement);
-    document.body.appendChild(fragment);
+    main.appendChild(fragment);
   };
+
+
+  const successButton = document.querySelector(`.success__button`);
+  const successInner = document.querySelector(`.success`);
+
+  const successClose = function () {
+    successButton.addEventListener(`click`, function () {
+      successInner.classList.add(`hidden`);
+    });
+    window.addEventListener(`click`, function () {
+      successInner.classList.add(`hidden`);
+    });
+  };
+
+  const sucessEscPress = function (evt) {
+    if (evt.key === `Escape`) {
+      evt.preventDefault();
+      successInner.classList.add(`hidden`);
+    }
+  };
+
+  document.body.addEventListener(`keydown`, sucessEscPress);
 
   const onErrorUpload = document.querySelector(`#error`)
 .content
@@ -158,8 +182,30 @@
     const fragment = document.createDocumentFragment();
     const errorElement = onErrorUpload.cloneNode(true);
     fragment.appendChild(errorElement);
-    document.body.appendChild(fragment);
+    main.appendChild(fragment);
   };
+
+  const errorButton = document.querySelector(`.error__button`);
+  const errorInner = document.querySelector(`.error`);
+
+  const errorClose = function () {
+    errorButton.addEventListener(`click`, function () {
+      errorInner.classList.add(`hidden`);
+    });
+    window.addEventListener(`click`, function () {
+      errorInner.classList.add(`hidden`);
+    });
+  };
+
+
+  const errorEscPress = function (evt) {
+    if (evt.key === `Escape`) {
+      evt.preventDefault();
+      errorInner.classList.add(`hidden`);
+    }
+  };
+
+  document.body.addEventListener(`keydown`, errorEscPress);
 
 
   const form = document.querySelector(`.img-upload__form`);
@@ -174,10 +220,10 @@
     window.validation.commentsField.textContent = ``;
     window.effects.setDefaultDepth();
     evt.preventDefault();
+
   };
 
   form.addEventListener(`submit`, submitHandler);
-
 })();
 
 
