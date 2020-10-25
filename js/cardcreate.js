@@ -67,27 +67,25 @@
 
   const successDataLoadHandler = function (data) {
     renderPictures(data);
+    window.bigpicture.bigPictureOpened(data);
+    window.bigpicture.bigPicture.classList.add(`hidden`);
     document.querySelector(`.img-filters`).classList.remove(`img-filters--inactive`);
+
+    const smallPhotos = document.querySelectorAll(`.picture`);
+    const addSmallPhotoClicker = function (smallphoto, content) {
+      smallphoto.addEventListener(`click`, function (evt) {
+        evt.preventDefault();
+        document.addEventListener(`keydown`, window.bigpicture.bigPictureEscPress);
+        window.bigpicture.bigPictureOpened(content);
+        createSocialComment(content);
+      });
+    };
+    for (let i = 0; i < smallPhotos.length; i++) {
+      addSmallPhotoClicker(smallPhotos[i], data[i]);
+    }
   };
 
   window.server.load(successDataLoadHandler, errorHandler);
-
-  // 6.2
-
-  const form = document.querySelector(`.img-upload__form`);
-  const imageUploadOverlay = document.querySelector(`.img-upload__overlay`);
-
-  const submitHandler = function (evt) {
-    window.server.upload(new FormData(form), function () {
-      imageUploadOverlay.classList.add(`hidden`);
-    });
-    window.effects.setDefaultDepth();
-    window.modalopenclose.uploadImageFile.value = ``;
-    window.scale.imageUploadPreview.style.filter = ``;
-    evt.preventDefault();
-  };
-
-  form.addEventListener(`submit`, submitHandler);
 
 })();
 

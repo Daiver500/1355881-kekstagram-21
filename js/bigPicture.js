@@ -12,12 +12,8 @@
     bigPicture.querySelector(`.comments-count`).textContent = comments;
     bigPicture.querySelector(`.social__caption`).textContent = description;
     // createSocialComment(cards);
+
   };
-  bigPictureOpened(data);
-
-  bigPicture.classList.add(`hidden`);
-
-  // Добавляем класс hidden
 
   const socialCommentCount = document.querySelector(`.social__comment-count`);
   socialCommentCount.classList.add(`hidden`);
@@ -30,24 +26,6 @@
   document.querySelector(`body`).classList.add(`modal-open`);
 
   // Раздел 4.2.
-
-  const smallPhotos = document.querySelectorAll(`.picture`);
-
-  const addSmallPhotoClicker = function (smallphoto, content) {
-    smallphoto.addEventListener(`click`, function (evt) {
-      evt.preventDefault();
-      document.addEventListener(`keydown`, bigPictureEscPress);
-      bigPictureOpened(content);
-      createSocialComment(content);
-    });
-  };
-
-  for (let i = 0; i < smallPhotos.length; i++) {
-    addSmallPhotoClicker(smallPhotos[i], cards[i]);
-  }
-
-  // Закрываем превью фото с коментами
-
 
   const bigPictureCancel = document.querySelector(`.big-picture__cancel`);
 
@@ -68,4 +46,10 @@
   bigPictureCancel.addEventListener(`click`, function () {
     closeBigPicture();
   });
+
+  window.bigpicture = {
+    bigPictureOpened,
+    bigPictureEscPress,
+    bigPicture
+  };
 })();
