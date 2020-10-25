@@ -2,7 +2,6 @@
 
 (function () {
 
-  // Обращение к шаблону
   const AVATAR = {
     width: 35,
     height: 25,
@@ -11,8 +10,6 @@
   const template = document.querySelector(`#picture`)
 .content
 .querySelector(`.picture`);
-
-  // Создание фукнции на основе шаблона
 
   const createCardElement = function (object) {
     const cardElement = template.cloneNode(true);
@@ -67,7 +64,7 @@
 
   const successDataLoadHandler = function (data) {
     renderPictures(data);
-    window.bigpicture.bigPictureOpened(data);
+    window.bigpicture.openBigPicture(data);
     window.bigpicture.bigPicture.classList.add(`hidden`);
     document.querySelector(`.img-filters`).classList.remove(`img-filters--inactive`);
 
@@ -76,7 +73,7 @@
       smallphoto.addEventListener(`click`, function (evt) {
         evt.preventDefault();
         document.addEventListener(`keydown`, window.bigpicture.bigPictureEscPress);
-        window.bigpicture.bigPictureOpened(content);
+        window.bigpicture.openBigPicture(content);
         createSocialComment(content);
       });
     };

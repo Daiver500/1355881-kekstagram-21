@@ -2,8 +2,8 @@
 "use strict";
 
 (function () {
-const main = document.querySelector(`main`);
-const onSuccessUpload = document.querySelector(`#success`)
+  const main = document.querySelector(`main`);
+  const onSuccessUpload = document.querySelector(`#success`)
   .content
   .querySelector(`.success`);
 
@@ -15,17 +15,17 @@ const onSuccessUpload = document.querySelector(`#success`)
     console.log(fragment);
 
     const successButton = document.querySelector(`.success__button`);
+    const success = document.querySelector(`.success`);
 
     const successClose = function () {
       successButton.addEventListener(`click`, function () {
         main.removeChild(successElement);
       });
-      window.addEventListener(`click`, function () {
+      success.addEventListener(`click`, function () {
         main.removeChild(successElement);
       });
     };
     successClose();
-
 
     const sucessEscPress = function (evt) {
       if (evt.key === `Escape`) {
@@ -34,5 +34,9 @@ const onSuccessUpload = document.querySelector(`#success`)
       }
     };
     document.body.addEventListener(`keydown`, sucessEscPress);
+  };
+
+  window.success = {
+    successHandlerUpload
   };
 })();

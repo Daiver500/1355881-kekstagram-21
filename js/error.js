@@ -2,7 +2,7 @@
 "use strict";
 
 (function () {
-const main = document.querySelector(`main`);
+  const main = document.querySelector(`main`);
   const onErrorUpload = document.querySelector(`#error`)
   .content
   .querySelector(`.error`);
@@ -35,5 +35,11 @@ const main = document.querySelector(`main`);
     };
 
     document.body.addEventListener(`keydown`, errorEscPress);
+
   };
+
+  window.error = {
+    errorHandlerUpload
+  };
+
 })();
