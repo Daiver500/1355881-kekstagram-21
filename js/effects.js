@@ -6,14 +6,13 @@
 
   // Эффект на изображение
 
-  const img = document.querySelector(`.img-upload__preview img`);
   const effects = document.querySelector(`.effects`);
 
   const filterChange = function (evt) {
     if (evt.target.matches(`input[type="radio"]`)) {
-      img.className = ``;
+      window.scale.imageUploadPreview.className = ``;
       setDefaultDepth();
-      img.className = `effects__preview--${evt.target.value}`;
+      window.scale.imageUploadPreview.className = `effects__preview--${evt.target.value}`;
     }
   };
 
@@ -42,6 +41,10 @@
     effectLevelDepth.style.width = DEFAULT_EFFECT_LEVEL + `%`;
     effectLevelValue.value = DEFAULT_EFFECT_LEVEL;
     window.scale.imageUploadPreview.style.filter = ``;
+  };
+
+  window.effects = {
+    setDefaultDepth,
   };
 
 

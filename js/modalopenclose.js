@@ -6,11 +6,21 @@
   const imageUploadOverlay = document.querySelector(`.img-upload__overlay`);
   const uploadCancel = document.querySelector(`#upload-cancel`);
 
-
   const modalEscPress = function (evt) {
-    window.main.isEscEvent(evt, closeModal);
-    evt.preventDefault();
+    if (evt.key === `Escape`) {
+      closeModal();
+      evt.preventDefault();
+    }
   };
+
+  (function () {
+    window.modalopenclose = {
+      modalEscPress
+    };
+    window.modalopenclose = {
+      uploadImageFile
+    };
+  })();
 
 
   const openModal = function () {
@@ -24,6 +34,7 @@
     document.querySelector(`body`).classList.remove(`modal-open`);
     document.removeEventListener(`keydown`, modalEscPress);
     uploadImageFile.value = ``;
+    window.submit.imageDataReset();
   };
 
   uploadImageFile.addEventListener(`change`, function () {

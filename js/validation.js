@@ -17,6 +17,7 @@
   const pattern = /^([#]{1})([0-9a-zа-яё]{1,19})$/;
   // /^([#]{1})([0-9a-zа-яё]{1,19})$/;
 
+
   // 2.Написать функцию получения хэштегов
   const createHashTagsArray = function (hashTagsString) {
     return hashTagsString.split(` `);
@@ -111,4 +112,13 @@
   commentsField.addEventListener(`focusout`, function () {
     document.addEventListener(`keydown`, window.modalopenclose.modalEscPress);
   });
+
+  (function () {
+    window.validation = {
+      hashTagsInput
+    };
+    window.validation = {
+      commentsField
+    };
+  })();
 })();
