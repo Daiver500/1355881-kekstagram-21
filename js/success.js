@@ -7,36 +7,45 @@
   .content
   .querySelector(`.success`);
 
-  const successHandlerUpload = function () {
-    const fragment = document.createDocumentFragment();
-    const successElement = onSuccessUpload.cloneNode(true);
-    fragment.appendChild(successElement);
-    main.appendChild(fragment);
-    console.log(fragment);
+  const successElement = onSuccessUpload.cloneNode(true);
+  const successInner = successElement.querySelector(`.success__inner`);
+  const successButton = successElement.querySelector(`.success__button`);
 
-    const successButton = document.querySelector(`.success__button`);
-    const success = document.querySelector(`.success`);
+  const createSuccessModule = function () {
+    main.insertAdjacentElement(`afterbegin`, successElement);
+    successButton.addEventListener(`click`, successButtonClickHandler);
+    document.addEventListener(`click`, successWindowClickHandler);
+    document.addEventListener(`keydown`, EscPressHandler);
+  };
 
-    const successClose = function () {
-      successButton.addEventListener(`click`, function () {
-        main.removeChild(successElement);
-      });
-      success.addEventListener(`click`, function () {
-        main.removeChild(successElement);
-      });
-    };
-    successClose();
+  const deleteSuccessModule = function () {
+    successButton.removeEventListener(`click`, successButtonClickHandler);
+    document.removeEventListener(`click`, successWindowClickHandler);
+    document.removeEventListener(`keydown`, EscPressHandler);
+    main.removeChild(successElement);
+  };
 
-    const sucessEscPress = function (evt) {
-      if (evt.key === `Escape`) {
-        evt.preventDefault();
-        main.removeChild(successElement);
-      }
-    };
-    document.body.addEventListener(`keydown`, sucessEscPress);
+  const successButtonClickHandler = function () {
+    deleteSuccessModule();
+  };
+
+  const successWindowClickHandler = function (evt) {
+    if (evt.target !== successInner) {
+      deleteSuccessModule();
+    }
+  };
+
+  const EscPressHandler = function (evt) {
+    if (evt.key === `Escape`) {
+      deleteSuccessModule();
+    }
+  };
+
+  const successUploadHandler = function () {
+    createSuccessModule();
   };
 
   window.success = {
-    successHandlerUpload
+    successUploadHandler,
   };
 })();

@@ -34,6 +34,7 @@
     document.querySelector(`body`).classList.remove(`modal-open`);
     document.removeEventListener(`keydown`, modalEscPress);
     uploadImageFile.value = ``;
+    window.submit.imageDataReset();
   };
 
   uploadImageFile.addEventListener(`change`, function () {

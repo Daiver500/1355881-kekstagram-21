@@ -7,39 +7,48 @@
   .content
   .querySelector(`.error`);
 
-  const errorHandlerUpload = function () {
-    const fragment = document.createDocumentFragment();
-    const errorElement = onErrorUpload.cloneNode(true);
-    fragment.appendChild(errorElement);
-    main.appendChild(fragment);
-    console.log(fragment);
+  const errorElement = onErrorUpload.cloneNode(true);
+  const errorButton = errorElement.querySelector(`.error__button`);
+  const errorInner = errorElement.querySelector(`.error__inner`);
 
-    const errorButton = document.querySelector(`.error__button`);
+  const createErrorModule = function () {
+    main.insertAdjacentElement(`beforeend`, errorElement);
+    errorButton.addEventListener(`click`, errorButtonClickHandler);
+    document.addEventListener(`click`, errorWindowClickHandler);
+    document.addEventListener(`keydown`, errorEscPress);
+  };
 
-    const errorClose = function () {
-      errorButton.addEventListener(`click`, function () {
-        main.removeChild(errorElement);
-      });
-      window.addEventListener(`click`, function () {
-        main.removeChild(errorElement);
-      });
-    };
-    errorClose();
+  const deleteErrorModule = function () {
+    main.removeChild(errorElement);
+    errorButton.removeEventListener(`click`, errorButtonClickHandler);
+    document.removeEventListener(`click`, errorWindowClickHandler);
+    document.removeEventListener(`keydown`, errorEscPress);
+  };
+
+  const errorButtonClickHandler = function () {
+    deleteErrorModule();
+  };
+
+  const errorWindowClickHandler = function (evt) {
+    if (evt.target !== errorInner) {
+      deleteErrorModule();
+    }
+  };
 
 
-    const errorEscPress = function (evt) {
-      if (evt.key === `Escape`) {
-        evt.preventDefault();
-        main.removeChild(errorElement);
-      }
-    };
+  const errorEscPress = function (evt) {
+    if (evt.key === `Escape`) {
+      deleteErrorModule();
+    }
+  };
 
-    document.body.addEventListener(`keydown`, errorEscPress);
 
+  const errorUploadHandler = function () {
+    createErrorModule();
   };
 
   window.error = {
-    errorHandlerUpload
+    errorUploadHandler
   };
 
 })();

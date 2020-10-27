@@ -11,8 +11,6 @@
     bigPicture.querySelector(`.likes-count`).textContent = likes;
     bigPicture.querySelector(`.comments-count`).textContent = comments;
     bigPicture.querySelector(`.social__caption`).textContent = description;
-    // createSocialComment(cards);
-
   };
 
   const socialCommentCount = document.querySelector(`.social__comment-count`);
