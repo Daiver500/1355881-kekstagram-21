@@ -7,7 +7,7 @@
   const filterMaxCommentsPhotos = document.querySelector(`#filter-discussed`);
 
   let lastTimeout;
-  const DEBOUNCE_INTERVAL = 50;
+  const DEBOUNCE_INTERVAL = 500;
   window.debounce = function (cb) {
     if (lastTimeout) {
       window.clearTimeout(lastTimeout);
@@ -108,17 +108,17 @@
 
   filterDefaultPhotos.addEventListener(`click`, function () {
     photosRemove();
-    photosFromServerDefault();
+    window.debounce(photosFromServerDefault);
   });
 
   filterRandomPhotos.addEventListener(`click`, function () {
     photosRemove();
-    tenRandomPhotos();
+    window.debounce(tenRandomPhotos);
   });
 
   filterMaxCommentsPhotos.addEventListener(`click`, function () {
     photosRemove();
-    photosWithMaxComments();
+    window.debounce(photosWithMaxComments);
 
   });
 
