@@ -50,6 +50,10 @@
     });
   };
 
+  window.cardcreate = {
+    createSocialComment
+  };
+
   const errorHandler = function (errorMessage) {
     const node = document.createElement(`div`);
     node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: red;`;
@@ -62,8 +66,8 @@
     document.body.insertAdjacentElement(`afterbegin`, node);
   };
 
+  let cardsSet = [];
   const successDataLoadHandler = function (data) {
-    let cardsSet = [];
     cardsSet = data;
     renderPictures(data);
     window.bigpicture.openBigPicture(data);
@@ -71,6 +75,7 @@
     document.querySelector(`.img-filters`).classList.remove(`img-filters--inactive`);
 
     const smallPhotos = document.querySelectorAll(`.picture`);
+
     const addSmallPhotoClicker = function (smallphoto, content) {
       smallphoto.addEventListener(`click`, function (evt) {
         evt.preventDefault();
@@ -82,9 +87,12 @@
     for (let i = 0; i < smallPhotos.length; i++) {
       addSmallPhotoClicker(smallPhotos[i], data[i]);
     }
+
     window.cardcreate = {
       cardsSet,
-      renderPictures
+      renderPictures,
+      createSocialComment,
+      smallPhotos
     };
   };
 

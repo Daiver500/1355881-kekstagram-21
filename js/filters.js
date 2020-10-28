@@ -7,7 +7,7 @@
   const filterMaxCommentsPhotos = document.querySelector(`#filter-discussed`);
 
   let lastTimeout;
-  const DEBOUNCE_INTERVAL = 500;
+  const DEBOUNCE_INTERVAL = 50;
   window.debounce = function (cb) {
     if (lastTimeout) {
       window.clearTimeout(lastTimeout);
@@ -15,12 +15,25 @@
     lastTimeout = window.setTimeout(cb, DEBOUNCE_INTERVAL);
   };
 
-
   // Массив фото с сервера (дефолт)
 
   const photosFromServerDefault = function () {
     const defaultPhotos = window.cardcreate.cardsSet;
     window.cardcreate.renderPictures(defaultPhotos);
+
+    const smallPhotos = document.querySelectorAll(`.picture`);
+
+    const addSmallPhotoClicker = function (smallphoto, content) {
+      smallphoto.addEventListener(`click`, function (evt) {
+        evt.preventDefault();
+        document.addEventListener(`keydown`, window.bigpicture.bigPictureEscPress);
+        window.bigpicture.openBigPicture(content);
+        window.cardcreate.createSocialComment(content);
+      });
+    };
+    for (let i = 0; i < smallPhotos; i++) {
+      addSmallPhotoClicker(smallPhotos[i], defaultPhotos[i]);
+    }
   };
 
   // Массив 10 рандомных фото
@@ -37,9 +50,24 @@
 
     shuffle.length = objectsAmount;
     window.cardcreate.renderPictures(shuffle);
+
+    const smallPhotos = document.querySelectorAll(`.picture`);
+
+    const addSmallPhotoClicker = function (smallphoto, content) {
+      smallphoto.addEventListener(`click`, function (evt) {
+        evt.preventDefault();
+        document.addEventListener(`keydown`, window.bigpicture.bigPictureEscPress);
+        window.bigpicture.openBigPicture(content);
+        window.cardcreate.createSocialComment(content);
+      });
+    };
+    for (let i = 0; i < smallPhotos.length; i++) {
+      addSmallPhotoClicker(smallPhotos[i], newArray[i]);
+    }
   };
 
   // Массив фото по макс комментариям
+
 
   const photosWithMaxComments = function () {
     const maxCommentsPhotosArray = [];
@@ -51,6 +79,20 @@
       return b.comments.length - a.comments.length;
     });
     window.cardcreate.renderPictures(maxCommentsPhotosArray);
+
+    const smallPhotos = document.querySelectorAll(`.picture`);
+
+    const addSmallPhotoClicker = function (smallphoto, content) {
+      smallphoto.addEventListener(`click`, function (evt) {
+        evt.preventDefault();
+        document.addEventListener(`keydown`, window.bigpicture.bigPictureEscPress);
+        window.bigpicture.openBigPicture(content);
+        window.cardcreate.createSocialComment(content);
+      });
+    };
+    for (let i = 0; i < smallPhotos.length; i++) {
+      addSmallPhotoClicker(smallPhotos[i], maxCommentsPhotosArray[i]);
+    }
   };
 
 
@@ -66,18 +108,17 @@
 
   filterDefaultPhotos.addEventListener(`click`, function () {
     photosRemove();
-    window.debounce(window.cardcreate.renderPictures(photosFromServerDefault()));
+    photosFromServerDefault();
   });
 
   filterRandomPhotos.addEventListener(`click`, function () {
     photosRemove();
-    window.debounce(window.cardcreate.renderPictures(tenRandomPhotos()));
-
+    tenRandomPhotos();
   });
 
   filterMaxCommentsPhotos.addEventListener(`click`, function () {
     photosRemove();
-    window.debounce(window.cardcreate.renderPictures(photosWithMaxComments()));
+    photosWithMaxComments();
 
   });
 
