@@ -66,20 +66,19 @@
 
   filterDefaultPhotos.addEventListener(`click`, function () {
     photosRemove();
-    window.debounce(window.cardcreate.renderPictures);
-    photosFromServerDefault();
+    window.debounce(window.cardcreate.renderPictures(photosFromServerDefault()));
   });
 
   filterRandomPhotos.addEventListener(`click`, function () {
     photosRemove();
-    window.debounce(window.cardcreate.renderPictures);
-    tenRandomPhotos();
+    window.debounce(window.cardcreate.renderPictures(tenRandomPhotos()));
+
   });
 
   filterMaxCommentsPhotos.addEventListener(`click`, function () {
     photosRemove();
-    window.debounce(window.cardcreate.renderPictures);
-    photosWithMaxComments();
+    window.debounce(window.cardcreate.renderPictures(photosWithMaxComments()));
+
   });
 
   // клик по меню
