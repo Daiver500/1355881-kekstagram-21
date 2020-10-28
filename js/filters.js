@@ -56,15 +56,16 @@
   });
 
   const objectsAmount = 10;
+  // const shuffle = window.cardcreate.cardsSet.sort(function (){
+  // return Math.random() - 0.5;
+  // });
 
   const tenRandomPhotos = function () {
     const newArray = [];
     for (let i = 1; i <= objectsAmount; i++) {
 
       newArray.push(
-          window.cardcreate.cardsSet.sort(function () {
-            return Math.random() - 0.5;
-          })
+          getRandomArrayElement(window.cardcreate.cardsSet)
       );
 
     }
