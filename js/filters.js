@@ -2,70 +2,65 @@
 
 (function () {
 
-  const filterDefault = document.querySelector(`#filter-default`);
-  const filterRandom = document.querySelector(`#filter-random`);
-  const filterDiscussed = document.querySelector(`#filter-discussed`);
+  const filterDefaultPhotos = document.querySelector(`#filter-default`);
+  const filterRandomPhotos = document.querySelector(`#filter-random`);
+  const filterMaxCommentsPhotos = document.querySelector(`#filter-discussed`);
 
+  // Массив фото с сервера (дефолт)
 
-  // Функция рандомного вызова массива (сообщения, имена)
-
-  const getRandomInt = function (min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
-
-  const getRandomArrayElement = function (array) {
-    return array[getRandomInt(0, array.length - 1)];
-  };
-
-  filterDefault.addEventListener(`click`, function () {
-    photosFromServer();
-  });
-
-  const photosFromServer = function () {
+  const photosFromServerDefault = function () {
     const defaultPhotos = window.cardcreate.cardsSet;
     console.log(defaultPhotos);
+    window.cardcreate.renderPictures(defaultPhotos);
+  };
+
+  // Массив 10 рандомных фото
+
+  const tenRandomPhotos = function () {
+    const objectsAmount = 10;
+    const newArray = [];
+    for (let i = 0; i < window.cardcreate.cardsSet.length; i++) {
+      newArray.push(window.cardcreate.cardsSet[i]);
+    }
+    const shuffle = newArray.sort(function () {
+      return Math.random() - 0.5;
+    });
+
+    shuffle.length = objectsAmount;
+    console.log(shuffle);
+    window.cardcreate.renderPictures(shuffle);
+  };
+
+  // Массив фото по макс комментариям
+
+  const photosWithMaxComments = function () {
+    const maxCommentsPhotosArray = [];
+    for (let i = 0; i < window.cardcreate.cardsSet.length; i++) {
+      maxCommentsPhotosArray.push(
+          window.cardcreate.cardsSet[i]);
+    }
+    maxCommentsPhotosArray.sort(function (a, b) {
+      return b.comments.length - a.comments.length;
+    });
+    console.log(maxCommentsPhotosArray);
+    window.cardcreate.renderPictures(maxCommentsPhotosArray);
   };
 
 
-  filterRandom.addEventListener(`click`, function () {
+  // Обработчики клика
+
+  filterDefaultPhotos.addEventListener(`click`, function () {
+    photosFromServerDefault();
+  });
+
+  filterRandomPhotos.addEventListener(`click`, function () {
     tenRandomPhotos();
   });
 
-  const objectsAmount = 10;
-  // const shuffle = window.cardcreate.cardsSet.sort(function (){
-  // return Math.random() - 0.5;
-  // });
-
-  const tenRandomPhotos = function () {
-    const newArray = [];
-    for (let i = 1; i <= objectsAmount; i++) {
-
-      newArray.push(
-          getRandomArrayElement(window.cardcreate.cardsSet)
-      );
-
-    }
-    console.log(newArray);
-    return newArray;
-  };
-
-  filterDiscussed.addEventListener(`click`, function () {
-    photosByComments();
+  filterMaxCommentsPhotos.addEventListener(`click`, function () {
+    photosWithMaxComments();
   });
 
-
-  const photosByComments = function () {
-    const newArray2 = [];
-    for (let i = 0; i < window.cardcreate.cardsSet.length; i++) {
-      newArray2.push(
-          window.cardcreate.cardsSet[i]);
-    }
-    newArray2.sort(function (a, b) {
-      return b.comments.length - a.comments.length;
-    });
-    console.log(newArray2);
-
-  };
-
+  // клик по меню
 
 })();

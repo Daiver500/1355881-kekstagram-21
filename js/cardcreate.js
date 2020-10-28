@@ -84,6 +84,7 @@
     }
     window.cardcreate = {
       cardsSet,
+      renderPictures
     };
   };
 
