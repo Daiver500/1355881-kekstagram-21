@@ -83,7 +83,7 @@
       addSmallPhotoClicker(smallPhotos[i], data[i]);
     }
     window.cardcreate = {
-      cardsSet
+      cardsSet,
     };
   };
 
