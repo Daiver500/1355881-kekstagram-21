@@ -6,11 +6,20 @@
   const filterRandomPhotos = document.querySelector(`#filter-random`);
   const filterMaxCommentsPhotos = document.querySelector(`#filter-discussed`);
 
+  let lastTimeout;
+  const DEBOUNCE_INTERVAL = 500;
+  window.debounce = function (cb) {
+    if (lastTimeout) {
+      window.clearTimeout(lastTimeout);
+    }
+    lastTimeout = window.setTimeout(cb, DEBOUNCE_INTERVAL);
+  };
+
+
   // Массив фото с сервера (дефолт)
 
   const photosFromServerDefault = function () {
     const defaultPhotos = window.cardcreate.cardsSet;
-    console.log(defaultPhotos);
     window.cardcreate.renderPictures(defaultPhotos);
   };
 
@@ -27,7 +36,6 @@
     });
 
     shuffle.length = objectsAmount;
-    console.log(shuffle);
     window.cardcreate.renderPictures(shuffle);
   };
 
@@ -42,27 +50,56 @@
     maxCommentsPhotosArray.sort(function (a, b) {
       return b.comments.length - a.comments.length;
     });
-    console.log(maxCommentsPhotosArray);
     window.cardcreate.renderPictures(maxCommentsPhotosArray);
   };
 
 
   // Обработчики клика
-  const picture = document.querySelector(`.pictures`);
+
+  const photosRemove = function () {
+    const pics = document.querySelectorAll(`.picture`);
+    pics.forEach((item) => {
+      item.remove();
+    });
+  };
+
 
   filterDefaultPhotos.addEventListener(`click`, function () {
+    photosRemove();
+    window.debounce(window.cardcreate.renderPictures);
     photosFromServerDefault();
   });
 
   filterRandomPhotos.addEventListener(`click`, function () {
-    picture.innerHTML = ``;
+    photosRemove();
+    window.debounce(window.cardcreate.renderPictures);
     tenRandomPhotos();
   });
 
   filterMaxCommentsPhotos.addEventListener(`click`, function () {
+    photosRemove();
+    window.debounce(window.cardcreate.renderPictures);
     photosWithMaxComments();
   });
 
   // клик по меню
+
+  filterRandomPhotos.onclick = function () {
+    filterDefaultPhotos.classList.remove(`img-filters__button--active`);
+    filterMaxCommentsPhotos.classList.remove(`img-filters__button--active`);
+    filterRandomPhotos.classList.add(`img-filters__button--active`);
+  };
+
+  filterMaxCommentsPhotos.onclick = function () {
+    filterDefaultPhotos.classList.remove(`img-filters__button--active`);
+    filterRandomPhotos.classList.remove(`img-filters__button--active`);
+    filterMaxCommentsPhotos.classList.add(`img-filters__button--active`);
+  };
+
+  filterDefaultPhotos.onclick = function () {
+    filterRandomPhotos.classList.remove(`img-filters__button--active`);
+    filterMaxCommentsPhotos.classList.remove(`img-filters__button--active`);
+    filterDefaultPhotos.classList.add(`img-filters__button--active`);
+  };
 
 })();
