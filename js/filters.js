@@ -49,11 +49,14 @@
 
   // Обработчики клика
 
+  const allPictures = document.querySelectorAll(`.picture`);
+
   filterDefaultPhotos.addEventListener(`click`, function () {
     photosFromServerDefault();
   });
 
   filterRandomPhotos.addEventListener(`click`, function () {
+    allPictures.innerHTML = ``;
     tenRandomPhotos();
   });
 
