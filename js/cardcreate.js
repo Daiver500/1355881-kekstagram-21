@@ -92,7 +92,6 @@
       cardsSet,
       renderPictures,
       createSocialComment,
-      smallPhotos
     };
   };
 
