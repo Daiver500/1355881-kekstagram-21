@@ -63,6 +63,8 @@
   };
 
   const successDataLoadHandler = function (data) {
+    let cardsSet = [];
+    cardsSet = data;
     renderPictures(data);
     window.bigpicture.openBigPicture(data);
     window.bigpicture.bigPicture.classList.add(`hidden`);
@@ -80,6 +82,9 @@
     for (let i = 0; i < smallPhotos.length; i++) {
       addSmallPhotoClicker(smallPhotos[i], data[i]);
     }
+    window.cardcreate = {
+      cardsSet
+    };
   };
 
   window.server.load(successDataLoadHandler, errorHandler);
