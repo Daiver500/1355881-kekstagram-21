@@ -2,7 +2,6 @@
 
 (function () {
 
-  // Обращение к шаблону
   const AVATAR = {
     width: 35,
     height: 25,
@@ -11,8 +10,6 @@
   const template = document.querySelector(`#picture`)
 .content
 .querySelector(`.picture`);
-
-  // Создание фукнции на основе шаблона
 
   const createCardElement = function (object) {
     const cardElement = template.cloneNode(true);
@@ -23,19 +20,17 @@
     return cardElement;
   };
 
-  // Добавление элемента через documentFragment
+  // 6.1
 
-  const renderPictures = function () {
+  const renderPictures = function (cardsArray) {
     const pictures = document.querySelector(`.pictures`);
     const fragment = document.createDocumentFragment();
-    window.mockscreation.mocks.forEach(function (value) {
+    cardsArray.forEach(function (value) {
       fragment.appendChild(createCardElement(value));
     });
     pictures.appendChild(fragment);
     return fragment;
   };
-
-  renderPictures(window.mockscreation.mocks);
 
   const createSocialComment = function (object) {
     const fragment = document.createDocumentFragment();
@@ -55,67 +50,40 @@
     });
   };
 
-  const bigPicture = document.querySelector(`.big-picture`);
-  const bigPictureOpened = function (object) {
-    bigPicture.classList.remove(`hidden`);
-    const {url, likes, comments, description} = object;
-    bigPicture.querySelector(`.big-picture__img img`).src = url;
-    bigPicture.querySelector(`.likes-count`).textContent = likes;
-    bigPicture.querySelector(`.comments-count`).textContent = comments.length;
-    bigPicture.querySelector(`.social__caption`).textContent = description;
-    createSocialComment(window.mockscreation.mocks[0]);
-  };
-  bigPictureOpened(window.mockscreation.mocks[0]);
+  const errorHandler = function (errorMessage) {
+    const node = document.createElement(`div`);
+    node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: red;`;
+    node.style.position = `absolute`;
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = `30px`;
 
-  bigPicture.classList.add(`hidden`);
-
-  // Добавляем класс hidden
-
-  const socialCommentCount = document.querySelector(`.social__comment-count`);
-  socialCommentCount.classList.add(`hidden`);
-
-  const commentsLoader = document.querySelector(`.comments-loader`);
-  commentsLoader.classList.add(`hidden`);
-
-  // Добавляем класс на body (для фиксации фона)
-
-  document.querySelector(`body`).classList.add(`modal-open`);
-
-  // Раздел 4.2.
-
-  const smallPhotos = document.querySelectorAll(`.picture`);
-
-  const addSmallPhotoClicker = function (smallphoto, content) {
-    smallphoto.addEventListener(`click`, function (evt) {
-      evt.preventDefault();
-      document.addEventListener(`keydown`, bigPictureEscPress);
-      bigPictureOpened(content);
-      createSocialComment(content);
-    });
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement(`afterbegin`, node);
   };
 
-  for (let i = 0; i < smallPhotos.length; i++) {
-    addSmallPhotoClicker(smallPhotos[i], window.mockscreation.mocks[i]);
-  }
+  const successDataLoadHandler = function (data) {
+    renderPictures(data);
+    window.bigpicture.openBigPicture(data);
+    window.bigpicture.bigPicture.classList.add(`hidden`);
+    document.querySelector(`.img-filters`).classList.remove(`img-filters--inactive`);
 
-  // Закрываем превью фото с коментами
-
-
-  const bigPictureCancel = document.querySelector(`.big-picture__cancel`);
-
-  const bigPictureEscPress = function (evt) {
-    window.main.isEscEvent(evt, closeBigPicture);
-    evt.preventDefault();
+    const smallPhotos = document.querySelectorAll(`.picture`);
+    const addSmallPhotoClicker = function (smallphoto, content) {
+      smallphoto.addEventListener(`click`, function (evt) {
+        evt.preventDefault();
+        document.addEventListener(`keydown`, window.bigpicture.bigPictureEscPress);
+        window.bigpicture.openBigPicture(content);
+        createSocialComment(content);
+      });
+    };
+    for (let i = 0; i < smallPhotos.length; i++) {
+      addSmallPhotoClicker(smallPhotos[i], data[i]);
+    }
   };
 
-  document.addEventListener(`keydown`, bigPictureEscPress);
+  window.server.load(successDataLoadHandler, errorHandler);
 
-  const closeBigPicture = function () {
-    bigPicture.classList.add(`hidden`);
-    document.removeEventListener(`keydown`, bigPictureEscPress);
-  };
-
-  bigPictureCancel.addEventListener(`click`, function () {
-    closeBigPicture();
-  });
 })();
+
+
