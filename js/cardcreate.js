@@ -47,19 +47,18 @@
   const test = function (data) {
     const smallPhotosList = document.querySelectorAll(`.picture`);
     smallPhotosList.forEach(function (picture, index) {
-      picture.addEventListener(`click`, function(evt) {
+      picture.addEventListener(`click`, function (evt) {
         evt.preventDefault();
         openBigPicturePopup(data[index]);
       });
     });
-  }
+  };
 
   const successDataLoadHandler = function (data) {
     window.cardcreate.cardList = [];
     window.cardcreate.cardList = data;
     renderPictures(data);
     test(data);
-    console.log(window.cardcreate.cardList)
     filters.classList.remove(`img-filters--inactive`);
   };
 
