@@ -2,56 +2,34 @@
 
 (function () {
 
-  const AVATAR = {
-    width: 35,
-    height: 25,
-  };
+
+  const pictures = document.querySelector(`.pictures`);
+  const filters = document.querySelector(`.img-filters`);
+  let cardsList = [];
+  const openBigPicturePopup = window.bigpicture.openBigPicture;
 
   const template = document.querySelector(`#picture`)
 .content
 .querySelector(`.picture`);
 
   const createCardElement = function (object) {
+    const {likes, comments, url} = object;
     const cardElement = template.cloneNode(true);
-
-    cardElement.querySelector(`.picture__likes`).textContent = object.likes;
-    cardElement.querySelector(`.picture__comments`).textContent = object.comments.length;
-    cardElement.querySelector(`img`).src = object.url;
+    cardElement.querySelector(`.picture__likes`).textContent = likes;
+    cardElement.querySelector(`.picture__comments`).textContent = comments.length;
+    cardElement.querySelector(`img`).src = url;
     return cardElement;
   };
 
   // 6.1
 
   const renderPictures = function (cardsArray) {
-    const pictures = document.querySelector(`.pictures`);
     const fragment = document.createDocumentFragment();
-    cardsArray.forEach(function (value) {
-      fragment.appendChild(createCardElement(value));
+    cardsArray.forEach(function (cardObject) {
+      fragment.appendChild(createCardElement(cardObject));
     });
     pictures.appendChild(fragment);
     return fragment;
-  };
-
-  const createSocialComment = function (object) {
-    const fragment = document.createDocumentFragment();
-    const socialComments = document.querySelector(`.social__comments`);
-    const socialComment = socialComments.querySelector(`li`);
-    socialComments.innerHTML = ``;
-
-    object.comments.forEach(function (value) {
-      const li = socialComment.cloneNode(true);
-      li.querySelector(`.social__picture`).src = value.avatar;
-      li.querySelector(`.social__picture`).alt = value.name;
-      li.querySelector(`.social__picture`).width = AVATAR.width;
-      li.querySelector(`.social__picture`).height = AVATAR.height;
-      li.querySelector(`.social__text`).textContent = value.message;
-      fragment.append(li);
-      socialComments.append(fragment);
-    });
-  };
-
-  window.cardcreate = {
-    createSocialComment
   };
 
   const errorHandler = function (errorMessage) {
@@ -66,36 +44,25 @@
     document.body.insertAdjacentElement(`afterbegin`, node);
   };
 
-  let cardsSet = [];
   const successDataLoadHandler = function (data) {
-    cardsSet = data;
+    cardsList = data;
     renderPictures(data);
-    window.bigpicture.openBigPicture(data);
-    window.bigpicture.bigPicture.classList.add(`hidden`);
-    document.querySelector(`.img-filters`).classList.remove(`img-filters--inactive`);
-
-    const smallPhotos = document.querySelectorAll(`.picture`);
-
-    const addSmallPhotoClicker = function (smallphoto, content) {
-      smallphoto.addEventListener(`click`, function (evt) {
+    filters.classList.remove(`img-filters--inactive`);
+    const smallPhotosList = document.querySelectorAll(`.picture`);
+    smallPhotosList.forEach(function (picture, index) {
+      picture.addEventListener(`click`, function(evt) {
         evt.preventDefault();
-        document.addEventListener(`keydown`, window.bigpicture.bigPictureEscPress);
-        window.bigpicture.openBigPicture(content);
-        createSocialComment(content);
+        openBigPicturePopup(data[index]);
       });
-    };
-    for (let i = 0; i < smallPhotos.length; i++) {
-      addSmallPhotoClicker(smallPhotos[i], data[i]);
-    }
-
-    window.cardcreate = {
-      cardsSet,
-      renderPictures,
-      createSocialComment,
-    };
+    });
   };
 
   window.server.load(successDataLoadHandler, errorHandler);
+
+  window.cardcreate = {
+    cardsList,
+    renderPictures,
+  };
 
 })();
 
