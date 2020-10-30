@@ -18,22 +18,9 @@
   // Массив фото с сервера (дефолт)
 
   const photosFromServerDefault = function () {
-    const defaultPhotos = window.cardcreate.cardsSet;
+    const defaultPhotos = window.cardcreate.cardList;
     window.cardcreate.renderPictures(defaultPhotos);
-
-    const smallPhotos = document.querySelectorAll(`.picture`);
-
-    const addSmallPhotoClicker = function (smallphoto, content) {
-      smallphoto.addEventListener(`click`, function (evt) {
-        evt.preventDefault();
-        document.addEventListener(`keydown`, window.bigpicture.bigPictureEscPress);
-        window.bigpicture.openBigPicture(content);
-        window.cardcreate.createSocialComment(content);
-      });
-    };
-    for (let i = 0; i < smallPhotos; i++) {
-      addSmallPhotoClicker(smallPhotos[i], defaultPhotos[i]);
-    }
+    console.log(window.cardcreate.cardList)
   };
 
   // Массив 10 рандомных фото
@@ -41,8 +28,8 @@
   const tenRandomPhotos = function () {
     const objectsAmount = 10;
     const newArray = [];
-    for (let i = 0; i < window.cardcreate.cardsSet.length; i++) {
-      newArray.push(window.cardcreate.cardsSet[i]);
+    for (let i = 0; i < window.cardcreate.cardList.length; i++) {
+      newArray.push(window.cardcreate.cardList[i]);
     }
     const shuffle = newArray.sort(function () {
       return Math.random() - 0.5;
@@ -50,20 +37,7 @@
 
     shuffle.length = objectsAmount;
     window.cardcreate.renderPictures(shuffle);
-
-    const smallPhotos = document.querySelectorAll(`.picture`);
-
-    const addSmallPhotoClicker = function (smallphoto, content) {
-      smallphoto.addEventListener(`click`, function (evt) {
-        evt.preventDefault();
-        document.addEventListener(`keydown`, window.bigpicture.bigPictureEscPress);
-        window.bigpicture.openBigPicture(content);
-        window.cardcreate.createSocialComment(content);
-      });
-    };
-    for (let i = 0; i < smallPhotos.length; i++) {
-      addSmallPhotoClicker(smallPhotos[i], newArray[i]);
-    }
+    console.log(shuffle)
   };
 
   // Массив фото по макс комментариям
@@ -71,28 +45,15 @@
 
   const photosWithMaxComments = function () {
     const maxCommentsPhotosArray = [];
-    for (let i = 0; i < window.cardcreate.cardsSet.length; i++) {
+    for (let i = 0; i < window.cardcreate.cardList.length; i++) {
       maxCommentsPhotosArray.push(
-          window.cardcreate.cardsSet[i]);
+          window.cardcreate.cardList[i]);
     }
     maxCommentsPhotosArray.sort(function (a, b) {
       return b.comments.length - a.comments.length;
     });
     window.cardcreate.renderPictures(maxCommentsPhotosArray);
-
-    const smallPhotos = document.querySelectorAll(`.picture`);
-
-    const addSmallPhotoClicker = function (smallphoto, content) {
-      smallphoto.addEventListener(`click`, function (evt) {
-        evt.preventDefault();
-        document.addEventListener(`keydown`, window.bigpicture.bigPictureEscPress);
-        window.bigpicture.openBigPicture(content);
-        window.cardcreate.createSocialComment(content);
-      });
-    };
-    for (let i = 0; i < smallPhotos.length; i++) {
-      addSmallPhotoClicker(smallPhotos[i], maxCommentsPhotosArray[i]);
-    }
+    console.log(maxCommentsPhotosArray)
   };
 
 

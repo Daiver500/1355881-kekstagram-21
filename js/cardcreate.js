@@ -5,8 +5,8 @@
 
   const pictures = document.querySelector(`.pictures`);
   const filters = document.querySelector(`.img-filters`);
-  let cardsList = [];
   const openBigPicturePopup = window.bigpicture.openBigPicture;
+  // let cardsList = [];
 
   const template = document.querySelector(`#picture`)
 .content
@@ -45,8 +45,10 @@
   };
 
   const successDataLoadHandler = function (data) {
-    cardsList = data;
+    window.cardcreate.cardList = [];
+    window.cardcreate.cardList = data;
     renderPictures(data);
+    console.log(window.cardcreate.cardList)
     filters.classList.remove(`img-filters--inactive`);
     const smallPhotosList = document.querySelectorAll(`.picture`);
     smallPhotosList.forEach(function (picture, index) {
@@ -60,7 +62,6 @@
   window.server.load(successDataLoadHandler, errorHandler);
 
   window.cardcreate = {
-    cardsList,
     renderPictures,
   };
 
