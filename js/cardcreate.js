@@ -44,12 +44,7 @@
     document.body.insertAdjacentElement(`afterbegin`, node);
   };
 
-  const successDataLoadHandler = function (data) {
-    window.cardcreate.cardList = [];
-    window.cardcreate.cardList = data;
-    renderPictures(data);
-    console.log(window.cardcreate.cardList)
-    filters.classList.remove(`img-filters--inactive`);
+  const test = function (data) {
     const smallPhotosList = document.querySelectorAll(`.picture`);
     smallPhotosList.forEach(function (picture, index) {
       picture.addEventListener(`click`, function(evt) {
@@ -57,12 +52,22 @@
         openBigPicturePopup(data[index]);
       });
     });
+  }
+
+  const successDataLoadHandler = function (data) {
+    window.cardcreate.cardList = [];
+    window.cardcreate.cardList = data;
+    renderPictures(data);
+    test(data);
+    console.log(window.cardcreate.cardList)
+    filters.classList.remove(`img-filters--inactive`);
   };
 
   window.server.load(successDataLoadHandler, errorHandler);
 
   window.cardcreate = {
     renderPictures,
+    test
   };
 
 })();

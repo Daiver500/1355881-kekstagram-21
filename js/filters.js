@@ -20,7 +20,7 @@
   const photosFromServerDefault = function () {
     const defaultPhotos = window.cardcreate.cardList;
     window.cardcreate.renderPictures(defaultPhotos);
-    console.log(window.cardcreate.cardList)
+    window.cardcreate.test(defaultPhotos);
   };
 
   // Массив 10 рандомных фото
@@ -37,7 +37,7 @@
 
     shuffle.length = objectsAmount;
     window.cardcreate.renderPictures(shuffle);
-    console.log(shuffle)
+    window.cardcreate.test(shuffle);
   };
 
   // Массив фото по макс комментариям
@@ -53,7 +53,7 @@
       return b.comments.length - a.comments.length;
     });
     window.cardcreate.renderPictures(maxCommentsPhotosArray);
-    console.log(maxCommentsPhotosArray)
+    window.cardcreate.test(maxCommentsPhotosArray);
   };
 
 
