@@ -48,6 +48,22 @@
     document.body.classList.add(`modal-open`);
     document.addEventListener(`keydown`, bigPictureEscPress)
     bigPictureCancel.addEventListener(`click`, closeButtonClickHandler);
+
+    const newFunction = function (comments) {
+      const newArray = comments.slice();
+      if (newArray.length >= 5) {
+      commentsLoader.classList.remove(`hidden`);
+      newArray.splice(5);
+      console.log(newArray)
+      createSocialComments(newArray)
+    } else {
+      commentsLoader.classList.add(`hidden`);
+    }
+   }
+   newFunction(comments)
+   commentsLoader.onclick = function () {
+    createSocialComments(comments);
+   };
   };
 
   const bigPictureEscPress = function (evt) {
