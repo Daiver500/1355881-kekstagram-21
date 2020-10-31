@@ -35,18 +35,22 @@
       fragment.append(li);
       socialComments.append(fragment);
 
-      const newFunction = function (commentsArray) {;
-        if (commentsArray.length >= 5) {
-          commentsLoader.onclick = function () {
-          console.log(commentsArray);
-        };
+      const newFunction = function (commentsArray) {
+        const newArray = commentsArray.slice();
+        console.log (newArray);
+        console.log(commentsArray);
+        if (newArray.length >= 5) {
         commentsLoader.classList.remove(`hidden`);
-        commentsArray.splice(5);
+        newArray.splice(5);
+        //
       } else {
         commentsLoader.classList.add(`hidden`);
       }
      }
-    newFunction(commentsArray)
+     newFunction(commentsArray)
+     commentsLoader.onclick = function () {
+      //
+     };
    });
   };
 
