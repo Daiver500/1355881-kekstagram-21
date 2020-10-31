@@ -35,15 +35,17 @@
       fragment.append(li);
       socialComments.append(fragment);
 
-      if (commentsArray.length >= 5) {
+    const newFunction = function (commentsArray) {};
+      const newArray = commentsArray.slice();
+      if (newArray.length >= 5) {
         commentsLoader.classList.remove(`hidden`);
-        const cutCommentsArray = commentsArray.splice(5); // то что отрезали
+        commentsArray.splice(5);
+        commentsLoader.onclick = function () {
+
+        };
       } else {
         commentsLoader.classList.add(`hidden`);
       }
-      commentsLoader.onclick = function () {
-
-      };
     });
   };
 
