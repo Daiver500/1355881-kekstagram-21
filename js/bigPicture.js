@@ -35,14 +35,12 @@
       fragment.append(li);
       socialComments.append(fragment);
 
-      const newFunction = function (commentsArray) {
+      /* const newFunction = function (commentsArray) {
         const newArray = commentsArray.slice();
-        console.log (newArray);
-        console.log(commentsArray);
         if (newArray.length >= 5) {
         commentsLoader.classList.remove(`hidden`);
         newArray.splice(5);
-        //
+        console.log(newArray)
       } else {
         commentsLoader.classList.add(`hidden`);
       }
@@ -50,7 +48,7 @@
      newFunction(commentsArray)
      commentsLoader.onclick = function () {
       //
-     };
+     };*/
    });
   };
 
@@ -66,21 +64,22 @@
     document.addEventListener(`keydown`, bigPictureEscPress)
     bigPictureCancel.addEventListener(`click`, closeButtonClickHandler);
 
-    /* const socialCommentsArray = document.querySelectorAll(`.social__comment`);
-    const maxComments = 5;
-    const pop  = function () {
-      for (let i = 0; i < socialCommentsArray.length; i++) {
-        if(socialCommentsArray.length > maxComments) {
-          socialCommentsArray[i + 5].classList.add(`hidden`);
-          commentsLoader.classList.remove(`hidden`);
-          commentsLoader.onclick = function () {
-            for (let socialComment of socialCommentsArray) {
-            socialComment.classList.remove(`hidden`);}
-          };
-        }
-      }
+    const newFunction = function (comments) {
+      const newArray = comments.slice();
+      if (newArray.length >= 5) {
+      commentsLoader.classList.remove(`hidden`);
+      newArray.splice(5);
+      console.log(newArray)
+      createSocialComments(newArray)
+    } else {
+      commentsLoader.classList.add(`hidden`);
     }
-    pop()*/
+   }
+   newFunction(comments)
+   commentsLoader.onclick = function () {
+    createSocialComments(newArray);
+   };
+
   };
 
   const bigPictureEscPress = function (evt) {
