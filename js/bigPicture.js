@@ -77,7 +77,7 @@
    }
    newFunction(comments)
    commentsLoader.onclick = function () {
-    createSocialComments(newArray);
+    createSocialComments(comments);
    };
 
   };
