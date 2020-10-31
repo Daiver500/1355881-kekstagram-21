@@ -35,18 +35,19 @@
       fragment.append(li);
       socialComments.append(fragment);
 
-    const newFunction = function (commentsArray) {};
-      const newArray = commentsArray.slice();
-      if (newArray.length >= 5) {
+      const newFunction = function (commentsArray) {;
+        if (commentsArray.length >= 5) {
+          commentsLoader.onclick = function () {
+          console.log(commentsArray);
+        };
         commentsLoader.classList.remove(`hidden`);
         commentsArray.splice(5);
-        commentsLoader.onclick = function () {
-
-        };
       } else {
         commentsLoader.classList.add(`hidden`);
       }
-    });
+     }
+    newFunction(commentsArray)
+   });
   };
 
   const openBigPicture = function (object) {
