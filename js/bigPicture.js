@@ -34,6 +34,16 @@
       li.querySelector(`.social__text`).textContent = message;
       fragment.append(li);
       socialComments.append(fragment);
+
+      if (commentsArray.length >= 5) {
+        commentsLoader.classList.remove(`hidden`);
+        const cutCommentsArray = commentsArray.splice(5); // то что отрезали
+      } else {
+        commentsLoader.classList.add(`hidden`);
+      }
+      commentsLoader.onclick = function () {
+
+      };
     });
   };
 
@@ -49,7 +59,7 @@
     document.addEventListener(`keydown`, bigPictureEscPress)
     bigPictureCancel.addEventListener(`click`, closeButtonClickHandler);
 
-    const socialCommentsArray = document.querySelectorAll(`.social__comment`);
+    /* const socialCommentsArray = document.querySelectorAll(`.social__comment`);
     const maxComments = 5;
     const pop  = function () {
       for (let i = 0; i < socialCommentsArray.length; i++) {
@@ -63,7 +73,7 @@
         }
       }
     }
-    pop()
+    pop()*/
   };
 
   const bigPictureEscPress = function (evt) {
