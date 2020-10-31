@@ -48,6 +48,22 @@
     document.body.classList.add(`modal-open`);
     document.addEventListener(`keydown`, bigPictureEscPress)
     bigPictureCancel.addEventListener(`click`, closeButtonClickHandler);
+
+    const socialCommentsArray = document.querySelectorAll(`.social__comment`);
+    const maxComments = 5;
+    const pop  = function () {
+      for (let i = 0; i < socialCommentsArray.length; i++) {
+        if(socialCommentsArray.length > maxComments) {
+          socialCommentsArray[i + 5].classList.add(`hidden`);
+          commentsLoader.classList.remove(`hidden`);
+          commentsLoader.onclick = function () {
+            for (let socialComment of socialCommentsArray) {
+            socialComment.classList.remove(`hidden`);}
+          };
+        }
+      }
+    }
+    pop()
   };
 
   const bigPictureEscPress = function (evt) {
