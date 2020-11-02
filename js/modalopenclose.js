@@ -13,14 +13,11 @@
     }
   };
 
-  (function () {
-    window.modalopenclose = {
-      modalEscPress
-    };
-    window.modalopenclose = {
-      uploadImageFile
-    };
-  })();
+
+  window.modalopenclose = {
+    modalEscPress,
+    uploadImageFile
+  };
 
 
   const openModal = function () {
