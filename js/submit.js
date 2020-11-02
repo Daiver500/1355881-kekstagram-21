@@ -12,6 +12,7 @@
     window.scale.imageUploadPreview.style.filter = ``;
     window.scale.imageUploadPreview.style.transform = `scale(1.00)`;
     window.scale.imageUploadPreview.className = `effects__preview--none`;
+    window.effects.effectLevel.classList.add(`hidden`);
   };
 
   const submitHandler = function (evt) {

@@ -45,6 +45,7 @@
 
   window.effects = {
     setDefaultDepth,
+    effectLevel
   };
 
 
