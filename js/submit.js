@@ -10,6 +10,7 @@
     window.effects.setDefaultDepth();
     window.modalopenclose.uploadImageFile.value = ``;
     window.scale.imageUploadPreview.style.filter = ``;
+    window.scale.imageUploadPreview.style.transform = `scale(1.00)`;
     window.scale.imageUploadPreview.className = `effects__preview--none`;
   };
 
