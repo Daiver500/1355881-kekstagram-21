@@ -17,9 +17,15 @@
     "webpack-cli": "4.1.0"
   },
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "css": "^3.0.0",
+    "loader": "^2.1.1",
+    "style": "0.0.3"
+  },
   "scripts": {
-    "test": "eslint js/"
+    "test": "eslint js/",
+    "build.dev": "webpack --mode development",
+    "build.prod": "webpack --mode production"
   },
   "engines": {
     "node": "8.11"
