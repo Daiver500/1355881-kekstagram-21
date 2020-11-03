@@ -1,5 +1,10 @@
+function require(path1) {
+  return undefined;
+}
+
 const path = require("path");
 
+let module;
 module.exports = {
   entry: [
     "./js/server.js",
