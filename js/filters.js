@@ -2,25 +2,15 @@
 
 (function () {
   const MAX_RANDOM_ELEMENTS = 10;
-  const DEBOUNCE_INTERVAL = 500;
-  const filtersForm = document.querySelector(`.img-filter__form`);
+  const filtersForm = document.querySelector(`.img-filters__form`);
   const renderPictures = window.cardcreate.renderPictures;
 
-  const debounce = (cb) => {
-    let lastTimeout = null;
-    return (...parameters) => {
-      if (lastTimeout) {
-        window.clearTimeout(lastTimeout);
-      }
-      lastTimeout = window.setTimeout(() => {
-        cb(...parameters);
-      }, DEBOUNCE_INTERVAL);
-    };
-  };
 
   // показываем дефолтные картинки
   const showDefaultPictures = function () {
-    renderPictures(window.data.picturesList);
+    const defaultPhotos = window.cardcreate.cardList;
+    renderPictures(defaultPhotos);
+    window.cardcreate.test(defaultPhotos);
   };
 
   // функция перемешивания массива
@@ -40,21 +30,24 @@
 
   // показываем рандомные картинки
   const showRandomPictures = function () {
-    const picturesList = window.data.picturesList;
+    const picturesList = window.cardcreate.cardList;
     const randomElements = shuffleArray(picturesList).slice(0, MAX_RANDOM_ELEMENTS);
 
     renderPictures(randomElements);
+    window.cardcreate.test(randomElements);
   };
 
   // обсуждаемые картинки
   const showDiscussedPictures = function () {
-    const picturesListCopy = window.data.picturesList.slice();
+    const picturesListCopy = window.cardcreate.cardList.slice();
     const sortedList = picturesListCopy.sort(function (a, b) {
       return a.comments.length - b.comments.length;
     });
 
     renderPictures(sortedList);
+    window.cardcreate.test(sortedList);
   };
+
   // удаление картинок
   const removePictures = function () {
     const pics = document.querySelectorAll(`.picture`);
@@ -63,22 +56,49 @@
     });
   };
   // функция фильтрации
-  const onFilterClick = debounce(function (evt) {
+
+  const onFilterClick = window.debounce.debounce(function (evt) {
     removePictures();
 
     switch (evt.target.id) {
       case `filter-default`:
         showDefaultPictures();
+        clickFilterDefaultButton();
         break;
       case `filter-random`:
         showRandomPictures();
+        clickFilterRandomButton();
         break;
       case `filter-discussed`:
         showDiscussedPictures();
+        clickFilterDiscussedButton();
         break;
       default:
         showDefaultPictures();
     }
   });
   filtersForm.addEventListener(`click`, onFilterClick);
+
+  // клик по меню
+
+  const filterDefaultPhotos = document.querySelector(`#filter-default`);
+  const filterRandomPhotos = document.querySelector(`#filter-random`);
+  const filterMaxCommentsPhotos = document.querySelector(`#filter-discussed`);
+
+  const clickFilterDefaultButton = function () {
+    filterRandomPhotos.classList.remove(`img-filters__button--active`);
+    filterMaxCommentsPhotos.classList.remove(`img-filters__button--active`);
+    filterDefaultPhotos.classList.add(`img-filters__button--active`);
+  };
+  const clickFilterRandomButton = function () {
+    filterDefaultPhotos.classList.remove(`img-filters__button--active`);
+    filterMaxCommentsPhotos.classList.remove(`img-filters__button--active`);
+    filterRandomPhotos.classList.add(`img-filters__button--active`);
+  };
+  const clickFilterDiscussedButton = function () {
+    filterDefaultPhotos.classList.remove(`img-filters__button--active`);
+    filterRandomPhotos.classList.remove(`img-filters__button--active`);
+    filterMaxCommentsPhotos.classList.add(`img-filters__button--active`);
+  };
+
 })();
