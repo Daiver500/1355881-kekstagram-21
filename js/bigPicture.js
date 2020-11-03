@@ -69,7 +69,8 @@
     };
     newFunction(comments);
     commentsLoader.onclick = function () {
-      createSocialComments(comments);
+      newArray.splice(5, 0, comments[1]);
+      createSocialComments(newArray);
     };
   };
 
