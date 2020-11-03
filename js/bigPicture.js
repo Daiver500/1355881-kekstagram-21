@@ -56,8 +56,8 @@
     document.addEventListener(`keydown`, bigPictureEscPress);
     bigPictureCancel.addEventListener(`click`, closeButtonClickHandler);
 
+    const newArray = comments.slice();
     const newFunction = function () {
-      const newArray = comments.slice();
       if (newArray.length >= 5) {
         commentsLoader.classList.remove(`hidden`);
         newArray.splice(5);
