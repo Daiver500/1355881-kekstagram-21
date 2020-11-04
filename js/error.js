@@ -2,6 +2,7 @@
 "use strict";
 
 (function () {
+
   const main = document.querySelector(`main`);
   const onErrorUpload = document.querySelector(`#error`)
   .content
@@ -35,13 +36,11 @@
     }
   };
 
-
   const errorEscPress = function (evt) {
     if (evt.key === `Escape`) {
       deleteErrorModule();
     }
   };
-
 
   const errorUploadHandler = function () {
     createErrorModule();

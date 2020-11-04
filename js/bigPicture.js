@@ -15,7 +15,6 @@
   const socialCommentCount = social.querySelector(`.social__comment-count`);
   const commentsLoader = social.querySelector(`.comments-loader`);
   const bigPictureCancel = bigPicture.querySelector(`.big-picture__cancel`);
-  const allComments = social.querySelectorAll(`li`);
 
   socialCommentCount.classList.add(`hidden`);
   commentsLoader.classList.add(`hidden`);
@@ -35,12 +34,6 @@
       li.querySelector(`.social__text`).textContent = message;
       fragment.append(li);
       socialComments.append(fragment);
-      console.log(allComments.length);
-
-      if (allComments.length > 5) {
-        socialComment.classList.add(`hidden`);
-      }
-
     });
   };
 
@@ -56,21 +49,24 @@
     document.addEventListener(`keydown`, bigPictureEscPress);
     bigPictureCancel.addEventListener(`click`, closeButtonClickHandler);
 
-    const newArray = comments.slice();
-    const newFunction = function () {
-      if (newArray.length >= 5) {
+    // 5 комментов скрыть и 5 показать по клику
+
+    const newCommentsArray = comments.slice();
+    const hideComments = function () {
+      if (newCommentsArray.length >= 5) {
         commentsLoader.classList.remove(`hidden`);
-        newArray.splice(5);
-        console.log(newArray);
-        createSocialComments(newArray);
+        newCommentsArray.splice(5);
+        console.log(newCommentsArray);
+        createSocialComments(newCommentsArray);
       } else {
         commentsLoader.classList.add(`hidden`);
       }
     };
-    newFunction(comments);
+    hideComments(comments);
+
     commentsLoader.onclick = function () {
-      newArray.splice(5, 0, comments[1]);
-      createSocialComments(newArray);
+      newCommentsArray.splice(5, 0, comments[1]);
+      createSocialComments(newCommentsArray);
     };
   };
 

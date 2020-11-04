@@ -10,7 +10,7 @@
   const showDefaultPictures = function () {
     const defaultPhotos = window.cardcreate.cardList;
     renderPictures(defaultPhotos);
-    window.cardcreate.test(defaultPhotos);
+    window.cardcreate.clickSmallPhoto(defaultPhotos);
   };
 
   // функция перемешивания массива
@@ -34,7 +34,7 @@
     const randomElements = shuffleArray(picturesList).slice(0, MAX_RANDOM_ELEMENTS);
 
     renderPictures(randomElements);
-    window.cardcreate.test(randomElements);
+    window.cardcreate.clickSmallPhoto(randomElements);
   };
 
   // обсуждаемые картинки
@@ -45,7 +45,7 @@
     });
 
     renderPictures(sortedList);
-    window.cardcreate.test(sortedList);
+    window.cardcreate.clickSmallPhoto(sortedList);
   };
 
   // удаление картинок

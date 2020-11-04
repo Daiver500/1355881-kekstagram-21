@@ -1,6 +1,5 @@
 "use strict";
 (function () {
-// Загрузка изображения и показ формы редактирования 1.2 и 1.3.
 
   const uploadImageFile = document.querySelector(`#upload-file`);
   const imageUploadOverlay = document.querySelector(`.img-upload__overlay`);
@@ -13,12 +12,10 @@
     }
   };
 
-
   window.modalopenclose = {
     modalEscPress,
     uploadImageFile
   };
-
 
   const openModal = function () {
     imageUploadOverlay.classList.remove(`hidden`);
@@ -31,7 +28,7 @@
     document.querySelector(`body`).classList.remove(`modal-open`);
     document.removeEventListener(`keydown`, modalEscPress);
     uploadImageFile.value = ``;
-    window.submit.imageDataReset();
+    window.submit.resetImageData();
   };
 
   uploadImageFile.addEventListener(`change`, function () {

@@ -12,27 +12,27 @@
   const scaleValue = document.querySelector(`.scale__control--value`);
   const imageUploadPreview = document.querySelector(`.img-upload__preview img`);
 
-  const onMinusScaleClick = function () {
+  const clickOnMinusScale = function () {
     let scale = parseInt(scaleValue.value, 10);
     if (scale <= VALUE.max && scale > VALUE.min) {
       scale -= VALUE.min;
     }
-    imageStyleChange(scale);
+    changeImageStyle(scale);
   };
 
-  scaleControlSmaller.addEventListener(`click`, onMinusScaleClick);
+  scaleControlSmaller.addEventListener(`click`, clickOnMinusScale);
 
-  const onPlusScaleClick = function () {
+  const clickOnPlusScale = function () {
     let scale = parseInt(scaleValue.value, 10);
     if (scale >= VALUE.min && scale < VALUE.max) {
       scale += VALUE.min;
     }
-    imageStyleChange(scale);
+    changeImageStyle(scale);
   };
 
-  scaleControlBigger.addEventListener(`click`, onPlusScaleClick);
+  scaleControlBigger.addEventListener(`click`, clickOnPlusScale);
 
-  const imageStyleChange = function (number) {
+  const changeImageStyle = function (number) {
     switch (number) {
       case 25:
         imageUploadPreview.style.transform = `scale(0.25)`;

@@ -1,9 +1,6 @@
 "use strict";
 
 (function () {
-// Валидация поля для хэштегов
-
-  // 1.Описать константы
 
   const HASHTAGS_LENGTH = {
     min: 2,
@@ -15,15 +12,13 @@
 
   const hashTagsInput = document.querySelector(`.text__hashtags`);
   const pattern = /^([#]{1})([0-9a-zа-яё]{1,19})$/;
-  // /^([#]{1})([0-9a-zа-яё]{1,19})$/;
 
+  const commentsField = document.querySelector(`.text__description`);
 
-  // 2.Написать функцию получения хэштегов
   const createHashTagsArray = function (hashTagsString) {
     return hashTagsString.split(` `);
   };
 
-  // 3.Написать функцию уборки  пробелов в новом массиве
   const createNewHashtagsArrayWithoutSpaces = function (allHashtags) {
     const tags = allHashtags.filter((hashtag) => {
       return hashtag !== ``;
@@ -31,7 +26,6 @@
     return tags;
   };
 
-  // 4.Функция валидации
   const doValidationOfHashtags = function (arrayOfHashtags) {
     arrayOfHashtags.forEach((item, index) => { // проверяем forEach каждый элемент "чистого массива"
       const valueLength = item.length;
@@ -67,8 +61,6 @@
     }
   };
 
-  // 5.Функция обработчик
-
   const hashTagsInputKeyupHandler = function () {
     const inputValue = hashTagsInput.value.trim().toLowerCase();
     const dirtyHashTags = createHashTagsArray(inputValue);
@@ -92,9 +84,6 @@
     document.addEventListener(`keydown`, window.modalopenclose.modalEscPress);
   });
 
-  // Поле ввода комментария
-
-  const commentsField = document.querySelector(`.text__description`);
   commentsField.oninput = function () {
     const valueLength = commentsField.value.length;
     if (commentsField.value.length > COMMENTS_MAX) {
@@ -113,12 +102,9 @@
     document.addEventListener(`keydown`, window.modalopenclose.modalEscPress);
   });
 
-  (function () {
-    window.validation = {
-      hashTagsInput
-    };
-    window.validation = {
-      commentsField
-    };
-  })();
+  window.validation = {
+    hashTagsInput,
+    commentsField
+  };
+
 })();
