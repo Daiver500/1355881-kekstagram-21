@@ -4,7 +4,9 @@
   const MAX_RANDOM_ELEMENTS = 10;
   const filtersForm = document.querySelector(`.img-filters__form`);
   const renderPictures = window.cardcreate.renderPictures;
-
+  const filterDefaultPhotos = document.querySelector(`#filter-default`);
+  const filterRandomPhotos = document.querySelector(`#filter-random`);
+  const filterMaxCommentsPhotos = document.querySelector(`#filter-discussed`);
 
   // показываем дефолтные картинки
   const showDefaultPictures = function () {
@@ -24,7 +26,6 @@
       arrayCopy[i] = arrayCopy[randomIndex];
       arrayCopy[randomIndex] = currentElement;
     }
-
     return arrayCopy;
   };
 
@@ -32,7 +33,6 @@
   const showRandomPictures = function () {
     const picturesList = window.cardcreate.cardList;
     const randomElements = shuffleArray(picturesList).slice(0, MAX_RANDOM_ELEMENTS);
-
     renderPictures(randomElements);
     window.cardcreate.clickSmallPhoto(randomElements);
   };
@@ -43,7 +43,6 @@
     const sortedList = picturesListCopy.sort(function (a, b) {
       return a.comments.length - b.comments.length;
     });
-
     renderPictures(sortedList);
     window.cardcreate.clickSmallPhoto(sortedList);
   };
@@ -80,10 +79,6 @@
   filtersForm.addEventListener(`click`, onFilterClick);
 
   // клик по меню
-
-  const filterDefaultPhotos = document.querySelector(`#filter-default`);
-  const filterRandomPhotos = document.querySelector(`#filter-random`);
-  const filterMaxCommentsPhotos = document.querySelector(`#filter-discussed`);
 
   const clickFilterDefaultButton = function () {
     filterRandomPhotos.classList.remove(`img-filters__button--active`);
