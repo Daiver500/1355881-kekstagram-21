@@ -57,7 +57,6 @@
       if (newCommentsArray.length >= MAX_VIEW_COMMENTS) {
         commentsLoader.classList.remove(`hidden`);
         newCommentsArray.splice(5);
-        console.log(newCommentsArray);
         createSocialComments(newCommentsArray);
       } else {
         commentsLoader.classList.add(`hidden`);
