@@ -10,7 +10,7 @@
 
   // показываем дефолтные картинки
   const showDefaultPictures = function () {
-    const defaultPhotos = window.cardcreate.cardList;
+    const defaultPhotos = window.cardcreate.cardList; // вопрос ???
     renderPictures(defaultPhotos);
     window.cardcreate.clickSmallPhoto(defaultPhotos);
   };
@@ -31,7 +31,7 @@
 
   // показываем рандомные картинки
   const showRandomPictures = function () {
-    const picturesList = window.cardcreate.cardList;
+    const picturesList = window.cardcreate.cardList; // вопрос ???
     const randomElements = shuffleArray(picturesList).slice(0, MAX_RANDOM_ELEMENTS);
     renderPictures(randomElements);
     window.cardcreate.clickSmallPhoto(randomElements);
