@@ -39,7 +39,7 @@
       } else if (!item.match(pattern)) {
         hashTagsInput.setCustomValidity(`Хэштег должен состоять только из букв и цифр`);
       } else if (arrayOfHashtags.length > HASHTAGS_MAX) {
-        hashTagsInput.setCustomValidity(`Нет 1`);
+        hashTagsInput.setCustomValidity(`Слишком много знаков`);
         // } else if (arrayOfHashtags.indexOf(item, index + 1) !== -1) { // проверяем на одинаковые элементы
       // hashTagsInput.setCustomValidity(`Нет 6`);
       } else {
