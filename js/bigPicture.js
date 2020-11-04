@@ -52,8 +52,9 @@
     // 5 комментов скрыть и 5 показать по клику
 
     const newCommentsArray = comments.slice();
+    const MAX_VIEW_COMMENTS = 5;
     const hideComments = function () {
-      if (newCommentsArray.length >= 5) {
+      if (newCommentsArray.length >= MAX_VIEW_COMMENTS) {
         commentsLoader.classList.remove(`hidden`);
         newCommentsArray.splice(5);
         console.log(newCommentsArray);
@@ -65,8 +66,7 @@
     hideComments(comments);
 
     commentsLoader.onclick = function () {
-      newCommentsArray.splice(5, 0, comments[1]);
-      createSocialComments(newCommentsArray);
+      createSocialComments(comments);
     };
   };
 
