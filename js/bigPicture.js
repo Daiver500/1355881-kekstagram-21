@@ -64,6 +64,22 @@
     };
     hideComments(comments);
 
+    /* const clickLoadPhotosButton = function () {
+      const fragment = document.createDocumentFragment();
+      const li = socialComment.cloneNode(true);
+      const li2 = socialComment.cloneNode(true);
+      const li3 = socialComment.cloneNode(true);
+      const li4 = socialComment.cloneNode(true);
+      const li5 = socialComment.cloneNode(true);
+      fragment.appendChild(li);
+      fragment.appendChild(li2);
+      fragment.appendChild(li3);
+      fragment.appendChild(li4);
+      fragment.appendChild(li5);
+      socialComments.appendChild(fragment);
+    };
+    clickLoadPhotosButton(comments) */
+
     commentsLoader.onclick = function () {
       createSocialComments(comments);
     };
