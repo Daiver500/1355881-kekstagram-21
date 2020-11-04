@@ -21,7 +21,7 @@ module.exports = {
   ],
   output: {
     filename: "bundle.js",
-    path: path.resolve(__dirname, "finaljs"),
+    path: path.resolve(__dirname),
     iife: true
   },
   devtool: false
