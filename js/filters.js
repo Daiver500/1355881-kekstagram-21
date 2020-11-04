@@ -50,7 +50,7 @@
   // удаление картинок
   const removePictures = function () {
     const pics = document.querySelectorAll(`.picture`);
-    pics.forEach((item) => {
+    pics.forEach(function (item) {
       item.remove();
     });
   };
