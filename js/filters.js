@@ -1,13 +1,14 @@
 "use strict";
 
 (function () {
+
   const MAX_RANDOM_ELEMENTS = 10;
 
   const filtersForm = document.querySelector(`.img-filters__form`);
   const renderPictures = window.cardcreate.renderPictures;
 
   const showDefaultPictures = function () {
-    const defaultPhotos = window.cardcreate.cardList;
+    const defaultPhotos = window.cardcreate.cardsList;
     renderPictures(defaultPhotos);
     window.cardcreate.clickSmallPhoto(defaultPhotos);
   };
@@ -26,14 +27,14 @@
   };
 
   const showRandomPictures = function () {
-    const picturesList = window.cardcreate.cardList;
+    const picturesList = window.cardcreate.cardsList;
     const randomElements = shuffleArray(picturesList).slice(0, MAX_RANDOM_ELEMENTS);
     renderPictures(randomElements);
     window.cardcreate.clickSmallPhoto(randomElements);
   };
 
   const showDiscussedPictures = function () {
-    const picturesListCopy = window.cardcreate.cardList.slice();
+    const picturesListCopy = window.cardcreate.cardsList.slice();
     const sortedList = picturesListCopy.sort(function (a, b) {
       return b.comments.length - a.comments.length;
     });

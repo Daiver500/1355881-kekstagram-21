@@ -28,7 +28,6 @@
   const doValidationOfHashtags = function (arrayOfHashtags) {
     arrayOfHashtags.forEach((item, index) => { // проверяем forEach каждый элемент "чистого массива"
       const valueLength = item.length;
-      console.log(arrayOfHashtags.indexOf(item, index + 1) !== -1);
       if (!item.startsWith(`#`)) { // проверяем начало хэштега с #
         hashTagsInput.setCustomValidity(`Хэштег должен начиться с #`);
       } else if (valueLength < HASHTAGS_LENGTH.min) { // проверяем на min значение
