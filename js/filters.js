@@ -6,14 +6,12 @@
   const filtersForm = document.querySelector(`.img-filters__form`);
   const renderPictures = window.cardcreate.renderPictures;
 
-  // показываем дефолтные картинки
   const showDefaultPictures = function () {
-    const defaultPhotos = window.cardcreate.cardList; // вопрос ???
+    const defaultPhotos = window.cardcreate.cardList;
     renderPictures(defaultPhotos);
     window.cardcreate.clickSmallPhoto(defaultPhotos);
   };
 
-  // функция перемешивания массива
   const shuffleArray = function (array) {
     const arrayCopy = array.slice();
     const iterations = MAX_RANDOM_ELEMENTS < arrayCopy.length ? MAX_RANDOM_ELEMENTS : arrayCopy.length - 1;
@@ -27,15 +25,13 @@
     return arrayCopy;
   };
 
-  // показываем рандомные картинки
   const showRandomPictures = function () {
-    const picturesList = window.cardcreate.cardList; // вопрос ???
+    const picturesList = window.cardcreate.cardList;
     const randomElements = shuffleArray(picturesList).slice(0, MAX_RANDOM_ELEMENTS);
     renderPictures(randomElements);
     window.cardcreate.clickSmallPhoto(randomElements);
   };
 
-  // обсуждаемые картинки
   const showDiscussedPictures = function () {
     const picturesListCopy = window.cardcreate.cardList.slice();
     const sortedList = picturesListCopy.sort(function (a, b) {
@@ -45,15 +41,12 @@
     window.cardcreate.clickSmallPhoto(sortedList);
   };
 
-  // удаление картинок
   const removePictures = function () {
     const pics = document.querySelectorAll(`.picture`);
     pics.forEach(function (item) {
       item.remove();
     });
   };
-
-  //
 
   const setActiveFilterBtn = function (evt) {
     const currentActive = filtersForm.querySelector(`.img-filters__button--active`);
@@ -63,8 +56,6 @@
       target.classList.add(`img-filters__button--active`);
     }
   };
-
-  // функция фильтрации
 
   const filterClickHandler = window.timeout.debounce(function (evt) {
     removePictures();

@@ -12,7 +12,6 @@
 
   const hashTagsInput = document.querySelector(`.text__hashtags`);
   const pattern = /^([#]{1})([0-9a-zа-яё]{1,19})$/;
-
   const commentsField = document.querySelector(`.text__description`);
 
   const createHashTagsArray = function (hashTagsString) {
@@ -77,11 +76,11 @@
   hashTagsInput.addEventListener(`keyup`, hashTagsInputKeyupHandler);
 
   hashTagsInput.addEventListener(`focusin`, function () {
-    document.removeEventListener(`keydown`, window.modalopenclose.modalEscPress);
+    document.removeEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
   });
 
   hashTagsInput.addEventListener(`focusout`, function () {
-    document.addEventListener(`keydown`, window.modalopenclose.modalEscPress);
+    document.addEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
   });
 
   commentsField.oninput = function () {
@@ -95,11 +94,11 @@
   };
 
   commentsField.addEventListener(`focusin`, function () {
-    document.removeEventListener(`keydown`, window.modalopenclose.modalEscPress);
+    document.removeEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
   });
 
   commentsField.addEventListener(`focusout`, function () {
-    document.addEventListener(`keydown`, window.modalopenclose.modalEscPress);
+    document.addEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
   });
 
   window.validation = {
