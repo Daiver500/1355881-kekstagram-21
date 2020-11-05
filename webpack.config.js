@@ -1,12 +1,9 @@
-function require(path) {
-  return undefined;
-}
-
 const path = require("path");
 
 module.exports = {
   entry: [
     "./js/server.js",
+    "./js/timeout.js",
     "./js/bigpicture.js",
     "./js/cardcreate.js",
     "./js/filters.js",
@@ -24,4 +21,4 @@ module.exports = {
     iife: true
   },
   devtool: false
-}
+};
