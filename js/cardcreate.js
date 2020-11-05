@@ -2,11 +2,9 @@
 
 (function () {
 
-
   const pictures = document.querySelector(`.pictures`);
   const filters = document.querySelector(`.img-filters`);
   const openBigPicturePopup = window.bigpicture.openBigPicture;
-  // let cardsList = [];
 
   const template = document.querySelector(`#picture`)
 .content
@@ -20,8 +18,6 @@
     cardElement.querySelector(`img`).src = url;
     return cardElement;
   };
-
-  // 6.1
 
   const renderPictures = function (cardsArray) {
     const fragment = document.createDocumentFragment();
@@ -39,12 +35,11 @@
     node.style.left = 0;
     node.style.right = 0;
     node.style.fontSize = `30px`;
-
     node.textContent = errorMessage;
     document.body.insertAdjacentElement(`afterbegin`, node);
   };
 
-  const test = function (data) {
+  const clickSmallPhoto = function (data) {
     const smallPhotosList = document.querySelectorAll(`.picture`);
     smallPhotosList.forEach(function (picture, index) {
       picture.addEventListener(`click`, function (evt) {
@@ -58,7 +53,7 @@
     window.cardcreate.cardList = [];
     window.cardcreate.cardList = data;
     renderPictures(data);
-    test(data);
+    clickSmallPhoto(data);
     filters.classList.remove(`img-filters--inactive`);
   };
 
@@ -66,7 +61,7 @@
 
   window.cardcreate = {
     renderPictures,
-    test
+    clickSmallPhoto
   };
 
 })();

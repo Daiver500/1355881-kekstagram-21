@@ -6,7 +6,7 @@
   const form = document.querySelector(`.img-upload__form`);
   const imageUploadOverlay = document.querySelector(`.img-upload__overlay`);
 
-  const imageDataReset = function () {
+  const resetImageData = function () {
     window.effects.setDefaultDepth();
     window.modalopenclose.uploadImageFile.value = ``;
     window.scale.imageUploadPreview.style.filter = ``;
@@ -20,7 +20,7 @@
         new FormData(form),
         function () {
           form.reset();
-          imageDataReset();
+          resetImageData();
           imageUploadOverlay.classList.add(`hidden`);
           window.success.successUploadHandler();
         },
@@ -33,7 +33,7 @@
   form.addEventListener(`submit`, submitHandler);
 
   window.submit = {
-    imageDataReset
+    resetImageData
   };
 
 })();
