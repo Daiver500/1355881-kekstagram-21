@@ -37,9 +37,9 @@
       } else if (!item.match(pattern)) {
         hashTagsInput.setCustomValidity(`Хэштег должен состоять только из букв и цифр`);
       } else if (arrayOfHashtags.length > HASHTAGS_MAX) {
-        hashTagsInput.setCustomValidity(`Слишком много знаков`);
+        hashTagsInput.setCustomValidity(`Слишком много хэштегов`);
         // } else if (arrayOfHashtags.indexOf(item, index + 1) !== -1) { // проверяем на одинаковые элементы
-      // hashTagsInput.setCustomValidity(`Нет 6`);
+        // hashTagsInput.setCustomValidity(`Нет 6`);
       } else {
         hashTagsInput.setCustomValidity(``);
       }
@@ -55,6 +55,11 @@
       } else if (arrayOfHashtags[i] === arrayOfHashtags[i + 4]) {
         hashTagsInput.setCustomValidity(`Повторяющиеся хэштеги`);
       }
+      hashTagsInput.reportValidity();
+    }
+    if (hashTagsInput.value === ``) {
+      hashTagsInput.style.outline = `none`;
+      hashTagsInput.setCustomValidity(``);
       hashTagsInput.reportValidity();
     }
   };
