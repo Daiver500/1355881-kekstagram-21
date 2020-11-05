@@ -69,7 +69,7 @@
     document.addEventListener(`keydown`, bigPictureEscPress);
     bigPictureCancel.addEventListener(`click`, closeButtonClickHandler);
 
-    if (commentsCopy.length >= MAX_COMMENTS_AMOUNT) {
+    if (comments.length > MAX_COMMENTS_AMOUNT) {
       commentsLoader.classList.remove(`hidden`);
       commentsLoader.addEventListener(`click`, moreCommentsBtnClickHandler);
     }

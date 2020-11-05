@@ -41,7 +41,7 @@
   const showDiscussedPictures = function () {
     const picturesListCopy = window.cardcreate.cardList.slice();
     const sortedList = picturesListCopy.sort(function (a, b) {
-      return a.comments.length - b.comments.length;
+      return b.comments.length - a.comments.length;
     });
     renderPictures(sortedList);
     window.cardcreate.clickSmallPhoto(sortedList);
