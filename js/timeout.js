@@ -16,7 +16,7 @@
     };
   };
 
-  window.debounce = {
+  window.timeout = {
     debounce
   };
 

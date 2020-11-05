@@ -2,8 +2,6 @@
 
 (function () {
 
-  const effects = document.querySelector(`.effects`);
-
   const DEFAULT_EFFECT_LEVEL = 100;
 
   const MaxEffectsValues = {
@@ -14,6 +12,7 @@
     heat: [1, 2],
   };
 
+  const effects = document.querySelector(`.effects`);
   const effectLevel = document.querySelector(`.effect-level`);
   const effectLevelPin = effectLevel.querySelector(`.effect-level__pin`);
   const effectLevelLine = effectLevel.querySelector(`.effect-level__line`);
@@ -68,7 +67,7 @@
     }
   };
 
-  const onEffectsLevelPinMouseDown = function (evt) {
+  const effectsLevelPinMouseDownHandler = function (evt) {
     evt.preventDefault();
 
     const lineWidth = effectLevelLine.offsetWidth;
@@ -102,7 +101,7 @@
     document.addEventListener(`mouseup`, oneffectLevelPinMouseUp);
   };
 
-  effectLevelPin.addEventListener(`mousedown`, onEffectsLevelPinMouseDown);
+  effectLevelPin.addEventListener(`mousedown`, effectsLevelPinMouseDownHandler);
 
   effectsItem.forEach(function (item) {
     item.addEventListener(`click`, function () {

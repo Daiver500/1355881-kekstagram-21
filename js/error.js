@@ -4,11 +4,11 @@
 (function () {
 
   const main = document.querySelector(`main`);
-  const onErrorUpload = document.querySelector(`#error`)
+  const errorUpload = document.querySelector(`#error`)
   .content
   .querySelector(`.error`);
 
-  const errorElement = onErrorUpload.cloneNode(true);
+  const errorElement = errorUpload.cloneNode(true);
   const errorButton = errorElement.querySelector(`.error__button`);
   const errorInner = errorElement.querySelector(`.error__inner`);
 
@@ -16,14 +16,14 @@
     main.insertAdjacentElement(`beforeend`, errorElement);
     errorButton.addEventListener(`click`, errorButtonClickHandler);
     document.addEventListener(`click`, errorWindowClickHandler);
-    document.addEventListener(`keydown`, errorEscPress);
+    document.addEventListener(`keydown`, errorEscPressHandler);
   };
 
   const deleteErrorModule = function () {
     main.removeChild(errorElement);
     errorButton.removeEventListener(`click`, errorButtonClickHandler);
     document.removeEventListener(`click`, errorWindowClickHandler);
-    document.removeEventListener(`keydown`, errorEscPress);
+    document.removeEventListener(`keydown`, errorEscPressHandler);
   };
 
   const errorButtonClickHandler = function () {
@@ -36,7 +36,7 @@
     }
   };
 
-  const errorEscPress = function (evt) {
+  const errorEscPressHandler = function (evt) {
     if (evt.key === `Escape`) {
       deleteErrorModule();
     }

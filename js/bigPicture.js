@@ -37,7 +37,7 @@
     const comments = commentsArray.splice(0, 5);
     const fragment = document.createDocumentFragment();
 
-    comments .forEach(function (comment) {
+    comments.forEach(function (comment) {
       const commentElement = createSocialComment(comment);
       fragment.append(commentElement);
     });
@@ -49,7 +49,6 @@
     if (commentsCopy.length === 0) {
       commentsLoader.classList.add(`hidden`);
       commentsLoader.removeEventListener(`click`, moreCommentsBtnClickHandler);
-
     }
   };
 
@@ -57,25 +56,25 @@
     const {url, likes, comments, description} = object;
     commentsCopy = comments.slice();
     socialComments.innerHTML = ``;
-    console.log(commentsCopy);
     bigPicture.querySelector(`.big-picture__img img`).src = url;
     bigPicture.querySelector(`.likes-count`).textContent = likes;
     bigPicture.querySelector(`.comments-count`).textContent = comments.length;
     bigPicture.querySelector(`.social__caption`).textContent = description;
     renderSocialComments(commentsCopy);
-    console.log(commentsCopy);
     bigPicture.classList.remove(`hidden`);
     document.body.classList.add(`modal-open`);
-    document.addEventListener(`keydown`, bigPictureEscPress);
+    document.addEventListener(`keydown`, bigPictureEscPressHandler);
     bigPictureCancel.addEventListener(`click`, closeButtonClickHandler);
 
     if (comments.length > MAX_COMMENTS_AMOUNT) {
       commentsLoader.classList.remove(`hidden`);
       commentsLoader.addEventListener(`click`, moreCommentsBtnClickHandler);
+    } else {
+      commentsLoader.classList.add(`hidden`);
     }
   };
 
-  const bigPictureEscPress = function (evt) {
+  const bigPictureEscPressHandler = function (evt) {
     if (evt.key === `Escape`) {
       evt.preventDefault();
       closeBigPicture();
@@ -90,14 +89,14 @@
 
   const closeBigPicture = function () {
     bigPicture.classList.add(`hidden`);
-    document.removeEventListener(`keydown`, bigPictureEscPress);
+    document.removeEventListener(`keydown`, bigPictureEscPressHandler);
     document.body.classList.remove(`modal-open`);
     bigPictureCancel.removeEventListener(`click`, closeButtonClickHandler);
   };
 
   window.bigpicture = {
     openBigPicture,
-    bigPictureEscPress,
+    bigPictureEscPressHandler,
     bigPicture
   };
 })();

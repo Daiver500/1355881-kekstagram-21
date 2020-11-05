@@ -2,11 +2,9 @@
 
 (function () {
   const MAX_RANDOM_ELEMENTS = 10;
+
   const filtersForm = document.querySelector(`.img-filters__form`);
   const renderPictures = window.cardcreate.renderPictures;
-  const filterDefaultPhotos = document.querySelector(`#filter-default`);
-  const filterRandomPhotos = document.querySelector(`#filter-random`);
-  const filterMaxCommentsPhotos = document.querySelector(`#filter-discussed`);
 
   // показываем дефолтные картинки
   const showDefaultPictures = function () {
@@ -54,46 +52,37 @@
       item.remove();
     });
   };
+
+  //
+
+  const setActiveFilterBtn = function (evt) {
+    const currentActive = filtersForm.querySelector(`.img-filters__button--active`);
+    const {target} = evt;
+    if (!target.classList.contains(`img-filters__button--active`)) {
+      currentActive.classList.remove(`img-filters__button--active`);
+      target.classList.add(`img-filters__button--active`);
+    }
+  };
+
   // функция фильтрации
 
-  const onFilterClick = window.debounce.debounce(function (evt) {
+  const filterClickHandler = window.timeout.debounce(function (evt) {
     removePictures();
+    setActiveFilterBtn(evt);
 
     switch (evt.target.id) {
       case `filter-default`:
         showDefaultPictures();
-        clickFilterDefaultButton();
         break;
       case `filter-random`:
         showRandomPictures();
-        clickFilterRandomButton();
         break;
       case `filter-discussed`:
         showDiscussedPictures();
-        clickFilterDiscussedButton();
         break;
       default:
         showDefaultPictures();
     }
   });
-  filtersForm.addEventListener(`click`, onFilterClick);
-
-  // клик по меню
-
-  const clickFilterDefaultButton = function () {
-    filterRandomPhotos.classList.remove(`img-filters__button--active`);
-    filterMaxCommentsPhotos.classList.remove(`img-filters__button--active`);
-    filterDefaultPhotos.classList.add(`img-filters__button--active`);
-  };
-  const clickFilterRandomButton = function () {
-    filterDefaultPhotos.classList.remove(`img-filters__button--active`);
-    filterMaxCommentsPhotos.classList.remove(`img-filters__button--active`);
-    filterRandomPhotos.classList.add(`img-filters__button--active`);
-  };
-  const clickFilterDiscussedButton = function () {
-    filterDefaultPhotos.classList.remove(`img-filters__button--active`);
-    filterRandomPhotos.classList.remove(`img-filters__button--active`);
-    filterMaxCommentsPhotos.classList.add(`img-filters__button--active`);
-  };
-
+  filtersForm.addEventListener(`click`, filterClickHandler);
 })();
