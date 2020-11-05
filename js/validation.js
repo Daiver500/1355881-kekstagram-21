@@ -1,9 +1,6 @@
 "use strict";
 
 (function () {
-// Валидация поля для хэштегов
-
-  // 1.Описать константы
 
   const HASHTAGS_LENGTH = {
     min: 2,
@@ -15,15 +12,12 @@
 
   const hashTagsInput = document.querySelector(`.text__hashtags`);
   const pattern = /^([#]{1})([0-9a-zа-яё]{1,19})$/;
-  // /^([#]{1})([0-9a-zа-яё]{1,19})$/;
+  const commentsField = document.querySelector(`.text__description`);
 
-
-  // 2.Написать функцию получения хэштегов
   const createHashTagsArray = function (hashTagsString) {
     return hashTagsString.split(` `);
   };
 
-  // 3.Написать функцию уборки  пробелов в новом массиве
   const createNewHashtagsArrayWithoutSpaces = function (allHashtags) {
     const tags = allHashtags.filter((hashtag) => {
       return hashtag !== ``;
@@ -31,23 +25,21 @@
     return tags;
   };
 
-  // 4.Функция валидации
   const doValidationOfHashtags = function (arrayOfHashtags) {
     arrayOfHashtags.forEach((item, index) => { // проверяем forEach каждый элемент "чистого массива"
       const valueLength = item.length;
-      console.log(arrayOfHashtags.indexOf(item, index + 1) !== -1);
       if (!item.startsWith(`#`)) { // проверяем начало хэштега с #
-        hashTagsInput.setCustomValidity(`Нет 3`);
+        hashTagsInput.setCustomValidity(`Хэштег должен начиться с #`);
       } else if (valueLength < HASHTAGS_LENGTH.min) { // проверяем на min значение
-        hashTagsInput.setCustomValidity(`Нет 4`);
+        hashTagsInput.setCustomValidity(`Минимальное количество знаков 2`);
       } else if (valueLength > HASHTAGS_LENGTH.max) { // проверяем на max значение
-        hashTagsInput.setCustomValidity(`Нет 5`);
+        hashTagsInput.setCustomValidity(`Максимальное количество знаков 20`);
       } else if (!item.match(pattern)) {
-        hashTagsInput.setCustomValidity(`Нет 2`);
+        hashTagsInput.setCustomValidity(`Хэштег должен состоять только из букв и цифр`);
       } else if (arrayOfHashtags.length > HASHTAGS_MAX) {
-        hashTagsInput.setCustomValidity(`Нет 1`);
+        hashTagsInput.setCustomValidity(`Слишком много хэштегов`);
         // } else if (arrayOfHashtags.indexOf(item, index + 1) !== -1) { // проверяем на одинаковые элементы
-      // hashTagsInput.setCustomValidity(`Нет 6`);
+        // hashTagsInput.setCustomValidity(`Нет 6`);
       } else {
         hashTagsInput.setCustomValidity(``);
       }
@@ -55,19 +47,22 @@
     });
     for (let i = 0; i < arrayOfHashtags.length; i++) {
       if (arrayOfHashtags[i] === arrayOfHashtags[i + 1]) {
-        hashTagsInput.setCustomValidity(`Нет 6`);
+        hashTagsInput.setCustomValidity(`Повторяющиеся хэштеги`);
       } else if (arrayOfHashtags[i] === arrayOfHashtags[i + 2]) {
-        hashTagsInput.setCustomValidity(`Нет 7`);
+        hashTagsInput.setCustomValidity(`Повторяющиеся хэштеги`);
       } else if (arrayOfHashtags[i] === arrayOfHashtags[i + 3]) {
-        hashTagsInput.setCustomValidity(`Нет 8`);
+        hashTagsInput.setCustomValidity(`Повторяющиеся хэштеги`);
       } else if (arrayOfHashtags[i] === arrayOfHashtags[i + 4]) {
-        hashTagsInput.setCustomValidity(`Нет 9`);
+        hashTagsInput.setCustomValidity(`Повторяющиеся хэштеги`);
       }
       hashTagsInput.reportValidity();
     }
+    if (hashTagsInput.value === ``) {
+      hashTagsInput.style.outline = `none`;
+      hashTagsInput.setCustomValidity(``);
+      hashTagsInput.reportValidity();
+    }
   };
-
-  // 5.Функция обработчик
 
   const hashTagsInputKeyupHandler = function () {
     const inputValue = hashTagsInput.value.trim().toLowerCase();
@@ -85,16 +80,13 @@
   hashTagsInput.addEventListener(`keyup`, hashTagsInputKeyupHandler);
 
   hashTagsInput.addEventListener(`focusin`, function () {
-    document.removeEventListener(`keydown`, window.modalopenclose.modalEscPress);
+    document.removeEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
   });
 
   hashTagsInput.addEventListener(`focusout`, function () {
-    document.addEventListener(`keydown`, window.modalopenclose.modalEscPress);
+    document.addEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
   });
 
-  // Поле ввода комментария
-
-  const commentsField = document.querySelector(`.text__description`);
   commentsField.oninput = function () {
     const valueLength = commentsField.value.length;
     if (commentsField.value.length > COMMENTS_MAX) {
@@ -106,19 +98,16 @@
   };
 
   commentsField.addEventListener(`focusin`, function () {
-    document.removeEventListener(`keydown`, window.modalopenclose.modalEscPress);
+    document.removeEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
   });
 
   commentsField.addEventListener(`focusout`, function () {
-    document.addEventListener(`keydown`, window.modalopenclose.modalEscPress);
+    document.addEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
   });
 
-  (function () {
-    window.validation = {
-      hashTagsInput
-    };
-    window.validation = {
-      commentsField
-    };
-  })();
+  window.validation = {
+    hashTagsInput,
+    commentsField
+  };
+
 })();
