@@ -15,13 +15,13 @@
     main.insertAdjacentElement(`afterbegin`, successElement);
     successButton.addEventListener(`click`, successButtonClickHandler);
     document.addEventListener(`click`, successWindowClickHandler);
-    document.addEventListener(`keydown`, EscPressHandler);
+    document.addEventListener(`keydown`, escPressHandler);
   };
 
   const deleteSuccessModule = function () {
     successButton.removeEventListener(`click`, successButtonClickHandler);
     document.removeEventListener(`click`, successWindowClickHandler);
-    document.removeEventListener(`keydown`, EscPressHandler);
+    document.removeEventListener(`keydown`, escPressHandler);
     main.removeChild(successElement);
   };
 
@@ -35,7 +35,7 @@
     }
   };
 
-  const EscPressHandler = function (evt) {
+  const escPressHandler = function (evt) {
     if (evt.key === `Escape`) {
       deleteSuccessModule();
     }

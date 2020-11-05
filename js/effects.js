@@ -1,24 +1,6 @@
 "use strict";
 
-// Интенсивность эффекта и ползунок
-
 (function () {
-
-  // Эффект на изображение
-
-  const effects = document.querySelector(`.effects`);
-
-  const filterChange = function (evt) {
-    if (evt.target.matches(`input[type="radio"]`)) {
-      window.scale.imageUploadPreview.className = ``;
-      setDefaultDepth();
-      window.scale.imageUploadPreview.className = `effects__preview--${evt.target.value}`;
-    }
-  };
-
-  effects.addEventListener(`click`, filterChange);
-
-  // Интенсивность эффекта и ползунок
 
   const DEFAULT_EFFECT_LEVEL = 100;
 
@@ -30,11 +12,27 @@
     heat: [1, 2],
   };
 
+  const effects = document.querySelector(`.effects`);
   const effectLevel = document.querySelector(`.effect-level`);
   const effectLevelPin = effectLevel.querySelector(`.effect-level__pin`);
   const effectLevelLine = effectLevel.querySelector(`.effect-level__line`);
   const effectLevelDepth = effectLevel.querySelector(`.effect-level__depth`);
   const effectLevelValue = effectLevel.querySelector(`.effect-level__value`);
+  const effectsItemFirst = document.querySelector(`.effects__item:first-child`);
+  const effectsItem = document.querySelectorAll(`.effects__item`);
+  const imgUploadEffectLevel = document.querySelector(`.img-upload__effect-level`);
+
+  imgUploadEffectLevel.classList.add(`hidden`);
+
+  const changeFilter = function (evt) {
+    if (evt.target.matches(`input[type="radio"]`)) {
+      window.scale.imageUploadPreview.className = ``;
+      setDefaultDepth();
+      window.scale.imageUploadPreview.className = `effects__preview--${evt.target.value}`;
+    }
+  };
+
+  effects.addEventListener(`click`, changeFilter);
 
   const setDefaultDepth = function () {
     effectLevelPin.style.left = DEFAULT_EFFECT_LEVEL + `%`;
@@ -42,11 +40,6 @@
     effectLevelValue.value = DEFAULT_EFFECT_LEVEL;
     window.scale.imageUploadPreview.style.filter = ``;
   };
-
-  window.effects = {
-    setDefaultDepth,
-  };
-
 
   const setNewEffectDepth = function (levelValue) {
     const value = levelValue / 100;
@@ -73,7 +66,8 @@
       }
     }
   };
-  const onEffectsLevelPinMouseDown = function (evt) {
+
+  const effectsLevelPinMouseDownHandler = function (evt) {
     evt.preventDefault();
 
     const lineWidth = effectLevelLine.offsetWidth;
@@ -95,9 +89,9 @@
         setNewEffectDepth(effectLevelValue.value);
       }
     };
+
     const oneffectLevelPinMouseUp = function (upEvt) {
       upEvt.preventDefault();
-
       document.removeEventListener(`mousemove`, oneEffectLevelPinMove);
       document.removeEventListener(`mouseup`, oneffectLevelPinMouseUp);
 
@@ -107,21 +101,21 @@
     document.addEventListener(`mouseup`, oneffectLevelPinMouseUp);
   };
 
-  effectLevelPin.addEventListener(`mousedown`, onEffectsLevelPinMouseDown);
+  effectLevelPin.addEventListener(`mousedown`, effectsLevelPinMouseDownHandler);
 
-  const liFirst = document.querySelector(`.effects__item:first-child`);
-  const Li = document.querySelectorAll(`.effects__item`);
-  const imgUploadEffectLevel = document.querySelector(`.img-upload__effect-level`);
-
-  imgUploadEffectLevel.classList.add(`hidden`);
-
-  Li.forEach(function (item) {
+  effectsItem.forEach(function (item) {
     item.addEventListener(`click`, function () {
       imgUploadEffectLevel.classList.remove(`hidden`);
     });
   });
 
-  liFirst.addEventListener(`click`, function () {
+  effectsItemFirst.addEventListener(`click`, function () {
     imgUploadEffectLevel.classList.add(`hidden`);
   });
+
+  window.effects = {
+    setDefaultDepth,
+    effectLevel
+  };
+
 })();
