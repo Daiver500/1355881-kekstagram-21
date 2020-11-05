@@ -50,8 +50,8 @@
   };
 
   const successDataLoadHandler = function (data) {
-    window.cardcreate.cardList = [];
-    window.cardcreate.cardList = data;
+    window.cardcreate.cardsList = [];
+    window.cardcreate.cardsList = data;
     renderPictures(data);
     clickSmallPhoto(data);
     filters.classList.remove(`img-filters--inactive`);
