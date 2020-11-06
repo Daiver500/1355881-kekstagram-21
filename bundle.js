@@ -98,45 +98,6 @@
 })();
 
 (() => {
-/*!****************************!*\
-  !*** ./js/photoloading.js ***!
-  \****************************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements:  */
-
-
-(function () {
-
-  const FILE_TYPES = [`jpg`, `jpeg`, `png`];
-
-  const fileChooser = document.querySelector(`.img-upload__start input[type=file]`);
-  const preview = document.querySelector(`.img-upload__preview img`);
-  console.log(preview);
-
-  fileChooser.addEventListener(`change`, function () {
-    const file = fileChooser.files[0];
-    const fileName = file.name.toLowerCase();
-    console.log(file);
-
-    const matches = FILE_TYPES.some(function (it) {
-      return fileName.endsWith(it);
-    });
-
-    if (matches) {
-      const reader = new FileReader();
-      reader.addEventListener(`load`, function () {
-        preview.src = reader.result;
-      });
-      reader.readAsDataURL(file);
-    }
-
-  });
-
-})();
-
-})();
-
-(() => {
 /*!**************************!*\
   !*** ./js/bigpicture.js ***!
   \**************************/
@@ -580,8 +541,61 @@
 
   window.modalopenclose = {
     modalEscPressHandler,
-    uploadImageFile
+    uploadImageFile,
+    imageUploadOverlay
   };
+
+})();
+
+})();
+
+(() => {
+/*!****************************!*\
+  !*** ./js/photoloading.js ***!
+  \****************************/
+/*! unknown exports (runtime-defined) */
+/*! runtime requirements:  */
+
+
+(function () {
+
+  const FILE_TYPES = [`jpg`, `jpeg`, `png`];
+  const imgUpload = document.querySelector(`.img-upload`);
+  const fileChooser = imgUpload.querySelector(`.img-upload__start input[type=file]`);
+  const previewImg = imgUpload.querySelector(`.img-upload__preview img`);
+  const effectsPreview = imgUpload.querySelector(`.effects__preview`);
+
+  const setEffectsPreview = function (customImage) {
+    effectsPreview.forEach(function (preview) {
+      preview.style = `background-image: url ('${customImage}')`;
+    });
+  };
+
+  fileChooser.addEventListener(`change`, function () {
+    const file = fileChooser.files[0];
+    const fileName = file.name.toLowerCase();
+
+
+    const matches = FILE_TYPES.some(function (it) {
+      return fileName.endsWith(it);
+    });
+
+    if (!matches) {
+      window.error.errorUploadHandler(`Недопустимый формат`);
+      window.modalopenclose.imageUploadOverlay.classList.add(`hidden`);
+      window.submit.resetImageData();
+    }
+
+    const reader = new FileReader();
+    reader.addEventListener(`load`, function () {
+      const image = reader.result;
+      previewImg.src = image;
+      setEffectsPreview(image);
+    });
+    reader.readAsDataURL(file);
+
+
+  });
 
 })();
 
@@ -714,8 +728,12 @@
   const errorElement = errorUpload.cloneNode(true);
   const errorButton = errorElement.querySelector(`.error__button`);
   const errorInner = errorElement.querySelector(`.error__inner`);
+  const errorTitle = errorElement.querySelector(`.error__title`);
 
-  const createErrorModule = function () {
+  const createErrorModule = function (errorText) {
+    if (errorText) {
+      errorTitle.textContent = errorText;
+    }
     main.insertAdjacentElement(`beforeend`, errorElement);
     errorButton.addEventListener(`click`, errorButtonClickHandler);
     document.addEventListener(`click`, errorWindowClickHandler);
@@ -745,8 +763,8 @@
     }
   };
 
-  const errorUploadHandler = function () {
-    createErrorModule();
+  const errorUploadHandler = function (errorText = false) {
+    createErrorModule(errorText);
   };
 
   window.error = {

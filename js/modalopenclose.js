@@ -36,7 +36,8 @@
 
   window.modalopenclose = {
     modalEscPressHandler,
-    uploadImageFile
+    uploadImageFile,
+    imageUploadOverlay
   };
 
 })();

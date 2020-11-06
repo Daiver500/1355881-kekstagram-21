@@ -11,8 +11,12 @@
   const errorElement = errorUpload.cloneNode(true);
   const errorButton = errorElement.querySelector(`.error__button`);
   const errorInner = errorElement.querySelector(`.error__inner`);
+  const errorTitle = errorElement.querySelector(`.error__title`);
 
-  const createErrorModule = function () {
+  const createErrorModule = function (errorText) {
+    if (errorText) {
+      errorTitle.textContent = errorText;
+    }
     main.insertAdjacentElement(`beforeend`, errorElement);
     errorButton.addEventListener(`click`, errorButtonClickHandler);
     document.addEventListener(`click`, errorWindowClickHandler);
@@ -42,8 +46,8 @@
     }
   };
 
-  const errorUploadHandler = function () {
-    createErrorModule();
+  const errorUploadHandler = function (errorText = false) {
+    createErrorModule(errorText);
   };
 
   window.error = {

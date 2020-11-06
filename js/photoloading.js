@@ -3,27 +3,40 @@
 (function () {
 
   const FILE_TYPES = [`jpg`, `jpeg`, `png`];
+  const imgUpload = document.querySelector(`.img-upload`);
+  const fileChooser = imgUpload.querySelector(`.img-upload__start input[type=file]`);
+  const previewImg = imgUpload.querySelector(`.img-upload__preview img`);
+  const effectsPreview = imgUpload.querySelector(`.effects__preview`);
 
-  const fileChooser = document.querySelector(`.img-upload__start input[type=file]`);
-  const preview = document.querySelector(`.img-upload__preview img`);
-  console.log(preview);
+  const setEffectsPreview = function (customImage) {
+    effectsPreview.forEach(function (preview) {
+      preview.style = `background-image: url ('${customImage}')`;
+    });
+  };
 
   fileChooser.addEventListener(`change`, function () {
     const file = fileChooser.files[0];
     const fileName = file.name.toLowerCase();
-    console.log(file);
+
 
     const matches = FILE_TYPES.some(function (it) {
       return fileName.endsWith(it);
     });
 
-    if (matches) {
-      const reader = new FileReader();
-      reader.addEventListener(`load`, function () {
-        preview.src = reader.result;
-      });
-      reader.readAsDataURL(file);
+    if (!matches) {
+      window.error.errorUploadHandler(`Недопустимый формат`);
+      window.modalopenclose.imageUploadOverlay.classList.add(`hidden`);
+      window.submit.resetImageData();
     }
+
+    const reader = new FileReader();
+    reader.addEventListener(`load`, function () {
+      const image = reader.result;
+      previewImg.src = image;
+      setEffectsPreview(image);
+    });
+    reader.readAsDataURL(file);
+
 
   });
 
