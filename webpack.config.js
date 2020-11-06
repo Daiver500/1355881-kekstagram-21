@@ -4,6 +4,7 @@ module.exports = {
   entry: [
     "./js/server.js",
     "./js/timeout.js",
+    "./js/photoloading.js",
     "./js/bigpicture.js",
     "./js/cardcreate.js",
     "./js/filters.js",
