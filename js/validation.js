@@ -45,6 +45,7 @@
       }
       // hashTagsInput.reportValidity();
     });
+
     for (let i = 0; i < arrayOfHashtags.length; i++) {
       if (arrayOfHashtags[i] === arrayOfHashtags[i + 1]) {
         hashTagsInput.setCustomValidity(`Повторяющиеся хэштеги`);
@@ -62,6 +63,11 @@
       hashTagsInput.setCustomValidity(``);
     }
 
+    if (!hashTagsInput.validity.valid) {
+      hashTagsInput.style.outline = `2px solid red`;
+    } else {
+      hashTagsInput.style.outline = `none`;
+    }
     hashTagsInput.reportValidity();
   };
 
@@ -71,12 +77,6 @@
     const dirtyHashTags = createHashTagsArray(inputValue);
     const cleanHashTags = createNewHashtagsArrayWithoutSpaces(dirtyHashTags);
     doValidationOfHashtags(cleanHashTags);
-
-    if (!hashTagsInput.validity.valid) {
-      hashTagsInput.style.outline = `2px solid red`;
-    } else {
-      hashTagsInput.style.outline = `none`;
-    }
   };
 
   hashTagsInput.addEventListener(`keyup`, hashTagsInputKeyupHandler);
