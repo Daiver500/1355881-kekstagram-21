@@ -409,7 +409,7 @@
   };
 
   const doValidationOfHashtags = function (arrayOfHashtags) {
-    arrayOfHashtags.forEach((item, index) => { // проверяем forEach каждый элемент "чистого массива"
+    arrayOfHashtags.forEach(function (item, index) { // проверяем forEach каждый элемент "чистого массива"
       const valueLength = item.length;
       if (!item.startsWith(`#`)) { // проверяем начало хэштега с #
         hashTagsInput.setCustomValidity(`Хэштег должен начиться с #`);
@@ -421,13 +421,14 @@
         hashTagsInput.setCustomValidity(`Хэштег должен состоять только из букв и цифр`);
       } else if (arrayOfHashtags.length > HASHTAGS_MAX) {
         hashTagsInput.setCustomValidity(`Слишком много хэштегов`);
-        // } else if (arrayOfHashtags.indexOf(item, index + 1) !== -1) { // проверяем на одинаковые элементы
+        // } else if (arrayOfHashtags.includes(item, 0) === arrayOfHashtags[item]) { // проверяем на одинаковые элементы
         // hashTagsInput.setCustomValidity(`Нет 6`);
-      } else {
-        hashTagsInput.setCustomValidity(``);
+      // } else {
+        // hashTagsInput.setCustomValidity(``);
       }
       hashTagsInput.reportValidity();
     });
+
     for (let i = 0; i < arrayOfHashtags.length; i++) {
       if (arrayOfHashtags[i] === arrayOfHashtags[i + 1]) {
         hashTagsInput.setCustomValidity(`Повторяющиеся хэштеги`);
@@ -440,6 +441,7 @@
       }
       hashTagsInput.reportValidity();
     }
+
     if (hashTagsInput.value === ``) {
       hashTagsInput.style.outline = `none`;
       hashTagsInput.setCustomValidity(``);
