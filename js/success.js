@@ -2,6 +2,7 @@
 "use strict";
 
 (function () {
+
   const main = document.querySelector(`main`);
   const onSuccessUpload = document.querySelector(`#success`)
   .content
@@ -15,13 +16,13 @@
     main.insertAdjacentElement(`afterbegin`, successElement);
     successButton.addEventListener(`click`, successButtonClickHandler);
     document.addEventListener(`click`, successWindowClickHandler);
-    document.addEventListener(`keydown`, escPressHandler);
+    document.addEventListener(`keydown`, EscPressHandler);
   };
 
   const deleteSuccessModule = function () {
     successButton.removeEventListener(`click`, successButtonClickHandler);
     document.removeEventListener(`click`, successWindowClickHandler);
-    document.removeEventListener(`keydown`, escPressHandler);
+    document.removeEventListener(`keydown`, EscPressHandler);
     main.removeChild(successElement);
   };
 
@@ -35,7 +36,7 @@
     }
   };
 
-  const escPressHandler = function (evt) {
+  const EscPressHandler = function (evt) {
     if (evt.key === `Escape`) {
       deleteSuccessModule();
     }

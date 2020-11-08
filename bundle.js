@@ -593,10 +593,7 @@
       setEffectsPreview(image);
     });
     reader.readAsDataURL(file);
-
-
   });
-
 })();
 
 })();
@@ -659,6 +656,7 @@
 
 
 (function () {
+
   const main = document.querySelector(`main`);
   const onSuccessUpload = document.querySelector(`#success`)
   .content
@@ -672,13 +670,13 @@
     main.insertAdjacentElement(`afterbegin`, successElement);
     successButton.addEventListener(`click`, successButtonClickHandler);
     document.addEventListener(`click`, successWindowClickHandler);
-    document.addEventListener(`keydown`, escPressHandler);
+    document.addEventListener(`keydown`, EscPressHandler);
   };
 
   const deleteSuccessModule = function () {
     successButton.removeEventListener(`click`, successButtonClickHandler);
     document.removeEventListener(`click`, successWindowClickHandler);
-    document.removeEventListener(`keydown`, escPressHandler);
+    document.removeEventListener(`keydown`, EscPressHandler);
     main.removeChild(successElement);
   };
 
@@ -692,7 +690,7 @@
     }
   };
 
-  const escPressHandler = function (evt) {
+  const EscPressHandler = function (evt) {
     if (evt.key === `Escape`) {
       deleteSuccessModule();
     }
@@ -787,7 +785,7 @@
 
   const DEFAULT_EFFECT_LEVEL = 100;
 
-  const MaxEffectsValues = {
+  const MAX_EFFECTS_VALUES = {
     chrome: 1,
     sepia: 1,
     marvin: 100,
@@ -812,6 +810,8 @@
       window.scale.imageUploadPreview.className = ``;
       setDefaultDepth();
       window.scale.imageUploadPreview.className = `effects__preview--${evt.target.value}`;
+      window.scale.imageUploadPreview.style.transform = `scale(1.00)`;
+      window.scale.scaleValue.value = `${100}%`;
     }
   };
 
@@ -830,19 +830,19 @@
     if (window.scale.imageUploadPreview.className.match(`effects__preview--`)) {
       switch (window.scale.imageUploadPreview.className) {
         case `effects__preview--chrome`:
-          window.scale.imageUploadPreview.style.filter = `grayscale(${MaxEffectsValues.chrome * value})`;
+          window.scale.imageUploadPreview.style.filter = `grayscale(${MAX_EFFECTS_VALUES.chrome * value})`;
           break;
         case `effects__preview--sepia`:
-          window.scale.imageUploadPreview.style.filter = `sepia(${MaxEffectsValues.sepia * value})`;
+          window.scale.imageUploadPreview.style.filter = `sepia(${MAX_EFFECTS_VALUES.sepia * value})`;
           break;
         case `effects__preview--marvin`:
           window.scale.imageUploadPreview.style.filter = `invert(${levelValue}%)`;
           break;
         case `effects__preview--phobos`:
-          window.scale.imageUploadPreview.style.filter = `blur(${MaxEffectsValues.phobos * value}px)`;
+          window.scale.imageUploadPreview.style.filter = `blur(${MAX_EFFECTS_VALUES.phobos * value}px)`;
           break;
         case `effects__preview--heat`:
-          window.scale.imageUploadPreview.style.filter = `brightness(${MaxEffectsValues.heat[1] * value + MaxEffectsValues.heat[0]})`;
+          window.scale.imageUploadPreview.style.filter = `brightness(${MAX_EFFECTS_VALUES.heat[1] * value + MAX_EFFECTS_VALUES.heat[0]})`;
           break;
         default:
           window.scale.imageUploadPreview.style.filter = ``;
@@ -873,15 +873,15 @@
       }
     };
 
-    const oneffectLevelPinMouseUp = function (upEvt) {
+    const oneEffectLevelPinMouseUp = function (upEvt) {
       upEvt.preventDefault();
       document.removeEventListener(`mousemove`, oneEffectLevelPinMove);
-      document.removeEventListener(`mouseup`, oneffectLevelPinMouseUp);
+      document.removeEventListener(`mouseup`, oneEffectLevelPinMouseUp);
 
     };
 
     document.addEventListener(`mousemove`, oneEffectLevelPinMove);
-    document.addEventListener(`mouseup`, oneffectLevelPinMouseUp);
+    document.addEventListener(`mouseup`, oneEffectLevelPinMouseUp);
   };
 
   effectLevelPin.addEventListener(`mousedown`, effectsLevelPinMouseDownHandler);
@@ -967,7 +967,8 @@
   };
 
   window.scale = {
-    imageUploadPreview
+    imageUploadPreview,
+    scaleValue
   };
 })();
 

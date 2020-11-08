@@ -54,6 +54,7 @@
   };
 
   window.scale = {
-    imageUploadPreview
+    imageUploadPreview,
+    scaleValue
   };
 })();

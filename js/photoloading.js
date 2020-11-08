@@ -36,8 +36,5 @@
       setEffectsPreview(image);
     });
     reader.readAsDataURL(file);
-
-
   });
-
 })();
