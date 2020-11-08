@@ -409,7 +409,8 @@
   };
 
   const doValidationOfHashtags = function (arrayOfHashtags) {
-    arrayOfHashtags.forEach(function (item, index) { // проверяем forEach каждый элемент "чистого массива"
+    for (let i = 0; i < arrayOfHashtags.length; i++) { // проверяем forEach каждый элемент "чистого массива"
+      const item = arrayOfHashtags[i];
       const valueLength = item.length;
       if (!item.startsWith(`#`)) { // проверяем начало хэштега с #
         hashTagsInput.setCustomValidity(`Хэштег должен начиться с #`);
@@ -423,11 +424,11 @@
         hashTagsInput.setCustomValidity(`Слишком много хэштегов`);
         // } else if (arrayOfHashtags.includes(item, 0) === arrayOfHashtags[item]) { // проверяем на одинаковые элементы
         // hashTagsInput.setCustomValidity(`Нет 6`);
-      // } else {
-        // hashTagsInput.setCustomValidity(``);
+      } else {
+        hashTagsInput.setCustomValidity(``);
       }
-      hashTagsInput.reportValidity();
-    });
+      // hashTagsInput.reportValidity();
+    }
 
     for (let i = 0; i < arrayOfHashtags.length; i++) {
       if (arrayOfHashtags[i] === arrayOfHashtags[i + 1]) {
@@ -439,14 +440,15 @@
       } else if (arrayOfHashtags[i] === arrayOfHashtags[i + 4]) {
         hashTagsInput.setCustomValidity(`Повторяющиеся хэштеги`);
       }
-      hashTagsInput.reportValidity();
+      // hashTagsInput.reportValidity();
     }
 
     if (hashTagsInput.value === ``) {
       hashTagsInput.style.outline = `none`;
       hashTagsInput.setCustomValidity(``);
-      hashTagsInput.reportValidity();
+      // hashTagsInput.reportValidity();
     }
+    hashTagsInput.reportValidity();
   };
 
   const hashTagsInputKeyupHandler = function () {
@@ -455,11 +457,11 @@
     const cleanHashTags = createNewHashtagsArrayWithoutSpaces(dirtyHashTags);
     doValidationOfHashtags(cleanHashTags);
 
-    if (!hashTagsInput.validity.valid) {
+    /* if (!hashTagsInput.validity.valid) {
       hashTagsInput.style.outline = `2px solid red`;
     } else {
       hashTagsInput.style.outline = `none`;
-    }
+    }*/
   };
 
   hashTagsInput.addEventListener(`keyup`, hashTagsInputKeyupHandler);
