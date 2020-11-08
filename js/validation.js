@@ -26,8 +26,7 @@
   };
 
   const doValidationOfHashtags = function (arrayOfHashtags) {
-    for (let i = 0; i < arrayOfHashtags.length; i++) { // проверяем forEach каждый элемент "чистого массива"
-      const item = arrayOfHashtags[i];
+    arrayOfHashtags.forEach(function (item, index) { // проверяем forEach каждый элемент "чистого массива"
       const valueLength = item.length;
       if (!item.startsWith(`#`)) { // проверяем начало хэштега с #
         hashTagsInput.setCustomValidity(`Хэштег должен начиться с #`);
@@ -45,7 +44,7 @@
         hashTagsInput.setCustomValidity(``);
       }
       // hashTagsInput.reportValidity();
-    }
+    });
 
     for (let i = 0; i < arrayOfHashtags.length; i++) {
       if (arrayOfHashtags[i] === arrayOfHashtags[i + 1]) {
