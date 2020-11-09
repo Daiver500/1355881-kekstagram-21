@@ -565,7 +565,7 @@
   const imgUpload = document.querySelector(`.img-upload`);
   const fileChooser = imgUpload.querySelector(`.img-upload__start input[type=file]`);
   const previewImg = imgUpload.querySelector(`.img-upload__preview img`);
-  const effectsPreview = imgUpload.querySelector(`.effects__preview`);
+  const effectsPreview = imgUpload.querySelectorAll(`.effects__preview`);
 
   const setEffectsPreview = function (customImage) {
     effectsPreview.forEach(function (preview) {

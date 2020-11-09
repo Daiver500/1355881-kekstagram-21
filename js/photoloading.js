@@ -10,7 +10,7 @@
 
   const setEffectsPreview = function (customImage) {
     effectsPreview.forEach(function (preview) {
-      preview.style = `background-image: url ('${customImage}')`;
+      preview.style = `background-image: url('${customImage}')`;
     });
   };
 
