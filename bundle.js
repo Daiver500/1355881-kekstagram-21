@@ -389,17 +389,14 @@ const commentsField = document.querySelector(`.text__description`);
 
 const hashtagsInputKeyupHandler = function () {
   const hashtagsArr = hashtagsInput.value.replace(/ +/g, ` `).trim().toLowerCase().split(` `);
-  console.log(hashtagsArr);
 
   const isHashtagsLessThanFive = hashtagsArr.length <= HASHTAGS_MAX_COUNT;
 
   const isHashtagCorrect = hashtagsArr.every(function (tag) {
-    console.log(`isHashRegExp`);
     return HASHTAG_REG_EXP.test(tag);
   });
 
   const isHastagsNoDuplicates = hashtagsArr.every(function (item, index, array) {
-    console.log(`NoDuplicates`);
     return array.indexOf(item) === index;
   });
 
