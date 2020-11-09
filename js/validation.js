@@ -1,115 +1,68 @@
 "use strict";
 
 (function () {
+  const HASHTAGS_MAX_COUNT = 5;
+  const HASHTAG_REG_EXP = /^#([а-яА-Я]|[a-zA-Z]|[0-9]){1,20}$/;
 
-  const HASHTAGS_LENGTH = {
-    min: 2,
-    max: 20
+  const USER_MESSAGE = {
+    LESS_THEN_FIVE: `Нельзя указать больше пяти хэш-тегов`,
+    NO_DUPLICATES: `Один и тот же хэш-тег не может быть использован дважды`,
+    CORRECT: `Не верный формат хештега`,
   };
 
-  const HASHTAGS_MAX = 5;
-  const COMMENTS_MAX = 120;
+  const inputHashtags = document.querySelector(`.text__hashtags`);
 
-  const hashTagsInput = document.querySelector(`.text__hashtags`);
-  const pattern = /^([#]{1})([0-9a-zа-яё]{1,19})$/;
-  const commentsField = document.querySelector(`.text__description`);
+  const onInputHashtagsKeyup = function () {
+    const hashtagsArr = inputHashtags.value.replace(/ +/g, ` `).trim().toLowerCase().split(` `);
+    console.log(hashtagsArr);
 
-  const createHashTagsArray = function (hashTagsString) {
-    return hashTagsString.split(` `);
-  };
+    const isHashtagsLessThanFive = hashtagsArr.length <= HASHTAGS_MAX_COUNT;
 
-  const createNewHashtagsArrayWithoutSpaces = function (allHashtags) {
-    const tags = allHashtags.filter((hashtag) => {
-      return hashtag !== ``;
-    });
-    return tags;
-  };
-
-  const doValidationOfHashtags = function (arrayOfHashtags) {
-    arrayOfHashtags.forEach(function (item, index) { // проверяем forEach каждый элемент "чистого массива"
-      const valueLength = item.length;
-      if (!item.startsWith(`#`)) { // проверяем начало хэштега с #
-        hashTagsInput.setCustomValidity(`Хэштег должен начиться с #`);
-      } else if (valueLength < HASHTAGS_LENGTH.min) { // проверяем на min значение
-        hashTagsInput.setCustomValidity(`Минимальное количество знаков 2`);
-      } else if (valueLength > HASHTAGS_LENGTH.max) { // проверяем на max значение
-        hashTagsInput.setCustomValidity(`Максимальное количество знаков 20`);
-      } else if (!item.match(pattern)) {
-        hashTagsInput.setCustomValidity(`Хэштег должен состоять только из букв и цифр`);
-      } else if (arrayOfHashtags.length > HASHTAGS_MAX) {
-        hashTagsInput.setCustomValidity(`Слишком много хэштегов`);
-        // } else if (arrayOfHashtags.indexOf(item, index + 1) !== -1) { // проверяем на одинаковые элементы
-        // hashTagsInput.setCustomValidity(`Нет 6`);
-      } else {
-        hashTagsInput.setCustomValidity(``);
+    const isHashtagCorrect = hashtagsArr.every(function (tag) {
+      console.log(`isHashRegExp`);
+      if (hashtagsArr[0] !== ``) {
+        HASHTAG_REG_EXP.test(tag);
       }
-      // hashTagsInput.reportValidity();
     });
 
-    for (let i = 0; i < arrayOfHashtags.length; i++) {
-      if (arrayOfHashtags[i] === arrayOfHashtags[i + 1]) {
-        hashTagsInput.setCustomValidity(`Повторяющиеся хэштеги`);
-      } else if (arrayOfHashtags[i] === arrayOfHashtags[i + 2]) {
-        hashTagsInput.setCustomValidity(`Повторяющиеся хэштеги`);
-      } else if (arrayOfHashtags[i] === arrayOfHashtags[i + 3]) {
-        hashTagsInput.setCustomValidity(`Повторяющиеся хэштеги`);
-      } else if (arrayOfHashtags[i] === arrayOfHashtags[i + 4]) {
-        hashTagsInput.setCustomValidity(`Повторяющиеся хэштеги`);
+    const isHastagsNoDuplicates = hashtagsArr.every(function (item, index, array) {
+      console.log(`NoDuplicates`);
+      if (hashtagsArr[0] !== ``) {
+        return array.indexOf(item) === index;
       }
-      // hashTagsInput.reportValidity();
-    }
-    if (hashTagsInput.value === ``) {
-      hashTagsInput.style.outline = `none`;
-      hashTagsInput.setCustomValidity(``);
+    });
+
+    inputHashtags.setCustomValidity(``);
+
+    if (!isHashtagsLessThanFive) {
+      inputHashtags.setCustomValidity(USER_MESSAGE.LESS_THEN_FIVE);
     }
 
-    if (!hashTagsInput.validity.valid) {
-      hashTagsInput.style.outline = `2px solid red`;
+    if (!isHashtagCorrect) {
+      inputHashtags.setCustomValidity(USER_MESSAGE.CORRECT);
+    }
+
+    if (!isHastagsNoDuplicates) {
+      inputHashtags.setCustomValidity(USER_MESSAGE.NO_DUPLICATES);
+    }
+    inputHashtags.reportValidity();
+
+    if ((isHashtagCorrect && isHastagsNoDuplicates && isHashtagsLessThanFive) || inputHashtags.value === ``) {
+      inputHashtags.style.outline = ``;
+      inputHashtags.style.background = ``;
     } else {
-      hashTagsInput.style.outline = `none`;
+      inputHashtags.style.outline = `2px solid red`;
+      inputHashtags.style.background = `pink`;
     }
-    hashTagsInput.reportValidity();
   };
 
+  inputHashtags.addEventListener(`input`, onInputHashtagsKeyup);
 
-  const hashTagsInputKeyupHandler = function () {
-    const inputValue = hashTagsInput.value.trim().toLowerCase();
-    const dirtyHashTags = createHashTagsArray(inputValue);
-    const cleanHashTags = createNewHashtagsArrayWithoutSpaces(dirtyHashTags);
-    doValidationOfHashtags(cleanHashTags);
-  };
-
-  hashTagsInput.addEventListener(`keyup`, hashTagsInputKeyupHandler);
-
-  hashTagsInput.addEventListener(`focusin`, function () {
-    document.removeEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
-  });
-
-  hashTagsInput.addEventListener(`focusout`, function () {
-    document.addEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
-  });
-
-  commentsField.oninput = function () {
-    const valueLength = commentsField.value.length;
-    if (commentsField.value.length > COMMENTS_MAX) {
-      commentsField.setCustomValidity(`Удалите ` + (COMMENTS_MAX - valueLength) + ` симв.`);
-    } else {
-      commentsField.setCustomValidity(``);
-    }
-    commentsField.reportValidity();
-  };
-
-  commentsField.addEventListener(`focusin`, function () {
-    document.removeEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
-  });
-
-  commentsField.addEventListener(`focusout`, function () {
-    document.addEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
-  });
-
-  window.validation = {
-    hashTagsInput,
-    commentsField
-  };
+  // window.validation = {
+  //   hashTagsInput,
+  //   commentsField
+  // };
 
 })();
+
+
