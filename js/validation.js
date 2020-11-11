@@ -11,11 +11,11 @@ const USER_MESSAGE = {
   CORRECT: `Не верный формат хештега`,
 };
 
-const hashtagsInput = document.querySelector(`.text__hashtags`);
-const commentsField = document.querySelector(`.text__description`);
+// const hashtagsInput = document.querySelector(`.text__hashtags`);
+// const commentsField = document.querySelector(`.text__description`);
 
-
-const hashtagsInputHandler = function () {
+const hashtagsInputHandler = function (evt) {
+  const {target: hashtagsInput} = evt;
   const hashtagsArr = hashtagsInput.value.replace(/ +/g, ` `).trim().toLowerCase().split(` `);
 
   const isHashtagsLessThanFive = hashtagsArr.length <= HASHTAGS_MAX_COUNT;
@@ -56,25 +56,21 @@ const hashtagsInputHandler = function () {
   }
 };
 
-commentsField.oninput = function () {
-  const valueLength = commentsField.value.length;
-  if (commentsField.value.length > COMMENTS_MAX) {
-    commentsField.setCustomValidity(`Удалите ` + (COMMENTS_MAX - valueLength) + ` симв.`);
-  } else {
-    commentsField.setCustomValidity(``);
-  }
-  commentsField.reportValidity();
+const commentsInputHandler = function (evt) {
+  const {target: commentsField} = evt;
+  commentsField.oninput = function () {
+    const valueLength = commentsField.value.length;
+    if (commentsField.value.length > COMMENTS_MAX) {
+      commentsField.setCustomValidity(`Удалите ` + (COMMENTS_MAX - valueLength) + ` симв.`);
+    } else {
+      commentsField.setCustomValidity(``);
+    }
+    commentsField.reportValidity();
+  };
 };
-
-commentsField.addEventListener(`focusin`, function () {
-  document.removeEventListener(`keydown`, window.modal.modalEscPressHandler);
-});
-
-commentsField.addEventListener(`focusout`, function () {
-  document.addEventListener(`keydown`, window.modal.modalEscPressHandler);
-});
 
 window.validation = {
   hashtagsInputHandler,
+  commentsInputHandler
 };
 
