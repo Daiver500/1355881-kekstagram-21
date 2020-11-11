@@ -15,7 +15,7 @@ const hashtagsInput = document.querySelector(`.text__hashtags`);
 const commentsField = document.querySelector(`.text__description`);
 
 
-const hashtagsInputKeyupHandler = function () {
+const hashtagsInputHandler = function () {
   const hashtagsArr = hashtagsInput.value.replace(/ +/g, ` `).trim().toLowerCase().split(` `);
 
   const isHashtagsLessThanFive = hashtagsArr.length <= HASHTAGS_MAX_COUNT;
@@ -56,16 +56,6 @@ const hashtagsInputKeyupHandler = function () {
   }
 };
 
-hashtagsInput.addEventListener(`input`, hashtagsInputKeyupHandler);
-
-hashtagsInput.addEventListener(`focusin`, function () {
-  document.removeEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
-});
-
-hashtagsInput.addEventListener(`focusout`, function () {
-  document.addEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
-});
-
 commentsField.oninput = function () {
   const valueLength = commentsField.value.length;
   if (commentsField.value.length > COMMENTS_MAX) {
@@ -77,10 +67,14 @@ commentsField.oninput = function () {
 };
 
 commentsField.addEventListener(`focusin`, function () {
-  document.removeEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
+  document.removeEventListener(`keydown`, window.modal.modalEscPressHandler);
 });
 
 commentsField.addEventListener(`focusout`, function () {
-  document.addEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
+  document.addEventListener(`keydown`, window.modal.modalEscPressHandler);
 });
+
+window.validation = {
+  hashtagsInputHandler,
+};
 

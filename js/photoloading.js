@@ -6,6 +6,7 @@ const imgUpload = document.querySelector(`.img-upload`);
 const fileChooser = imgUpload.querySelector(`.img-upload__start input[type=file]`);
 const previewImg = imgUpload.querySelector(`.img-upload__preview img`);
 const effectsPreview = imgUpload.querySelectorAll(`.effects__preview`);
+const openModal = window.modal.openModalHandler;
 
 const setEffectsPreview = function (customImage) {
   effectsPreview.forEach(function (preview) {
@@ -24,12 +25,13 @@ fileChooser.addEventListener(`change`, function () {
 
   if (!matches) {
     window.error.errorUploadHandler(`Недопустимый формат`);
-    window.modalopenclose.imageUploadOverlay.classList.add(`hidden`);
+    window.modal.imageUploadOverlay.classList.add(`hidden`);
     window.submit.resetImageData();
   }
 
   const reader = new FileReader();
   reader.addEventListener(`load`, function () {
+    openModal();
     const image = reader.result;
     previewImg.src = image;
     setEffectsPreview(image);

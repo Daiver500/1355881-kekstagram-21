@@ -11,6 +11,7 @@ const bigPicture = document.querySelector(`.big-picture`);
 const social = bigPicture.querySelector(`.social`);
 const socialComments = social.querySelector(`.social__comments`);
 const socialCommentCount = social.querySelector(`.social__comment-count`);
+const currentCommentsCount = bigPicture.querySelector(`.comments-current`);
 const socialComment = socialComments.querySelector(`li`);
 const commentsLoader = social.querySelector(`.comments-loader`);
 const bigPictureCancel = bigPicture.querySelector(`.big-picture__cancel`);
@@ -40,10 +41,13 @@ const renderSocialComments = function (commentsArray) {
     fragment.append(commentElement);
   });
   socialComments.append(fragment);
+  return comments;
 };
 
 const moreCommentsBtnClickHandler = function () {
-  renderSocialComments(commentsCopy);
+  const comments = renderSocialComments(commentsCopy);
+  currentCommentsCount.textContent = Number(currentCommentsCount.textContent) + comments.length;
+
   if (commentsCopy.length === 0) {
     commentsLoader.classList.add(`hidden`);
     commentsLoader.removeEventListener(`click`, moreCommentsBtnClickHandler);
@@ -52,14 +56,17 @@ const moreCommentsBtnClickHandler = function () {
 
 const openBigPicture = function (object) {
   const {url, likes, comments, description} = object;
+  const commentsAmount = comments.length;
   commentsCopy = comments.slice();
   socialComments.innerHTML = ``;
   bigPicture.querySelector(`.big-picture__img img`).src = url;
   bigPicture.querySelector(`.likes-count`).textContent = likes;
-  bigPicture.querySelector(`.comments-count`).textContent = comments.length;
+  bigPicture.querySelector(`.comments-current`).textContent = (commentsAmount <= MAX_COMMENTS_AMOUNT) ? commentsAmount : MAX_COMMENTS_AMOUNT;
+  bigPicture.querySelector(`.comments-count`).textContent = commentsAmount;
   bigPicture.querySelector(`.social__caption`).textContent = description;
   renderSocialComments(commentsCopy);
   bigPicture.classList.remove(`hidden`);
+  socialCommentCount.classList.remove(`hidden`);
   document.body.classList.add(`modal-open`);
   document.addEventListener(`keydown`, bigPictureEscPressHandler);
   bigPictureCancel.addEventListener(`click`, closeButtonClickHandler);
