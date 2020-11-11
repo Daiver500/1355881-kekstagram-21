@@ -1,5 +1,4 @@
-'use strict';
-
+"use strict";
 
 const FILE_TYPES = [`jpg`, `jpeg`, `png`];
 const imgUpload = document.querySelector(`.img-upload`);

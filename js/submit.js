@@ -1,4 +1,3 @@
-
 "use strict";
 
 const form = document.querySelector(`.img-upload__form`);
@@ -27,8 +26,6 @@ const formSubmitHandler = function (evt) {
       });
   evt.preventDefault();
 };
-
-// form.addEventListener(`submit`, submitHandler);
 
 window.submit = {
   formSubmitHandler,
