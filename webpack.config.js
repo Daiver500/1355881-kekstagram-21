@@ -9,6 +9,7 @@ module.exports = {
     "./js/filters.js",
     "./js/validation.js",
     "./js/modalopenclose.js",
+    "./js/photoloading.js",
     "./js/submit.js",
     "./js/success.js",
     "./js/error.js",
