@@ -17,7 +17,7 @@ const effectLevelPin = effectLevel.querySelector(`.effect-level__pin`);
 const effectLevelLine = effectLevel.querySelector(`.effect-level__line`);
 const effectLevelDepth = effectLevel.querySelector(`.effect-level__depth`);
 const effectLevelValue = effectLevel.querySelector(`.effect-level__value`);
-const effectsItemFirst = document.querySelector(`.effects__item:first-child`);
+const effectDefault = document.querySelector(`.effects__item:first-child`);
 const effectsItem = document.querySelectorAll(`.effects__item`);
 const imgUploadEffectLevel = document.querySelector(`.img-upload__effect-level`);
 
@@ -110,7 +110,7 @@ effectsItem.forEach(function (item) {
   });
 });
 
-effectsItemFirst.addEventListener(`click`, function () {
+effectDefault.addEventListener(`click`, function () {
   imgUploadEffectLevel.classList.add(`hidden`);
 });
 

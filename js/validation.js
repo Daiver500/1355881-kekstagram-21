@@ -10,9 +10,6 @@ const USER_MESSAGE = {
   CORRECT: `Не верный формат хештега`,
 };
 
-// const hashtagsInput = document.querySelector(`.text__hashtags`);
-// const commentsField = document.querySelector(`.text__description`);
-
 const hashtagsInputHandler = function (evt) {
   const {target: hashtagsInput} = evt;
   const hashtagsArr = hashtagsInput.value.replace(/ +/g, ` `).trim().toLowerCase().split(` `);
