@@ -1,4 +1,3 @@
-
 "use strict";
 
 const MAX_COMMENTS_AMOUNT = 5;
