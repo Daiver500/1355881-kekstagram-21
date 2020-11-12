@@ -8,20 +8,20 @@ const onSuccessUpload = document.querySelector(`#success`)
 const successElement = onSuccessUpload.cloneNode(true);
 const successInner = successElement.querySelector(`.success__inner`);
 const successButton = successElement.querySelector(`.success__button`);
-const closeModal = window.modal.closeModal;
+const closeModal = window.popup.closeModal;
 
 const createSuccessModule = function () {
   closeModal();
   main.insertAdjacentElement(`afterbegin`, successElement);
   successButton.addEventListener(`click`, successButtonClickHandler);
   document.addEventListener(`click`, successWindowClickHandler);
-  document.addEventListener(`keydown`, EscPressHandler);
+  document.addEventListener(`keydown`, escPressHandler);
 };
 
 const deleteSuccessModule = function () {
   successButton.removeEventListener(`click`, successButtonClickHandler);
   document.removeEventListener(`click`, successWindowClickHandler);
-  document.removeEventListener(`keydown`, EscPressHandler);
+  document.removeEventListener(`keydown`, escPressHandler);
   main.removeChild(successElement);
 };
 
@@ -35,16 +35,16 @@ const successWindowClickHandler = function (evt) {
   }
 };
 
-const EscPressHandler = function (evt) {
+const escPressHandler = function (evt) {
   if (evt.key === `Escape`) {
     deleteSuccessModule();
   }
 };
 
-const successUploadHandler = function () {
+const fortunateUploadHandler = function () {
   createSuccessModule();
 };
 
 window.success = {
-  successUploadHandler,
+  fortunateUploadHandler,
 };

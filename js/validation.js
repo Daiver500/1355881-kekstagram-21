@@ -4,7 +4,7 @@ const HASHTAGS_MAX_COUNT = 5;
 const COMMENTS_MAX = 140;
 const HASHTAG_REG_EXP = /^#([а-яА-Я]|[a-zA-Z]|[0-9]){1,20}$/;
 
-const USER_MESSAGE = {
+const UserMessage = {
   LESS_THEN_FIVE: `Нельзя указать больше пяти хэш-тегов`,
   NO_DUPLICATES: `Один и тот же хэш-тег не может быть использован дважды`,
   CORRECT: `Не верный формат хештега`,
@@ -20,22 +20,22 @@ const hashtagsInputHandler = function (evt) {
     return HASHTAG_REG_EXP.test(tag);
   });
 
-  const isHastagsNoDuplicates = hashtagsArr.every(function (item, index, array) {
-    return array.indexOf(item) === index;
+  const isHastagsNoDuplicates = hashtagsArr.every(function (item, index, arrayOfHashtags) {
+    return arrayOfHashtags.indexOf(item) === index;
   });
 
   hashtagsInput.setCustomValidity(``);
 
   if (!isHashtagsLessThanFive) {
-    hashtagsInput.setCustomValidity(USER_MESSAGE.LESS_THEN_FIVE);
+    hashtagsInput.setCustomValidity(UserMessage.LESS_THEN_FIVE);
   }
 
   if (!isHashtagCorrect) {
-    hashtagsInput.setCustomValidity(USER_MESSAGE.CORRECT);
+    hashtagsInput.setCustomValidity(UserMessage.CORRECT);
   }
 
   if (!isHastagsNoDuplicates) {
-    hashtagsInput.setCustomValidity(USER_MESSAGE.NO_DUPLICATES);
+    hashtagsInput.setCustomValidity(UserMessage.NO_DUPLICATES);
   }
   hashtagsInput.reportValidity();
 
@@ -54,15 +54,14 @@ const hashtagsInputHandler = function (evt) {
 
 const commentsInputHandler = function (evt) {
   const {target: commentsField} = evt;
-  commentsField.oninput = function () {
-    const valueLength = commentsField.value.length;
-    if (commentsField.value.length > COMMENTS_MAX) {
-      commentsField.setCustomValidity(`Удалите ` + (COMMENTS_MAX - valueLength) + ` симв.`);
-    } else {
-      commentsField.setCustomValidity(``);
-    }
-    commentsField.reportValidity();
-  };
+  const valueLength = commentsField.value.length;
+  if (commentsField.value.length > COMMENTS_MAX) {
+    commentsField.setCustomValidity(`Удалите ` + (COMMENTS_MAX - valueLength) + ` симв.`);
+  } else {
+    commentsField.setCustomValidity(``);
+  }
+  commentsField.reportValidity();
+
 };
 
 window.validation = {

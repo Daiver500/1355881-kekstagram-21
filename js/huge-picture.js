@@ -99,7 +99,7 @@ const closeBigPicture = function () {
   bigPictureCancel.removeEventListener(`click`, closeButtonClickHandler);
 };
 
-window.bigpicture = {
+window.hugepicture = {
   openBigPicture,
   bigPictureEscPressHandler,
   bigPicture

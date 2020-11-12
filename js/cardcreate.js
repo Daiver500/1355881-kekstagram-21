@@ -2,7 +2,7 @@
 
 const pictures = document.querySelector(`.pictures`);
 const filters = document.querySelector(`.img-filters`);
-const openBigPicturePopup = window.bigpicture.openBigPicture;
+const openBigPicturePopup = window.hugepicture.openBigPicture;
 
 const template = document.querySelector(`#picture`)
 .content

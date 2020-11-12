@@ -15,23 +15,23 @@ const effectLevelPin = effectLevel.querySelector(`.effect-level__pin`);
 const effectLevelLine = effectLevel.querySelector(`.effect-level__line`);
 const effectLevelDepth = effectLevel.querySelector(`.effect-level__depth`);
 const effectLevelValue = effectLevel.querySelector(`.effect-level__value`);
-const effectsItemFirst = document.querySelector(`.effects__item:first-child`);
+const effectsItemDefault = document.querySelector(`.effects__item:first-child`);
 const effectsItem = document.querySelectorAll(`.effects__item`);
 const imgUploadEffectLevel = document.querySelector(`.img-upload__effect-level`);
 
 imgUploadEffectLevel.classList.add(`hidden`);
 
-const changeFilter = function (evt) {
+const changeFilterHandler = function (evt) {
   if (evt.target.matches(`input[type="radio"]`)) {
     window.scale.imageUploadPreview.className = ``;
     setDefaultDepth();
     window.scale.imageUploadPreview.className = `effects__preview--${evt.target.value}`;
     window.scale.imageUploadPreview.style.transform = `scale(1.00)`;
-    window.scale.scaleValue.value = `${100}%`;
+    window.scale.counterValue.value = `${100}%`;
   }
 };
 
-effects.addEventListener(`click`, changeFilter);
+effects.addEventListener(`click`, changeFilterHandler);
 
 const setDefaultDepth = function () {
   effectLevelPin.style.left = DEFAULT_EFFECT_LEVEL + `%`;
@@ -72,7 +72,7 @@ const effectsLevelPinMouseDownHandler = function (evt) {
   const lineWidth = effectLevelLine.offsetWidth;
   let startCoordinates = evt.clientX;
 
-  const oneEffectLevelPinMove = function (moveEvt) {
+  const oneEffectLevelPinMoveHandler = function (moveEvt) {
     moveEvt.preventDefault();
 
     const shift = startCoordinates - moveEvt.clientX;
@@ -89,15 +89,15 @@ const effectsLevelPinMouseDownHandler = function (evt) {
     }
   };
 
-  const oneEffectLevelPinMouseUp = function (upEvt) {
+  const oneEffectLevelPinMouseUpHandler = function (upEvt) {
     upEvt.preventDefault();
-    document.removeEventListener(`mousemove`, oneEffectLevelPinMove);
-    document.removeEventListener(`mouseup`, oneEffectLevelPinMouseUp);
+    document.removeEventListener(`mousemove`, oneEffectLevelPinMoveHandler);
+    document.removeEventListener(`mouseup`, oneEffectLevelPinMouseUpHandler);
 
   };
 
-  document.addEventListener(`mousemove`, oneEffectLevelPinMove);
-  document.addEventListener(`mouseup`, oneEffectLevelPinMouseUp);
+  document.addEventListener(`mousemove`, oneEffectLevelPinMoveHandler);
+  document.addEventListener(`mouseup`, oneEffectLevelPinMouseUpHandler);
 };
 
 effectLevelPin.addEventListener(`mousedown`, effectsLevelPinMouseDownHandler);
@@ -108,7 +108,7 @@ effectsItem.forEach(function (item) {
   });
 });
 
-effectsItemFirst.addEventListener(`click`, function () {
+effectsItemDefault.addEventListener(`click`, function () {
   imgUploadEffectLevel.classList.add(`hidden`);
 });
 

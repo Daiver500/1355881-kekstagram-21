@@ -11,17 +11,17 @@ const showDefaultPictures = function () {
   window.cardcreate.clickSmallPhoto(defaultPhotos);
 };
 
-const shuffleArray = function (array) {
-  const arrayCopy = array.slice();
-  const iterations = MAX_RANDOM_ELEMENTS < arrayCopy.length ? MAX_RANDOM_ELEMENTS : arrayCopy.length - 1;
+const shuffleArray = function (arrayOfPhotos) {
+  const arrayCopyOfPhotos = arrayOfPhotos.slice();
+  const iterations = MAX_RANDOM_ELEMENTS < arrayCopyOfPhotos.length ? MAX_RANDOM_ELEMENTS : arrayCopyOfPhotos.length - 1;
 
   for (let i = 0; i < iterations; i++) {
-    const randomIndex = Math.floor(Math.random() * (arrayCopy.length - i)) + i;
-    const currentElement = arrayCopy[i];
-    arrayCopy[i] = arrayCopy[randomIndex];
-    arrayCopy[randomIndex] = currentElement;
+    const randomIndex = Math.floor(Math.random() * (arrayCopyOfPhotos.length - i)) + i;
+    const currentElement = arrayCopyOfPhotos[i];
+    arrayCopyOfPhotos[i] = arrayCopyOfPhotos[randomIndex];
+    arrayCopyOfPhotos[randomIndex] = currentElement;
   }
-  return arrayCopy;
+  return arrayCopyOfPhotos;
 };
 
 const showRandomPictures = function () {

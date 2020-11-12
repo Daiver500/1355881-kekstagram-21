@@ -47,7 +47,7 @@ const errorUploadHandler = function (errorText = false) {
   createErrorModule(errorText);
 };
 
-window.error = {
+window.mistake = {
   errorUploadHandler
 };
 

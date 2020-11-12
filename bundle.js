@@ -199,7 +199,7 @@ const closeBigPicture = function () {
   bigPictureCancel.removeEventListener(`click`, closeButtonClickHandler);
 };
 
-window.bigpicture = {
+window.hugepicture = {
   openBigPicture,
   bigPictureEscPressHandler,
   bigPicture
@@ -219,7 +219,7 @@ window.bigpicture = {
 
 const pictures = document.querySelector(`.pictures`);
 const filters = document.querySelector(`.img-filters`);
-const openBigPicturePopup = window.bigpicture.openBigPicture;
+const openBigPicturePopup = window.hugepicture.openBigPicture;
 
 const template = document.querySelector(`#picture`)
 .content
@@ -470,24 +470,24 @@ const imageUploadOverlay = document.querySelector(`.img-upload__overlay`);
 
 const resetImageData = function () {
   window.effects.setDefaultDepth();
-  window.modal.uploadImageFile.value = ``;
+  window.popup.uploadImageFile.value = ``;
   window.scale.imageUploadPreview.style.filter = ``;
   window.scale.imageUploadPreview.style.transform = `scale(1.00)`;
   window.scale.imageUploadPreview.className = `effects__preview--none`;
   window.effects.effectLevel.classList.add(`hidden`);
 };
 
-const formSubmitHandler = function (evt) {
+const formSendingHandler = function (evt) {
   window.server.upload(
       new FormData(form),
       function () {
         form.reset();
         resetImageData();
         imageUploadOverlay.classList.add(`hidden`);
-        window.success.successUploadHandler();
+        window.success.fortunateUploadHandler();
       },
       function () {
-        window.error.errorUploadHandler();
+        window.mistake.errorUploadHandler();
       });
   evt.preventDefault();
 };
@@ -495,7 +495,7 @@ const formSubmitHandler = function (evt) {
 // form.addEventListener(`submit`, submitHandler);
 
 window.submit = {
-  formSubmitHandler,
+  formSendingHandler,
   resetImageData
 };
 
@@ -513,7 +513,7 @@ const uploadImageFile = document.querySelector(`#upload-file`);
 const uploadForm = document.querySelector(`.img-upload__form`);
 const imageUploadOverlay = uploadForm.querySelector(`.img-upload__overlay`);
 const modalCloseBtn = imageUploadOverlay.querySelector(`#upload-cancel`);
-const formSubmitHandler = window.submit.formSubmitHandler;
+const formSendingHandler = window.submit.formSendingHandler;
 const hashtagsInput = imageUploadOverlay.querySelector(`.text__hashtags`);
 const hashtagsInputHandler = window.validation.hashtagsInputHandler;
 const commentsInput = imageUploadOverlay.querySelector(`.text__description`);
@@ -535,7 +535,7 @@ const openModal = function () {
   commentsInput.addEventListener(`input`, commentsInputHandler);
   commentsInput.addEventListener(`focusin`, commentsFocusInHandler);
   commentsInput.addEventListener(`focusout`, commentsFocusOutHandler);
-  uploadForm.addEventListener(`submit`, formSubmitHandler);
+  uploadForm.addEventListener(`submit`, formSendingHandler);
   modalCloseBtn.addEventListener(`click`, modalCloseBtnClickHandler);
   document.addEventListener(`keydown`, modalEscPressHandler);
 };
@@ -549,7 +549,7 @@ const closeModal = function () {
   commentsInput.removeEventListener(`input`, commentsInputHandler);
   commentsInput.removeEventListener(`focusin`, commentsFocusInHandler);
   commentsInput.removeEventListener(`focusout`, commentsFocusOutHandler);
-  uploadForm.removeEventListener(`submit`, formSubmitHandler);
+  uploadForm.removeEventListener(`submit`, formSendingHandler);
   modalCloseBtn.removeEventListener(`click`, modalCloseBtnClickHandler);
   document.removeEventListener(`keydown`, modalEscPressHandler);
   window.submit.resetImageData();
@@ -582,7 +582,7 @@ const modalCloseBtnClickHandler = function () {
   closeModal();
 };
 
-window.modal = {
+window.popup = {
   openModalHandler,
   modalCloseBtnClickHandler,
   closeModal,
@@ -607,7 +607,7 @@ const imgUpload = document.querySelector(`.img-upload`);
 const fileChooser = imgUpload.querySelector(`.img-upload__start input[type=file]`);
 const previewImg = imgUpload.querySelector(`.img-upload__preview img`);
 const effectsPreview = imgUpload.querySelectorAll(`.effects__preview`);
-const openModal = window.modal.openModalHandler;
+const openModal = window.popup.openModalHandler;
 
 const setEffectsPreview = function (customImage) {
   effectsPreview.forEach(function (preview) {
@@ -625,8 +625,8 @@ fileChooser.addEventListener(`change`, function () {
   });
 
   if (!matches) {
-    window.error.errorUploadHandler(`Недопустимый формат`);
-    window.modal.imageUploadOverlay.classList.add(`hidden`);
+    window.mistake.errorUploadHandler(`Недопустимый формат`);
+    window.popup.imageUploadOverlay.classList.add(`hidden`);
     window.submit.resetImageData();
   }
 
@@ -660,7 +660,7 @@ const onSuccessUpload = document.querySelector(`#success`)
 const successElement = onSuccessUpload.cloneNode(true);
 const successInner = successElement.querySelector(`.success__inner`);
 const successButton = successElement.querySelector(`.success__button`);
-const closeModal = window.modal.closeModal;
+const closeModal = window.popup.closeModal;
 
 const createSuccessModule = function () {
   closeModal();
@@ -693,12 +693,12 @@ const EscPressHandler = function (evt) {
   }
 };
 
-const successUploadHandler = function () {
+const fortunateUploadHandler = function () {
   createSuccessModule();
 };
 
 window.success = {
-  successUploadHandler,
+  fortunateUploadHandler,
 };
 
 })();
@@ -760,7 +760,7 @@ const errorUploadHandler = function (errorText = false) {
   createErrorModule(errorText);
 };
 
-window.error = {
+window.mistake = {
   errorUploadHandler
 };
 
@@ -804,7 +804,7 @@ const changeFilter = function (evt) {
     setDefaultDepth();
     window.scale.imageUploadPreview.className = `effects__preview--${evt.target.value}`;
     window.scale.imageUploadPreview.style.transform = `scale(1.00)`;
-    window.scale.scaleValue.value = `${100}%`;
+    window.scale.counterValue.value = `${100}%`;
   }
 };
 
@@ -914,11 +914,11 @@ const VALUE = {
 
 const scaleControlSmaller = document.querySelector(`.scale__control--smaller`);
 const scaleControlBigger = document.querySelector(`.scale__control--bigger`);
-const scaleValue = document.querySelector(`.scale__control--value`);
+const counterValue = document.querySelector(`.scale__control--value`);
 const imageUploadPreview = document.querySelector(`.img-upload__preview img`);
 
 const clickOnMinusScale = function () {
-  let scale = parseInt(scaleValue.value, 10);
+  let scale = parseInt(counterValue.value, 10);
   if (scale <= VALUE.max && scale > VALUE.min) {
     scale -= VALUE.min;
   }
@@ -928,7 +928,7 @@ const clickOnMinusScale = function () {
 scaleControlSmaller.addEventListener(`click`, clickOnMinusScale);
 
 const clickOnPlusScale = function () {
-  let scale = parseInt(scaleValue.value, 10);
+  let scale = parseInt(counterValue.value, 10);
   if (scale >= VALUE.min && scale < VALUE.max) {
     scale += VALUE.min;
   }
@@ -941,26 +941,26 @@ const changeImageStyle = function (number) {
   switch (number) {
     case 25:
       imageUploadPreview.style.transform = `scale(0.25)`;
-      scaleValue.value = `${number}%`;
+      counterValue.value = `${number}%`;
       break;
     case 50:
       imageUploadPreview.style.transform = `scale(0.50)`;
-      scaleValue.value = `${number}%`;
+      counterValue.value = `${number}%`;
       break;
     case 75:
       imageUploadPreview.style.transform = `scale(0.75)`;
-      scaleValue.value = `${number}%`;
+      counterValue.value = `${number}%`;
       break;
     case 100:
       imageUploadPreview.style.transform = `scale(1.00)`;
-      scaleValue.value = `${number}%`;
+      counterValue.value = `${number}%`;
       break;
   }
 };
 
 window.scale = {
   imageUploadPreview,
-  scaleValue
+  counterValue
 };
 
 

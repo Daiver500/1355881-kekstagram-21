@@ -4,7 +4,7 @@ const uploadImageFile = document.querySelector(`#upload-file`);
 const uploadForm = document.querySelector(`.img-upload__form`);
 const imageUploadOverlay = uploadForm.querySelector(`.img-upload__overlay`);
 const modalCloseBtn = imageUploadOverlay.querySelector(`#upload-cancel`);
-const formSubmitHandler = window.submit.formSubmitHandler;
+const formSendingHandler = window.submit.formSendingHandler;
 const hashtagsInput = imageUploadOverlay.querySelector(`.text__hashtags`);
 const hashtagsInputHandler = window.validation.hashtagsInputHandler;
 const commentsInput = imageUploadOverlay.querySelector(`.text__description`);
@@ -26,7 +26,7 @@ const openModal = function () {
   commentsInput.addEventListener(`input`, commentsInputHandler);
   commentsInput.addEventListener(`focusin`, commentsFocusInHandler);
   commentsInput.addEventListener(`focusout`, commentsFocusOutHandler);
-  uploadForm.addEventListener(`submit`, formSubmitHandler);
+  uploadForm.addEventListener(`submit`, formSendingHandler);
   modalCloseBtn.addEventListener(`click`, modalCloseBtnClickHandler);
   document.addEventListener(`keydown`, modalEscPressHandler);
 };
@@ -40,7 +40,7 @@ const closeModal = function () {
   commentsInput.removeEventListener(`input`, commentsInputHandler);
   commentsInput.removeEventListener(`focusin`, commentsFocusInHandler);
   commentsInput.removeEventListener(`focusout`, commentsFocusOutHandler);
-  uploadForm.removeEventListener(`submit`, formSubmitHandler);
+  uploadForm.removeEventListener(`submit`, formSendingHandler);
   modalCloseBtn.removeEventListener(`click`, modalCloseBtnClickHandler);
   document.removeEventListener(`keydown`, modalEscPressHandler);
   window.submit.resetImageData();
@@ -73,7 +73,7 @@ const modalCloseBtnClickHandler = function () {
   closeModal();
 };
 
-window.modal = {
+window.popup = {
   openModalHandler,
   modalCloseBtnClickHandler,
   closeModal,

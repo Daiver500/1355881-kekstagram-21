@@ -5,12 +5,13 @@ const REFERENCE = {
   upload: `https://21.javascript.pages.academy/kekstagram`
 };
 
+const TIMEOUT_IN_MS = 10000;
+
 const StatusCode = {
   OK: 200
 };
-const TIMEOUT_IN_MS = 10000;
 
-const server = function (xhr, onSuccess, onError) {
+const getServerRequest = function (xhr, onSuccess, onError) {
   xhr.responseType = `json`;
 
   xhr.addEventListener(`load`, function () {
@@ -33,7 +34,7 @@ const server = function (xhr, onSuccess, onError) {
 const load = function (success, error) {
   const xhr = new XMLHttpRequest();
   xhr.open(`GET`, REFERENCE.load);
-  server(xhr, success, error);
+  getServerRequest(xhr, success, error);
   xhr.send();
 };
 
@@ -41,7 +42,7 @@ const load = function (success, error) {
 const upload = function (data, success, error) {
   const xhr = new XMLHttpRequest();
   xhr.open(`POST`, REFERENCE.upload);
-  server(xhr, success, error);
+  getServerRequest(xhr, success, error);
   xhr.send(data);
 };
 
