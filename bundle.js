@@ -8,49 +8,49 @@
 /*! runtime requirements:  */
 
 
-
 const REFERENCE = {
   load: `https://21.javascript.pages.academy/kekstagram/data`,
   upload: `https://21.javascript.pages.academy/kekstagram`
 };
 
+const TIMEOUT_IN_MS = 10000;
+
 const StatusCode = {
   OK: 200
 };
-const TIMEOUT_IN_MS = 10000;
 
-const server = function (xhr, onSuccess, onError) {
+const getServerRequest = (xhr, onSuccess, onError) => {
   xhr.responseType = `json`;
 
-  xhr.addEventListener(`load`, function () {
+  xhr.addEventListener(`load`, () => {
     if (xhr.status === StatusCode.OK) {
       onSuccess(xhr.response);
     } else {
       onError(`Статус ответа: ` + xhr.status + ` ` + xhr.statusText);
     }
   });
-  xhr.addEventListener(`error`, function () {
+  xhr.addEventListener(`error`, () => {
     onError(`Произошла ошибка соединения`);
   });
-  xhr.addEventListener(`timeout`, function () {
+  xhr.addEventListener(`timeout`, () => {
     onError(`Запрос не успел выполниться за ` + xhr.timeout + `мс`);
   });
 
   xhr.timeout = TIMEOUT_IN_MS;
 };
 
-const load = function (success, error) {
+const load = (success, error) => {
   const xhr = new XMLHttpRequest();
   xhr.open(`GET`, REFERENCE.load);
-  server(xhr, success, error);
+  getServerRequest(xhr, success, error);
   xhr.send();
 };
 
 
-const upload = function (data, success, error) {
+const upload = (data, success, error) => {
   const xhr = new XMLHttpRequest();
   xhr.open(`POST`, REFERENCE.upload);
-  server(xhr, success, error);
+  getServerRequest(xhr, success, error);
   xhr.send(data);
 };
 
@@ -69,7 +69,6 @@ window.server = {
   \***********************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements:  */
-
 
 
 const DEBOUNCE_INTERVAL = 500;
@@ -93,9 +92,9 @@ window.timeout = {
 })();
 
 (() => {
-/*!***************************!*\
-  !*** ./js/big-picture.js ***!
-  \***************************/
+/*!****************************!*\
+  !*** ./js/huge-picture.js ***!
+  \****************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements:  */
 
@@ -119,7 +118,7 @@ let commentsCopy = [];
 
 socialCommentCount.classList.add(`hidden`);
 
-const createSocialComment = function (commentObject) {
+const createSocialComment = (commentObject) => {
   const {avatar, name, message} = commentObject;
   const li = socialComment.cloneNode(true);
   const picture = li.querySelector(`.social__picture`);
@@ -132,11 +131,11 @@ const createSocialComment = function (commentObject) {
   return li;
 };
 
-const renderSocialComments = function (commentsArray) {
+const renderSocialComments = (commentsArray) => {
   const comments = commentsArray.splice(0, 5);
   const fragment = document.createDocumentFragment();
 
-  comments.forEach(function (comment) {
+  comments.forEach((comment) => {
     const commentElement = createSocialComment(comment);
     fragment.append(commentElement);
   });
@@ -144,7 +143,7 @@ const renderSocialComments = function (commentsArray) {
   return comments;
 };
 
-const moreCommentsBtnClickHandler = function () {
+const moreCommentsBtnClickHandler = () => {
   const comments = renderSocialComments(commentsCopy);
   currentCommentsCount.textContent = Number(currentCommentsCount.textContent) + comments.length;
 
@@ -154,7 +153,7 @@ const moreCommentsBtnClickHandler = function () {
   }
 };
 
-const openBigPicture = function (object) {
+const openBigPicture = (object) => {
   const {url, likes, comments, description} = object;
   const commentsAmount = comments.length;
   commentsCopy = comments.slice();
@@ -179,20 +178,20 @@ const openBigPicture = function (object) {
   }
 };
 
-const bigPictureEscPressHandler = function (evt) {
+const bigPictureEscPressHandler = (evt) => {
   if (evt.key === `Escape`) {
     evt.preventDefault();
     closeBigPicture();
   }
 };
 
-const closeButtonClickHandler = function (evt) {
+const closeButtonClickHandler = (evt) => {
   evt.preventDefault();
   closeBigPicture();
 
 };
 
-const closeBigPicture = function () {
+const closeBigPicture = () => {
   bigPicture.classList.add(`hidden`);
   document.removeEventListener(`keydown`, bigPictureEscPressHandler);
   document.body.classList.remove(`modal-open`);
@@ -216,7 +215,6 @@ window.hugepicture = {
 /*! runtime requirements:  */
 
 
-
 const pictures = document.querySelector(`.pictures`);
 const filters = document.querySelector(`.img-filters`);
 const openBigPicturePopup = window.hugepicture.openBigPicture;
@@ -225,7 +223,7 @@ const template = document.querySelector(`#picture`)
 .content
 .querySelector(`.picture`);
 
-const createCardElement = function (object) {
+const createCardElement = (object) => {
   const {likes, comments, url} = object;
   const cardElement = template.cloneNode(true);
   cardElement.querySelector(`.picture__likes`).textContent = likes;
@@ -234,16 +232,16 @@ const createCardElement = function (object) {
   return cardElement;
 };
 
-const renderPictures = function (cardsArray) {
+const renderPictures = (cardsArray) => {
   const fragment = document.createDocumentFragment();
-  cardsArray.forEach(function (cardObject) {
+  cardsArray.forEach((cardObject) => {
     fragment.appendChild(createCardElement(cardObject));
   });
   pictures.appendChild(fragment);
   return fragment;
 };
 
-const errorHandler = function (errorMessage) {
+const errorHandler = (errorMessage) => {
   const node = document.createElement(`div`);
   node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: red;`;
   node.style.position = `absolute`;
@@ -254,9 +252,9 @@ const errorHandler = function (errorMessage) {
   document.body.insertAdjacentElement(`afterbegin`, node);
 };
 
-const clickSmallPhoto = function (data) {
+const clickSmallPhoto = (data) => {
   const smallPhotosList = document.querySelectorAll(`.picture`);
-  smallPhotosList.forEach(function (picture, index) {
+  smallPhotosList.forEach((picture, index) => {
     picture.addEventListener(`click`, function (evt) {
       evt.preventDefault();
       openBigPicturePopup(data[index]);
@@ -264,7 +262,7 @@ const clickSmallPhoto = function (data) {
   });
 };
 
-const successDataLoadHandler = function (data) {
+const successDataLoadHandler = (data) => {
   window.cardcreate.cardsList = [];
   window.cardcreate.cardsList = data;
   renderPictures(data);
@@ -291,55 +289,54 @@ window.cardcreate = {
 /*! runtime requirements:  */
 
 
-
 const MAX_RANDOM_ELEMENTS = 10;
 
 const filtersForm = document.querySelector(`.img-filters__form`);
 const renderPictures = window.cardcreate.renderPictures;
 
-const showDefaultPictures = function () {
+const showDefaultPictures = () => {
   const defaultPhotos = window.cardcreate.cardsList;
   renderPictures(defaultPhotos);
   window.cardcreate.clickSmallPhoto(defaultPhotos);
 };
 
-const shuffleArray = function (array) {
-  const arrayCopy = array.slice();
-  const iterations = MAX_RANDOM_ELEMENTS < arrayCopy.length ? MAX_RANDOM_ELEMENTS : arrayCopy.length - 1;
+const shuffleArray = (arrayOfPhotos) => {
+  const arrayCopyOfPhotos = arrayOfPhotos.slice();
+  const iterations = MAX_RANDOM_ELEMENTS < arrayCopyOfPhotos.length ? MAX_RANDOM_ELEMENTS : arrayCopyOfPhotos.length - 1;
 
   for (let i = 0; i < iterations; i++) {
-    const randomIndex = Math.floor(Math.random() * (arrayCopy.length - i)) + i;
-    const currentElement = arrayCopy[i];
-    arrayCopy[i] = arrayCopy[randomIndex];
-    arrayCopy[randomIndex] = currentElement;
+    const randomIndex = Math.floor(Math.random() * (arrayCopyOfPhotos.length - i)) + i;
+    const currentElement = arrayCopyOfPhotos[i];
+    arrayCopyOfPhotos[i] = arrayCopyOfPhotos[randomIndex];
+    arrayCopyOfPhotos[randomIndex] = currentElement;
   }
-  return arrayCopy;
+  return arrayCopyOfPhotos;
 };
 
-const showRandomPictures = function () {
+const showRandomPictures = () => {
   const picturesList = window.cardcreate.cardsList;
   const randomElements = shuffleArray(picturesList).slice(0, MAX_RANDOM_ELEMENTS);
   renderPictures(randomElements);
   window.cardcreate.clickSmallPhoto(randomElements);
 };
 
-const showDiscussedPictures = function () {
+const showDiscussedPictures = () => {
   const picturesListCopy = window.cardcreate.cardsList.slice();
-  const sortedList = picturesListCopy.sort(function (a, b) {
+  const sortedList = picturesListCopy.sort((a, b) => {
     return b.comments.length - a.comments.length;
   });
   renderPictures(sortedList);
   window.cardcreate.clickSmallPhoto(sortedList);
 };
 
-const removePictures = function () {
+const removePictures = () => {
   const pics = document.querySelectorAll(`.picture`);
-  pics.forEach(function (item) {
+  pics.forEach((item) => {
     item.remove();
   });
 };
 
-const setActiveFilterBtn = function (evt) {
+const setActiveFilterBtn = (evt) => {
   const currentActive = filtersForm.querySelector(`.img-filters__button--active`);
   const {target} = evt;
   if (!target.classList.contains(`img-filters__button--active`)) {
@@ -348,7 +345,7 @@ const setActiveFilterBtn = function (evt) {
   }
 };
 
-const filterClickHandler = window.timeout.debounce(function (evt) {
+const filterClickHandler = window.timeout.debounce((evt) => {
   removePictures();
   setActiveFilterBtn(evt);
 
@@ -379,46 +376,42 @@ filtersForm.addEventListener(`click`, filterClickHandler);
 /*! runtime requirements:  */
 
 
-
 const HASHTAGS_MAX_COUNT = 5;
 const COMMENTS_MAX = 140;
 const HASHTAG_REG_EXP = /^#([а-яА-Я]|[a-zA-Z]|[0-9]){1,20}$/;
 
-const USER_MESSAGE = {
+const UserMessage = {
   LESS_THEN_FIVE: `Нельзя указать больше пяти хэш-тегов`,
   NO_DUPLICATES: `Один и тот же хэш-тег не может быть использован дважды`,
   CORRECT: `Не верный формат хештега`,
 };
 
-// const hashtagsInput = document.querySelector(`.text__hashtags`);
-// const commentsField = document.querySelector(`.text__description`);
-
-const hashtagsInputHandler = function (evt) {
+const hashtagsInputHandler = (evt) => {
   const {target: hashtagsInput} = evt;
   const hashtagsArr = hashtagsInput.value.replace(/ +/g, ` `).trim().toLowerCase().split(` `);
 
   const isHashtagsLessThanFive = hashtagsArr.length <= HASHTAGS_MAX_COUNT;
 
-  const isHashtagCorrect = hashtagsArr.every(function (tag) {
+  const isHashtagCorrect = hashtagsArr.every((tag) => {
     return HASHTAG_REG_EXP.test(tag);
   });
 
-  const isHastagsNoDuplicates = hashtagsArr.every(function (item, index, array) {
-    return array.indexOf(item) === index;
+  const isHastagsNoDuplicates = hashtagsArr.every((item, index, arrayOfHashtags) => {
+    return arrayOfHashtags.indexOf(item) === index;
   });
 
   hashtagsInput.setCustomValidity(``);
 
   if (!isHashtagsLessThanFive) {
-    hashtagsInput.setCustomValidity(USER_MESSAGE.LESS_THEN_FIVE);
+    hashtagsInput.setCustomValidity(UserMessage.LESS_THEN_FIVE);
   }
 
   if (!isHashtagCorrect) {
-    hashtagsInput.setCustomValidity(USER_MESSAGE.CORRECT);
+    hashtagsInput.setCustomValidity(UserMessage.CORRECT);
   }
 
   if (!isHastagsNoDuplicates) {
-    hashtagsInput.setCustomValidity(USER_MESSAGE.NO_DUPLICATES);
+    hashtagsInput.setCustomValidity(UserMessage.NO_DUPLICATES);
   }
   hashtagsInput.reportValidity();
 
@@ -435,17 +428,16 @@ const hashtagsInputHandler = function (evt) {
   }
 };
 
-const commentsInputHandler = function (evt) {
+const commentsInputHandler = (evt) => {
   const {target: commentsField} = evt;
-  commentsField.oninput = function () {
-    const valueLength = commentsField.value.length;
-    if (commentsField.value.length > COMMENTS_MAX) {
-      commentsField.setCustomValidity(`Удалите ` + (COMMENTS_MAX - valueLength) + ` симв.`);
-    } else {
-      commentsField.setCustomValidity(``);
-    }
-    commentsField.reportValidity();
-  };
+  const valueLength = commentsField.value.length;
+  if (commentsField.value.length > COMMENTS_MAX) {
+    commentsField.setCustomValidity(`Удалите ` + (COMMENTS_MAX - valueLength) + ` симв.`);
+  } else {
+    commentsField.setCustomValidity(``);
+  }
+  commentsField.reportValidity();
+
 };
 
 window.validation = {
@@ -464,11 +456,10 @@ window.validation = {
 /*! runtime requirements:  */
 
 
-
 const form = document.querySelector(`.img-upload__form`);
 const imageUploadOverlay = document.querySelector(`.img-upload__overlay`);
 
-const resetImageData = function () {
+const resetImageData = () => {
   window.effects.setDefaultDepth();
   window.popup.uploadImageFile.value = ``;
   window.scale.imageUploadPreview.style.filter = ``;
@@ -477,22 +468,20 @@ const resetImageData = function () {
   window.effects.effectLevel.classList.add(`hidden`);
 };
 
-const formSendingHandler = function (evt) {
+const formSendingHandler = (evt) => {
   window.server.upload(
       new FormData(form),
-      function () {
+      () => {
         form.reset();
         resetImageData();
         imageUploadOverlay.classList.add(`hidden`);
         window.success.fortunateUploadHandler();
       },
-      function () {
+      () => {
         window.mistake.errorUploadHandler();
       });
   evt.preventDefault();
 };
-
-// form.addEventListener(`submit`, submitHandler);
 
 window.submit = {
   formSendingHandler,
@@ -503,7 +492,7 @@ window.submit = {
 
 (() => {
 /*!*********************!*\
-  !*** ./js/modal.js ***!
+  !*** ./js/popup.js ***!
   \*********************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements:  */
@@ -519,14 +508,14 @@ const hashtagsInputHandler = window.validation.hashtagsInputHandler;
 const commentsInput = imageUploadOverlay.querySelector(`.text__description`);
 const commentsInputHandler = window.validation.commentsInputHandler;
 
-const modalEscPressHandler = function (evt) {
+const modalEscPressHandler = (evt) => {
   if (evt.key === `Escape`) {
     closeModal();
     evt.preventDefault();
   }
 };
 
-const openModal = function () {
+const openModal = () => {
   imageUploadOverlay.classList.remove(`hidden`);
   document.querySelector(`body`).classList.add(`modal-open`);
   hashtagsInput.addEventListener(`input`, hashtagsInputHandler);
@@ -540,7 +529,7 @@ const openModal = function () {
   document.addEventListener(`keydown`, modalEscPressHandler);
 };
 
-const closeModal = function () {
+const closeModal = () => {
   imageUploadOverlay.classList.add(`hidden`);
   document.querySelector(`body`).classList.remove(`modal-open`);
   hashtagsInput.removeEventListener(`input`, hashtagsInputHandler);
@@ -558,27 +547,27 @@ const closeModal = function () {
   hashtagsInput.style.background = ``;
 };
 
-const hashtagFocusInHandler = function () {
+const hashtagFocusInHandler = () => {
   document.removeEventListener(`keydown`, modalEscPressHandler);
 };
 
-const hashtagFocusOutHandler = function () {
+const hashtagFocusOutHandler = () => {
   document.addEventListener(`keydown`, modalEscPressHandler);
 };
 
-const commentsFocusInHandler = function () {
+const commentsFocusInHandler = () => {
   document.removeEventListener(`keydown`, modalEscPressHandler);
 };
 
-const commentsFocusOutHandler = function () {
+const commentsFocusOutHandler = () => {
   document.addEventListener(`keydown`, modalEscPressHandler);
 };
 
-const openModalHandler = function () {
+const openModalHandler = () => {
   openModal();
 };
 
-const modalCloseBtnClickHandler = function () {
+const modalCloseBtnClickHandler = () => {
   closeModal();
 };
 
@@ -601,7 +590,6 @@ window.popup = {
 /*! runtime requirements:  */
 
 
-
 const FILE_TYPES = [`jpg`, `jpeg`, `png`];
 const imgUpload = document.querySelector(`.img-upload`);
 const fileChooser = imgUpload.querySelector(`.img-upload__start input[type=file]`);
@@ -609,18 +597,18 @@ const previewImg = imgUpload.querySelector(`.img-upload__preview img`);
 const effectsPreview = imgUpload.querySelectorAll(`.effects__preview`);
 const openModal = window.popup.openModalHandler;
 
-const setEffectsPreview = function (customImage) {
-  effectsPreview.forEach(function (preview) {
+const setEffectsPreview = (customImage) => {
+  effectsPreview.forEach((preview) => {
     preview.style = `background-image: url('${customImage}')`;
   });
 };
 
-fileChooser.addEventListener(`change`, function () {
+fileChooser.addEventListener(`change`, () => {
   const file = fileChooser.files[0];
   const fileName = file.name.toLowerCase();
 
 
-  const matches = FILE_TYPES.some(function (it) {
+  const matches = FILE_TYPES.some((it) => {
     return fileName.endsWith(it);
   });
 
@@ -631,7 +619,7 @@ fileChooser.addEventListener(`change`, function () {
   }
 
   const reader = new FileReader();
-  reader.addEventListener(`load`, function () {
+  reader.addEventListener(`load`, () => {
     openModal();
     const image = reader.result;
     previewImg.src = image;
@@ -651,7 +639,6 @@ fileChooser.addEventListener(`change`, function () {
 /*! runtime requirements:  */
 
 
-
 const main = document.querySelector(`main`);
 const onSuccessUpload = document.querySelector(`#success`)
   .content
@@ -662,32 +649,32 @@ const successInner = successElement.querySelector(`.success__inner`);
 const successButton = successElement.querySelector(`.success__button`);
 const closeModal = window.popup.closeModal;
 
-const createSuccessModule = function () {
+const createSuccessModule = () => {
   closeModal();
   main.insertAdjacentElement(`afterbegin`, successElement);
   successButton.addEventListener(`click`, successButtonClickHandler);
   document.addEventListener(`click`, successWindowClickHandler);
-  document.addEventListener(`keydown`, EscPressHandler);
+  document.addEventListener(`keydown`, escPressHandler);
 };
 
-const deleteSuccessModule = function () {
+const deleteSuccessModule = () => {
   successButton.removeEventListener(`click`, successButtonClickHandler);
   document.removeEventListener(`click`, successWindowClickHandler);
-  document.removeEventListener(`keydown`, EscPressHandler);
+  document.removeEventListener(`keydown`, escPressHandler);
   main.removeChild(successElement);
 };
 
-const successButtonClickHandler = function () {
+const successButtonClickHandler = () => {
   deleteSuccessModule();
 };
 
-const successWindowClickHandler = function (evt) {
+const successWindowClickHandler = (evt) => {
   if (evt.target !== successInner) {
     deleteSuccessModule();
   }
 };
 
-const EscPressHandler = function (evt) {
+const escPressHandler = function (evt) {
   if (evt.key === `Escape`) {
     deleteSuccessModule();
   }
@@ -704,13 +691,11 @@ window.success = {
 })();
 
 (() => {
-/*!*********************!*\
-  !*** ./js/error.js ***!
-  \*********************/
+/*!***********************!*\
+  !*** ./js/mistake.js ***!
+  \***********************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements:  */
-
-
 
 
 const main = document.querySelector(`main`);
@@ -723,7 +708,7 @@ const errorButton = errorElement.querySelector(`.error__button`);
 const errorInner = errorElement.querySelector(`.error__inner`);
 const errorTitle = errorElement.querySelector(`.error__title`);
 
-const createErrorModule = function (errorText) {
+const createErrorModule = (errorText) => {
   if (errorText) {
     errorTitle.textContent = errorText;
   }
@@ -733,30 +718,30 @@ const createErrorModule = function (errorText) {
   document.addEventListener(`keydown`, errorEscPressHandler);
 };
 
-const deleteErrorModule = function () {
+const deleteErrorModule = () => {
   main.removeChild(errorElement);
   errorButton.removeEventListener(`click`, errorButtonClickHandler);
   document.removeEventListener(`click`, errorWindowClickHandler);
   document.removeEventListener(`keydown`, errorEscPressHandler);
 };
 
-const errorButtonClickHandler = function () {
+const errorButtonClickHandler = () => {
   deleteErrorModule();
 };
 
-const errorWindowClickHandler = function (evt) {
+const errorWindowClickHandler = (evt) => {
   if (evt.target !== errorInner) {
     deleteErrorModule();
   }
 };
 
-const errorEscPressHandler = function (evt) {
+const errorEscPressHandler = (evt) => {
   if (evt.key === `Escape`) {
     deleteErrorModule();
   }
 };
 
-const errorUploadHandler = function (errorText = false) {
+const errorUploadHandler = (errorText = false) => {
   createErrorModule(errorText);
 };
 
@@ -775,9 +760,7 @@ window.mistake = {
 /*! runtime requirements:  */
 
 
-
 const DEFAULT_EFFECT_LEVEL = 100;
-
 const MAX_EFFECTS_VALUES = {
   chrome: 1,
   sepia: 1,
@@ -792,13 +775,13 @@ const effectLevelPin = effectLevel.querySelector(`.effect-level__pin`);
 const effectLevelLine = effectLevel.querySelector(`.effect-level__line`);
 const effectLevelDepth = effectLevel.querySelector(`.effect-level__depth`);
 const effectLevelValue = effectLevel.querySelector(`.effect-level__value`);
-const effectsItemFirst = document.querySelector(`.effects__item:first-child`);
+const effectsItemDefault = document.querySelector(`.effects__item:first-child`);
 const effectsItem = document.querySelectorAll(`.effects__item`);
 const imgUploadEffectLevel = document.querySelector(`.img-upload__effect-level`);
 
 imgUploadEffectLevel.classList.add(`hidden`);
 
-const changeFilter = function (evt) {
+const changeFilterHandler = (evt) => {
   if (evt.target.matches(`input[type="radio"]`)) {
     window.scale.imageUploadPreview.className = ``;
     setDefaultDepth();
@@ -808,16 +791,16 @@ const changeFilter = function (evt) {
   }
 };
 
-effects.addEventListener(`click`, changeFilter);
+effects.addEventListener(`click`, changeFilterHandler);
 
-const setDefaultDepth = function () {
+const setDefaultDepth = () => {
   effectLevelPin.style.left = DEFAULT_EFFECT_LEVEL + `%`;
   effectLevelDepth.style.width = DEFAULT_EFFECT_LEVEL + `%`;
   effectLevelValue.value = DEFAULT_EFFECT_LEVEL;
   window.scale.imageUploadPreview.style.filter = ``;
 };
 
-const setNewEffectDepth = function (levelValue) {
+const setNewEffectDepth = (levelValue) => {
   const value = levelValue / 100;
 
   if (window.scale.imageUploadPreview.className.match(`effects__preview--`)) {
@@ -843,13 +826,13 @@ const setNewEffectDepth = function (levelValue) {
   }
 };
 
-const effectsLevelPinMouseDownHandler = function (evt) {
+const effectsLevelPinMouseDownHandler = (evt) => {
   evt.preventDefault();
 
   const lineWidth = effectLevelLine.offsetWidth;
   let startCoordinates = evt.clientX;
 
-  const oneEffectLevelPinMove = function (moveEvt) {
+  const oneEffectLevelPinMoveHandler = (moveEvt) => {
     moveEvt.preventDefault();
 
     const shift = startCoordinates - moveEvt.clientX;
@@ -866,26 +849,26 @@ const effectsLevelPinMouseDownHandler = function (evt) {
     }
   };
 
-  const oneEffectLevelPinMouseUp = function (upEvt) {
+  const oneEffectLevelPinMouseUpHandler = (upEvt) => {
     upEvt.preventDefault();
-    document.removeEventListener(`mousemove`, oneEffectLevelPinMove);
-    document.removeEventListener(`mouseup`, oneEffectLevelPinMouseUp);
+    document.removeEventListener(`mousemove`, oneEffectLevelPinMoveHandler);
+    document.removeEventListener(`mouseup`, oneEffectLevelPinMouseUpHandler);
 
   };
 
-  document.addEventListener(`mousemove`, oneEffectLevelPinMove);
-  document.addEventListener(`mouseup`, oneEffectLevelPinMouseUp);
+  document.addEventListener(`mousemove`, oneEffectLevelPinMoveHandler);
+  document.addEventListener(`mouseup`, oneEffectLevelPinMouseUpHandler);
 };
 
 effectLevelPin.addEventListener(`mousedown`, effectsLevelPinMouseDownHandler);
 
-effectsItem.forEach(function (item) {
+effectsItem.forEach((item) => {
   item.addEventListener(`click`, function () {
     imgUploadEffectLevel.classList.remove(`hidden`);
   });
 });
 
-effectsItemFirst.addEventListener(`click`, function () {
+effectsItemDefault.addEventListener(`click`, function () {
   imgUploadEffectLevel.classList.add(`hidden`);
 });
 
@@ -906,10 +889,9 @@ window.effects = {
 /*! runtime requirements:  */
 
 
-
-const VALUE = {
-  min: 25,
-  max: 100
+const Value = {
+  MIN: 25,
+  MAX: 100
 };
 
 const scaleControlSmaller = document.querySelector(`.scale__control--smaller`);
@@ -917,25 +899,25 @@ const scaleControlBigger = document.querySelector(`.scale__control--bigger`);
 const counterValue = document.querySelector(`.scale__control--value`);
 const imageUploadPreview = document.querySelector(`.img-upload__preview img`);
 
-const clickOnMinusScale = function () {
+const clickOnMinusScaleHandler = () => {
   let scale = parseInt(counterValue.value, 10);
-  if (scale <= VALUE.max && scale > VALUE.min) {
-    scale -= VALUE.min;
+  if (scale <= Value.MAX && scale > Value.MIN) {
+    scale -= Value.MIN;
   }
   changeImageStyle(scale);
 };
 
-scaleControlSmaller.addEventListener(`click`, clickOnMinusScale);
+scaleControlSmaller.addEventListener(`click`, clickOnMinusScaleHandler);
 
-const clickOnPlusScale = function () {
+const clickOnPlusScaleHandler = () => {
   let scale = parseInt(counterValue.value, 10);
-  if (scale >= VALUE.min && scale < VALUE.max) {
-    scale += VALUE.min;
+  if (scale >= Value.min && scale < Value.MAX) {
+    scale += Value.min;
   }
   changeImageStyle(scale);
 };
 
-scaleControlBigger.addEventListener(`click`, clickOnPlusScale);
+scaleControlBigger.addEventListener(`click`, clickOnPlusScaleHandler);
 
 const changeImageStyle = function (number) {
   switch (number) {

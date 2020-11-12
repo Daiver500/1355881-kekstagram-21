@@ -35,13 +35,13 @@ const successWindowClickHandler = (evt) => {
   }
 };
 
-const escPressHandler = function (evt) {
+const escPressHandler = (evt) => {
   if (evt.key === `Escape`) {
     deleteSuccessModule();
   }
 };
 
-const fortunateUploadHandler = function () {
+const fortunateUploadHandler = () => {
   createSuccessModule();
 };
 

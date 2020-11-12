@@ -20,8 +20,8 @@ const hashtagsInputHandler = (evt) => {
     return HASHTAG_REG_EXP.test(tag);
   });
 
-  const isHastagsNoDuplicates = hashtagsArr.every((item, index, arrayOfHashtags) => {
-    return arrayOfHashtags.indexOf(item) === index;
+  const isHastagsNoDuplicates = hashtagsArr.every((item, index, hashtags) => {
+    return hashtags.indexOf(item) === index;
   });
 
   hashtagsInput.setCustomValidity(``);

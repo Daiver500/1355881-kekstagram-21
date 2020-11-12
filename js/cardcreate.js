@@ -40,7 +40,7 @@ const errorHandler = (errorMessage) => {
 const clickSmallPhoto = (data) => {
   const smallPhotosList = document.querySelectorAll(`.picture`);
   smallPhotosList.forEach((picture, index) => {
-    picture.addEventListener(`click`, function (evt) {
+    picture.addEventListener(`click`, (evt) => {
       evt.preventDefault();
       openBigPicturePopup(data[index]);
     });

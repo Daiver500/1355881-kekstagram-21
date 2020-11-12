@@ -103,12 +103,12 @@ const effectsLevelPinMouseDownHandler = (evt) => {
 effectLevelPin.addEventListener(`mousedown`, effectsLevelPinMouseDownHandler);
 
 effectsItem.forEach((item) => {
-  item.addEventListener(`click`, function () {
+  item.addEventListener(`click`, () => {
     imgUploadEffectLevel.classList.remove(`hidden`);
   });
 });
 
-effectsItemDefault.addEventListener(`click`, function () {
+effectsItemDefault.addEventListener(`click`, () => {
   imgUploadEffectLevel.classList.add(`hidden`);
 });
 
