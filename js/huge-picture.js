@@ -19,7 +19,7 @@ let commentsCopy = [];
 
 socialCommentCount.classList.add(`hidden`);
 
-const createSocialComment = function (commentObject) {
+const createSocialComment = (commentObject) => {
   const {avatar, name, message} = commentObject;
   const li = socialComment.cloneNode(true);
   const picture = li.querySelector(`.social__picture`);
@@ -32,11 +32,11 @@ const createSocialComment = function (commentObject) {
   return li;
 };
 
-const renderSocialComments = function (commentsArray) {
+const renderSocialComments = (commentsArray) => {
   const comments = commentsArray.splice(0, 5);
   const fragment = document.createDocumentFragment();
 
-  comments.forEach(function (comment) {
+  comments.forEach((comment) => {
     const commentElement = createSocialComment(comment);
     fragment.append(commentElement);
   });
@@ -44,7 +44,7 @@ const renderSocialComments = function (commentsArray) {
   return comments;
 };
 
-const moreCommentsBtnClickHandler = function () {
+const moreCommentsBtnClickHandler = () => {
   const comments = renderSocialComments(commentsCopy);
   currentCommentsCount.textContent = Number(currentCommentsCount.textContent) + comments.length;
 
@@ -54,7 +54,7 @@ const moreCommentsBtnClickHandler = function () {
   }
 };
 
-const openBigPicture = function (object) {
+const openBigPicture = (object) => {
   const {url, likes, comments, description} = object;
   const commentsAmount = comments.length;
   commentsCopy = comments.slice();
@@ -79,20 +79,20 @@ const openBigPicture = function (object) {
   }
 };
 
-const bigPictureEscPressHandler = function (evt) {
+const bigPictureEscPressHandler = (evt) => {
   if (evt.key === `Escape`) {
     evt.preventDefault();
     closeBigPicture();
   }
 };
 
-const closeButtonClickHandler = function (evt) {
+const closeButtonClickHandler = (evt) => {
   evt.preventDefault();
   closeBigPicture();
 
 };
 
-const closeBigPicture = function () {
+const closeBigPicture = () => {
   bigPicture.classList.add(`hidden`);
   document.removeEventListener(`keydown`, bigPictureEscPressHandler);
   document.body.classList.remove(`modal-open`);

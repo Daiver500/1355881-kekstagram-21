@@ -21,7 +21,7 @@ const imgUploadEffectLevel = document.querySelector(`.img-upload__effect-level`)
 
 imgUploadEffectLevel.classList.add(`hidden`);
 
-const changeFilterHandler = function (evt) {
+const changeFilterHandler = (evt) => {
   if (evt.target.matches(`input[type="radio"]`)) {
     window.scale.imageUploadPreview.className = ``;
     setDefaultDepth();
@@ -33,14 +33,14 @@ const changeFilterHandler = function (evt) {
 
 effects.addEventListener(`click`, changeFilterHandler);
 
-const setDefaultDepth = function () {
+const setDefaultDepth = () => {
   effectLevelPin.style.left = DEFAULT_EFFECT_LEVEL + `%`;
   effectLevelDepth.style.width = DEFAULT_EFFECT_LEVEL + `%`;
   effectLevelValue.value = DEFAULT_EFFECT_LEVEL;
   window.scale.imageUploadPreview.style.filter = ``;
 };
 
-const setNewEffectDepth = function (levelValue) {
+const setNewEffectDepth = (levelValue) => {
   const value = levelValue / 100;
 
   if (window.scale.imageUploadPreview.className.match(`effects__preview--`)) {
@@ -66,13 +66,13 @@ const setNewEffectDepth = function (levelValue) {
   }
 };
 
-const effectsLevelPinMouseDownHandler = function (evt) {
+const effectsLevelPinMouseDownHandler = (evt) => {
   evt.preventDefault();
 
   const lineWidth = effectLevelLine.offsetWidth;
   let startCoordinates = evt.clientX;
 
-  const oneEffectLevelPinMoveHandler = function (moveEvt) {
+  const oneEffectLevelPinMoveHandler = (moveEvt) => {
     moveEvt.preventDefault();
 
     const shift = startCoordinates - moveEvt.clientX;
@@ -89,7 +89,7 @@ const effectsLevelPinMouseDownHandler = function (evt) {
     }
   };
 
-  const oneEffectLevelPinMouseUpHandler = function (upEvt) {
+  const oneEffectLevelPinMouseUpHandler = (upEvt) => {
     upEvt.preventDefault();
     document.removeEventListener(`mousemove`, oneEffectLevelPinMoveHandler);
     document.removeEventListener(`mouseup`, oneEffectLevelPinMouseUpHandler);
@@ -102,7 +102,7 @@ const effectsLevelPinMouseDownHandler = function (evt) {
 
 effectLevelPin.addEventListener(`mousedown`, effectsLevelPinMouseDownHandler);
 
-effectsItem.forEach(function (item) {
+effectsItem.forEach((item) => {
   item.addEventListener(`click`, function () {
     imgUploadEffectLevel.classList.remove(`hidden`);
   });

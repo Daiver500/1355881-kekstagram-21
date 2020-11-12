@@ -8,7 +8,7 @@ const template = document.querySelector(`#picture`)
 .content
 .querySelector(`.picture`);
 
-const createCardElement = function (object) {
+const createCardElement = (object) => {
   const {likes, comments, url} = object;
   const cardElement = template.cloneNode(true);
   cardElement.querySelector(`.picture__likes`).textContent = likes;
@@ -17,16 +17,16 @@ const createCardElement = function (object) {
   return cardElement;
 };
 
-const renderPictures = function (cardsArray) {
+const renderPictures = (cardsArray) => {
   const fragment = document.createDocumentFragment();
-  cardsArray.forEach(function (cardObject) {
+  cardsArray.forEach((cardObject) => {
     fragment.appendChild(createCardElement(cardObject));
   });
   pictures.appendChild(fragment);
   return fragment;
 };
 
-const errorHandler = function (errorMessage) {
+const errorHandler = (errorMessage) => {
   const node = document.createElement(`div`);
   node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: red;`;
   node.style.position = `absolute`;
@@ -37,9 +37,9 @@ const errorHandler = function (errorMessage) {
   document.body.insertAdjacentElement(`afterbegin`, node);
 };
 
-const clickSmallPhoto = function (data) {
+const clickSmallPhoto = (data) => {
   const smallPhotosList = document.querySelectorAll(`.picture`);
-  smallPhotosList.forEach(function (picture, index) {
+  smallPhotosList.forEach((picture, index) => {
     picture.addEventListener(`click`, function (evt) {
       evt.preventDefault();
       openBigPicturePopup(data[index]);
@@ -47,7 +47,7 @@ const clickSmallPhoto = function (data) {
   });
 };
 
-const successDataLoadHandler = function (data) {
+const successDataLoadHandler = (data) => {
   window.cardcreate.cardsList = [];
   window.cardcreate.cardsList = data;
   renderPictures(data);

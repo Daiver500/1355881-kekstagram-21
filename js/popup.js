@@ -10,14 +10,14 @@ const hashtagsInputHandler = window.validation.hashtagsInputHandler;
 const commentsInput = imageUploadOverlay.querySelector(`.text__description`);
 const commentsInputHandler = window.validation.commentsInputHandler;
 
-const modalEscPressHandler = function (evt) {
+const modalEscPressHandler = (evt) => {
   if (evt.key === `Escape`) {
     closeModal();
     evt.preventDefault();
   }
 };
 
-const openModal = function () {
+const openModal = () => {
   imageUploadOverlay.classList.remove(`hidden`);
   document.querySelector(`body`).classList.add(`modal-open`);
   hashtagsInput.addEventListener(`input`, hashtagsInputHandler);
@@ -31,7 +31,7 @@ const openModal = function () {
   document.addEventListener(`keydown`, modalEscPressHandler);
 };
 
-const closeModal = function () {
+const closeModal = () => {
   imageUploadOverlay.classList.add(`hidden`);
   document.querySelector(`body`).classList.remove(`modal-open`);
   hashtagsInput.removeEventListener(`input`, hashtagsInputHandler);
@@ -49,27 +49,27 @@ const closeModal = function () {
   hashtagsInput.style.background = ``;
 };
 
-const hashtagFocusInHandler = function () {
+const hashtagFocusInHandler = () => {
   document.removeEventListener(`keydown`, modalEscPressHandler);
 };
 
-const hashtagFocusOutHandler = function () {
+const hashtagFocusOutHandler = () => {
   document.addEventListener(`keydown`, modalEscPressHandler);
 };
 
-const commentsFocusInHandler = function () {
+const commentsFocusInHandler = () => {
   document.removeEventListener(`keydown`, modalEscPressHandler);
 };
 
-const commentsFocusOutHandler = function () {
+const commentsFocusOutHandler = () => {
   document.addEventListener(`keydown`, modalEscPressHandler);
 };
 
-const openModalHandler = function () {
+const openModalHandler = () => {
   openModal();
 };
 
-const modalCloseBtnClickHandler = function () {
+const modalCloseBtnClickHandler = () => {
   closeModal();
 };
 

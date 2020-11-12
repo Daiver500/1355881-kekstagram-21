@@ -5,13 +5,13 @@ const MAX_RANDOM_ELEMENTS = 10;
 const filtersForm = document.querySelector(`.img-filters__form`);
 const renderPictures = window.cardcreate.renderPictures;
 
-const showDefaultPictures = function () {
+const showDefaultPictures = () => {
   const defaultPhotos = window.cardcreate.cardsList;
   renderPictures(defaultPhotos);
   window.cardcreate.clickSmallPhoto(defaultPhotos);
 };
 
-const shuffleArray = function (arrayOfPhotos) {
+const shuffleArray = (arrayOfPhotos) => {
   const arrayCopyOfPhotos = arrayOfPhotos.slice();
   const iterations = MAX_RANDOM_ELEMENTS < arrayCopyOfPhotos.length ? MAX_RANDOM_ELEMENTS : arrayCopyOfPhotos.length - 1;
 
@@ -24,30 +24,30 @@ const shuffleArray = function (arrayOfPhotos) {
   return arrayCopyOfPhotos;
 };
 
-const showRandomPictures = function () {
+const showRandomPictures = () => {
   const picturesList = window.cardcreate.cardsList;
   const randomElements = shuffleArray(picturesList).slice(0, MAX_RANDOM_ELEMENTS);
   renderPictures(randomElements);
   window.cardcreate.clickSmallPhoto(randomElements);
 };
 
-const showDiscussedPictures = function () {
+const showDiscussedPictures = () => {
   const picturesListCopy = window.cardcreate.cardsList.slice();
-  const sortedList = picturesListCopy.sort(function (a, b) {
+  const sortedList = picturesListCopy.sort((a, b) => {
     return b.comments.length - a.comments.length;
   });
   renderPictures(sortedList);
   window.cardcreate.clickSmallPhoto(sortedList);
 };
 
-const removePictures = function () {
+const removePictures = () => {
   const pics = document.querySelectorAll(`.picture`);
-  pics.forEach(function (item) {
+  pics.forEach((item) => {
     item.remove();
   });
 };
 
-const setActiveFilterBtn = function (evt) {
+const setActiveFilterBtn = (evt) => {
   const currentActive = filtersForm.querySelector(`.img-filters__button--active`);
   const {target} = evt;
   if (!target.classList.contains(`img-filters__button--active`)) {
@@ -56,7 +56,7 @@ const setActiveFilterBtn = function (evt) {
   }
 };
 
-const filterClickHandler = window.timeout.debounce(function (evt) {
+const filterClickHandler = window.timeout.debounce((evt) => {
   removePictures();
   setActiveFilterBtn(evt);
 

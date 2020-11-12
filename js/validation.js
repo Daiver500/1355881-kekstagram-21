@@ -10,17 +10,17 @@ const UserMessage = {
   CORRECT: `Не верный формат хештега`,
 };
 
-const hashtagsInputHandler = function (evt) {
+const hashtagsInputHandler = (evt) => {
   const {target: hashtagsInput} = evt;
   const hashtagsArr = hashtagsInput.value.replace(/ +/g, ` `).trim().toLowerCase().split(` `);
 
   const isHashtagsLessThanFive = hashtagsArr.length <= HASHTAGS_MAX_COUNT;
 
-  const isHashtagCorrect = hashtagsArr.every(function (tag) {
+  const isHashtagCorrect = hashtagsArr.every((tag) => {
     return HASHTAG_REG_EXP.test(tag);
   });
 
-  const isHastagsNoDuplicates = hashtagsArr.every(function (item, index, arrayOfHashtags) {
+  const isHastagsNoDuplicates = hashtagsArr.every((item, index, arrayOfHashtags) => {
     return arrayOfHashtags.indexOf(item) === index;
   });
 
@@ -52,7 +52,7 @@ const hashtagsInputHandler = function (evt) {
   }
 };
 
-const commentsInputHandler = function (evt) {
+const commentsInputHandler = (evt) => {
   const {target: commentsField} = evt;
   const valueLength = commentsField.value.length;
   if (commentsField.value.length > COMMENTS_MAX) {

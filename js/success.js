@@ -10,7 +10,7 @@ const successInner = successElement.querySelector(`.success__inner`);
 const successButton = successElement.querySelector(`.success__button`);
 const closeModal = window.popup.closeModal;
 
-const createSuccessModule = function () {
+const createSuccessModule = () => {
   closeModal();
   main.insertAdjacentElement(`afterbegin`, successElement);
   successButton.addEventListener(`click`, successButtonClickHandler);
@@ -18,18 +18,18 @@ const createSuccessModule = function () {
   document.addEventListener(`keydown`, escPressHandler);
 };
 
-const deleteSuccessModule = function () {
+const deleteSuccessModule = () => {
   successButton.removeEventListener(`click`, successButtonClickHandler);
   document.removeEventListener(`click`, successWindowClickHandler);
   document.removeEventListener(`keydown`, escPressHandler);
   main.removeChild(successElement);
 };
 
-const successButtonClickHandler = function () {
+const successButtonClickHandler = () => {
   deleteSuccessModule();
 };
 
-const successWindowClickHandler = function (evt) {
+const successWindowClickHandler = (evt) => {
   if (evt.target !== successInner) {
     deleteSuccessModule();
   }

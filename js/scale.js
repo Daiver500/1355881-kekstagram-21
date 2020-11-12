@@ -10,7 +10,7 @@ const scaleControlBigger = document.querySelector(`.scale__control--bigger`);
 const counterValue = document.querySelector(`.scale__control--value`);
 const imageUploadPreview = document.querySelector(`.img-upload__preview img`);
 
-const clickOnMinusScaleHandler = function () {
+const clickOnMinusScaleHandler = () => {
   let scale = parseInt(counterValue.value, 10);
   if (scale <= Value.MAX && scale > Value.MIN) {
     scale -= Value.MIN;
@@ -20,7 +20,7 @@ const clickOnMinusScaleHandler = function () {
 
 scaleControlSmaller.addEventListener(`click`, clickOnMinusScaleHandler);
 
-const clickOnPlusScaleHandler = function () {
+const clickOnPlusScaleHandler = () => {
   let scale = parseInt(counterValue.value, 10);
   if (scale >= Value.min && scale < Value.MAX) {
     scale += Value.min;

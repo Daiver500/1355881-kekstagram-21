@@ -7,18 +7,18 @@ const previewImg = imgUpload.querySelector(`.img-upload__preview img`);
 const effectsPreview = imgUpload.querySelectorAll(`.effects__preview`);
 const openModal = window.popup.openModalHandler;
 
-const setEffectsPreview = function (customImage) {
-  effectsPreview.forEach(function (preview) {
+const setEffectsPreview = (customImage) => {
+  effectsPreview.forEach((preview) => {
     preview.style = `background-image: url('${customImage}')`;
   });
 };
 
-fileChooser.addEventListener(`change`, function () {
+fileChooser.addEventListener(`change`, () => {
   const file = fileChooser.files[0];
   const fileName = file.name.toLowerCase();
 
 
-  const matches = FILE_TYPES.some(function (it) {
+  const matches = FILE_TYPES.some((it) => {
     return fileName.endsWith(it);
   });
 
@@ -29,7 +29,7 @@ fileChooser.addEventListener(`change`, function () {
   }
 
   const reader = new FileReader();
-  reader.addEventListener(`load`, function () {
+  reader.addEventListener(`load`, () => {
     openModal();
     const image = reader.result;
     previewImg.src = image;
