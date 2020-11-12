@@ -1,6 +1,5 @@
 "use strict";
 
-
 const pictures = document.querySelector(`.pictures`);
 const filters = document.querySelector(`.img-filters`);
 const openBigPicturePopup = window.bigpicture.openBigPicture;

@@ -1,6 +1,5 @@
 "use strict";
 
-
 const VALUE = {
   min: 25,
   max: 100

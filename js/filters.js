@@ -1,6 +1,5 @@
 "use strict";
 
-
 const MAX_RANDOM_ELEMENTS = 10;
 
 const filtersForm = document.querySelector(`.img-filters__form`);

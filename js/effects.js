@@ -1,8 +1,6 @@
 "use strict";
 
-
 const DEFAULT_EFFECT_LEVEL = 100;
-
 const MAX_EFFECTS_VALUES = {
   chrome: 1,
   sepia: 1,
@@ -17,7 +15,7 @@ const effectLevelPin = effectLevel.querySelector(`.effect-level__pin`);
 const effectLevelLine = effectLevel.querySelector(`.effect-level__line`);
 const effectLevelDepth = effectLevel.querySelector(`.effect-level__depth`);
 const effectLevelValue = effectLevel.querySelector(`.effect-level__value`);
-const effectDefault = document.querySelector(`.effects__item:first-child`);
+const effectsItemFirst = document.querySelector(`.effects__item:first-child`);
 const effectsItem = document.querySelectorAll(`.effects__item`);
 const imgUploadEffectLevel = document.querySelector(`.img-upload__effect-level`);
 
@@ -110,7 +108,7 @@ effectsItem.forEach(function (item) {
   });
 });
 
-effectDefault.addEventListener(`click`, function () {
+effectsItemFirst.addEventListener(`click`, function () {
   imgUploadEffectLevel.classList.add(`hidden`);
 });
 
