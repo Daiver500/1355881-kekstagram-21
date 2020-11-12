@@ -1,4 +1,3 @@
-// 6.2
 "use strict";
 
 const form = document.querySelector(`.img-upload__form`);
@@ -6,14 +5,14 @@ const imageUploadOverlay = document.querySelector(`.img-upload__overlay`);
 
 const resetImageData = function () {
   window.effects.setDefaultDepth();
-  window.modalopenclose.uploadImageFile.value = ``;
+  window.modal.uploadImageFile.value = ``;
   window.scale.imageUploadPreview.style.filter = ``;
   window.scale.imageUploadPreview.style.transform = `scale(1.00)`;
   window.scale.imageUploadPreview.className = `effects__preview--none`;
   window.effects.effectLevel.classList.add(`hidden`);
 };
 
-const submitHandler = function (evt) {
+const formSubmitHandler = function (evt) {
   window.server.upload(
       new FormData(form),
       function () {
@@ -28,8 +27,7 @@ const submitHandler = function (evt) {
   evt.preventDefault();
 };
 
-form.addEventListener(`submit`, submitHandler);
-
 window.submit = {
+  formSubmitHandler,
   resetImageData
 };

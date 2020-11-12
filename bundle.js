@@ -93,9 +93,9 @@ window.timeout = {
 })();
 
 (() => {
-/*!**************************!*\
-  !*** ./js/bigpicture.js ***!
-  \**************************/
+/*!***************************!*\
+  !*** ./js/big-picture.js ***!
+  \***************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements:  */
 
@@ -111,6 +111,7 @@ const bigPicture = document.querySelector(`.big-picture`);
 const social = bigPicture.querySelector(`.social`);
 const socialComments = social.querySelector(`.social__comments`);
 const socialCommentCount = social.querySelector(`.social__comment-count`);
+const currentCommentsCount = bigPicture.querySelector(`.comments-current`);
 const socialComment = socialComments.querySelector(`li`);
 const commentsLoader = social.querySelector(`.comments-loader`);
 const bigPictureCancel = bigPicture.querySelector(`.big-picture__cancel`);
@@ -140,10 +141,13 @@ const renderSocialComments = function (commentsArray) {
     fragment.append(commentElement);
   });
   socialComments.append(fragment);
+  return comments;
 };
 
 const moreCommentsBtnClickHandler = function () {
-  renderSocialComments(commentsCopy);
+  const comments = renderSocialComments(commentsCopy);
+  currentCommentsCount.textContent = Number(currentCommentsCount.textContent) + comments.length;
+
   if (commentsCopy.length === 0) {
     commentsLoader.classList.add(`hidden`);
     commentsLoader.removeEventListener(`click`, moreCommentsBtnClickHandler);
@@ -152,14 +156,17 @@ const moreCommentsBtnClickHandler = function () {
 
 const openBigPicture = function (object) {
   const {url, likes, comments, description} = object;
+  const commentsAmount = comments.length;
   commentsCopy = comments.slice();
   socialComments.innerHTML = ``;
   bigPicture.querySelector(`.big-picture__img img`).src = url;
   bigPicture.querySelector(`.likes-count`).textContent = likes;
-  bigPicture.querySelector(`.comments-count`).textContent = comments.length;
+  bigPicture.querySelector(`.comments-current`).textContent = (commentsAmount <= MAX_COMMENTS_AMOUNT) ? commentsAmount : MAX_COMMENTS_AMOUNT;
+  bigPicture.querySelector(`.comments-count`).textContent = commentsAmount;
   bigPicture.querySelector(`.social__caption`).textContent = description;
   renderSocialComments(commentsCopy);
   bigPicture.classList.remove(`hidden`);
+  socialCommentCount.classList.remove(`hidden`);
   document.body.classList.add(`modal-open`);
   document.addEventListener(`keydown`, bigPictureEscPressHandler);
   bigPictureCancel.addEventListener(`click`, closeButtonClickHandler);
@@ -383,11 +390,11 @@ const USER_MESSAGE = {
   CORRECT: `Не верный формат хештега`,
 };
 
-const hashtagsInput = document.querySelector(`.text__hashtags`);
-const commentsField = document.querySelector(`.text__description`);
+// const hashtagsInput = document.querySelector(`.text__hashtags`);
+// const commentsField = document.querySelector(`.text__description`);
 
-
-const hashtagsInputKeyupHandler = function () {
+const hashtagsInputHandler = function (evt) {
+  const {target: hashtagsInput} = evt;
   const hashtagsArr = hashtagsInput.value.replace(/ +/g, ` `).trim().toLowerCase().split(` `);
 
   const isHashtagsLessThanFive = hashtagsArr.length <= HASHTAGS_MAX_COUNT;
@@ -428,48 +435,89 @@ const hashtagsInputKeyupHandler = function () {
   }
 };
 
-hashtagsInput.addEventListener(`input`, hashtagsInputKeyupHandler);
-
-hashtagsInput.addEventListener(`focusin`, function () {
-  document.removeEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
-});
-
-hashtagsInput.addEventListener(`focusout`, function () {
-  document.addEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
-});
-
-commentsField.oninput = function () {
-  const valueLength = commentsField.value.length;
-  if (commentsField.value.length > COMMENTS_MAX) {
-    commentsField.setCustomValidity(`Удалите ` + (COMMENTS_MAX - valueLength) + ` симв.`);
-  } else {
-    commentsField.setCustomValidity(``);
-  }
-  commentsField.reportValidity();
+const commentsInputHandler = function (evt) {
+  const {target: commentsField} = evt;
+  commentsField.oninput = function () {
+    const valueLength = commentsField.value.length;
+    if (commentsField.value.length > COMMENTS_MAX) {
+      commentsField.setCustomValidity(`Удалите ` + (COMMENTS_MAX - valueLength) + ` симв.`);
+    } else {
+      commentsField.setCustomValidity(``);
+    }
+    commentsField.reportValidity();
+  };
 };
 
-commentsField.addEventListener(`focusin`, function () {
-  document.removeEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
-});
-
-commentsField.addEventListener(`focusout`, function () {
-  document.addEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
-});
+window.validation = {
+  hashtagsInputHandler,
+  commentsInputHandler
+};
 
 
 })();
 
 (() => {
-/*!******************************!*\
-  !*** ./js/modalopenclose.js ***!
-  \******************************/
+/*!**********************!*\
+  !*** ./js/submit.js ***!
+  \**********************/
+/*! unknown exports (runtime-defined) */
+/*! runtime requirements:  */
+
+
+
+const form = document.querySelector(`.img-upload__form`);
+const imageUploadOverlay = document.querySelector(`.img-upload__overlay`);
+
+const resetImageData = function () {
+  window.effects.setDefaultDepth();
+  window.modal.uploadImageFile.value = ``;
+  window.scale.imageUploadPreview.style.filter = ``;
+  window.scale.imageUploadPreview.style.transform = `scale(1.00)`;
+  window.scale.imageUploadPreview.className = `effects__preview--none`;
+  window.effects.effectLevel.classList.add(`hidden`);
+};
+
+const formSubmitHandler = function (evt) {
+  window.server.upload(
+      new FormData(form),
+      function () {
+        form.reset();
+        resetImageData();
+        imageUploadOverlay.classList.add(`hidden`);
+        window.success.successUploadHandler();
+      },
+      function () {
+        window.error.errorUploadHandler();
+      });
+  evt.preventDefault();
+};
+
+// form.addEventListener(`submit`, submitHandler);
+
+window.submit = {
+  formSubmitHandler,
+  resetImageData
+};
+
+})();
+
+(() => {
+/*!*********************!*\
+  !*** ./js/modal.js ***!
+  \*********************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements:  */
 
 
 const uploadImageFile = document.querySelector(`#upload-file`);
-const imageUploadOverlay = document.querySelector(`.img-upload__overlay`);
-const uploadCancel = document.querySelector(`#upload-cancel`);
+const uploadForm = document.querySelector(`.img-upload__form`);
+const imageUploadOverlay = uploadForm.querySelector(`.img-upload__overlay`);
+const modalCloseBtn = imageUploadOverlay.querySelector(`#upload-cancel`);
+const formSubmitHandler = window.submit.formSubmitHandler;
+const hashtagsInput = imageUploadOverlay.querySelector(`.text__hashtags`);
+const hashtagsInputHandler = window.validation.hashtagsInputHandler;
+const commentsInput = imageUploadOverlay.querySelector(`.text__description`);
+const commentsInputHandler = window.validation.commentsInputHandler;
 
 const modalEscPressHandler = function (evt) {
   if (evt.key === `Escape`) {
@@ -481,27 +529,63 @@ const modalEscPressHandler = function (evt) {
 const openModal = function () {
   imageUploadOverlay.classList.remove(`hidden`);
   document.querySelector(`body`).classList.add(`modal-open`);
+  hashtagsInput.addEventListener(`input`, hashtagsInputHandler);
+  hashtagsInput.addEventListener(`focusin`, hashtagFocusInHandler);
+  hashtagsInput.addEventListener(`focusout`, hashtagFocusOutHandler);
+  commentsInput.addEventListener(`input`, commentsInputHandler);
+  commentsInput.addEventListener(`focusin`, commentsFocusInHandler);
+  commentsInput.addEventListener(`focusout`, commentsFocusOutHandler);
+  uploadForm.addEventListener(`submit`, formSubmitHandler);
+  modalCloseBtn.addEventListener(`click`, modalCloseBtnClickHandler);
   document.addEventListener(`keydown`, modalEscPressHandler);
 };
 
 const closeModal = function () {
   imageUploadOverlay.classList.add(`hidden`);
   document.querySelector(`body`).classList.remove(`modal-open`);
+  hashtagsInput.removeEventListener(`input`, hashtagsInputHandler);
+  hashtagsInput.removeEventListener(`focusin`, hashtagFocusInHandler);
+  hashtagsInput.removeEventListener(`focusout`, hashtagFocusOutHandler);
+  commentsInput.removeEventListener(`input`, commentsInputHandler);
+  commentsInput.removeEventListener(`focusin`, commentsFocusInHandler);
+  commentsInput.removeEventListener(`focusout`, commentsFocusOutHandler);
+  uploadForm.removeEventListener(`submit`, formSubmitHandler);
+  modalCloseBtn.removeEventListener(`click`, modalCloseBtnClickHandler);
   document.removeEventListener(`keydown`, modalEscPressHandler);
-  uploadImageFile.value = ``;
   window.submit.resetImageData();
+  uploadForm.reset();
+  hashtagsInput.style.outline = ``;
+  hashtagsInput.style.background = ``;
 };
 
-uploadImageFile.addEventListener(`change`, function () {
+const hashtagFocusInHandler = function () {
+  document.removeEventListener(`keydown`, modalEscPressHandler);
+};
+
+const hashtagFocusOutHandler = function () {
+  document.addEventListener(`keydown`, modalEscPressHandler);
+};
+
+const commentsFocusInHandler = function () {
+  document.removeEventListener(`keydown`, modalEscPressHandler);
+};
+
+const commentsFocusOutHandler = function () {
+  document.addEventListener(`keydown`, modalEscPressHandler);
+};
+
+const openModalHandler = function () {
   openModal();
-});
+};
 
-uploadCancel.addEventListener(`click`, function () {
+const modalCloseBtnClickHandler = function () {
   closeModal();
-});
+};
 
-window.modalopenclose = {
-  modalEscPressHandler,
+window.modal = {
+  openModalHandler,
+  modalCloseBtnClickHandler,
+  closeModal,
   uploadImageFile,
   imageUploadOverlay
 };
@@ -523,6 +607,7 @@ const imgUpload = document.querySelector(`.img-upload`);
 const fileChooser = imgUpload.querySelector(`.img-upload__start input[type=file]`);
 const previewImg = imgUpload.querySelector(`.img-upload__preview img`);
 const effectsPreview = imgUpload.querySelectorAll(`.effects__preview`);
+const openModal = window.modal.openModalHandler;
 
 const setEffectsPreview = function (customImage) {
   effectsPreview.forEach(function (preview) {
@@ -541,12 +626,13 @@ fileChooser.addEventListener(`change`, function () {
 
   if (!matches) {
     window.error.errorUploadHandler(`Недопустимый формат`);
-    window.modalopenclose.imageUploadOverlay.classList.add(`hidden`);
+    window.modal.imageUploadOverlay.classList.add(`hidden`);
     window.submit.resetImageData();
   }
 
   const reader = new FileReader();
   reader.addEventListener(`load`, function () {
+    openModal();
     const image = reader.result;
     previewImg.src = image;
     setEffectsPreview(image);
@@ -554,50 +640,6 @@ fileChooser.addEventListener(`change`, function () {
   reader.readAsDataURL(file);
 });
 
-
-})();
-
-(() => {
-/*!**********************!*\
-  !*** ./js/submit.js ***!
-  \**********************/
-/*! unknown exports (runtime-defined) */
-/*! runtime requirements:  */
-// 6.2
-
-
-const form = document.querySelector(`.img-upload__form`);
-const imageUploadOverlay = document.querySelector(`.img-upload__overlay`);
-
-const resetImageData = function () {
-  window.effects.setDefaultDepth();
-  window.modalopenclose.uploadImageFile.value = ``;
-  window.scale.imageUploadPreview.style.filter = ``;
-  window.scale.imageUploadPreview.style.transform = `scale(1.00)`;
-  window.scale.imageUploadPreview.className = `effects__preview--none`;
-  window.effects.effectLevel.classList.add(`hidden`);
-};
-
-const submitHandler = function (evt) {
-  window.server.upload(
-      new FormData(form),
-      function () {
-        form.reset();
-        resetImageData();
-        imageUploadOverlay.classList.add(`hidden`);
-        window.success.successUploadHandler();
-      },
-      function () {
-        window.error.errorUploadHandler();
-      });
-  evt.preventDefault();
-};
-
-form.addEventListener(`submit`, submitHandler);
-
-window.submit = {
-  resetImageData
-};
 
 })();
 
@@ -618,8 +660,10 @@ const onSuccessUpload = document.querySelector(`#success`)
 const successElement = onSuccessUpload.cloneNode(true);
 const successInner = successElement.querySelector(`.success__inner`);
 const successButton = successElement.querySelector(`.success__button`);
+const closeModal = window.modal.closeModal;
 
 const createSuccessModule = function () {
+  closeModal();
   main.insertAdjacentElement(`afterbegin`, successElement);
   successButton.addEventListener(`click`, successButtonClickHandler);
   document.addEventListener(`click`, successWindowClickHandler);

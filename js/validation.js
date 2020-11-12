@@ -1,6 +1,5 @@
 "use strict";
 
-
 const HASHTAGS_MAX_COUNT = 5;
 const COMMENTS_MAX = 140;
 const HASHTAG_REG_EXP = /^#([а-яА-Я]|[a-zA-Z]|[0-9]){1,20}$/;
@@ -11,11 +10,8 @@ const USER_MESSAGE = {
   CORRECT: `Не верный формат хештега`,
 };
 
-const hashtagsInput = document.querySelector(`.text__hashtags`);
-const commentsField = document.querySelector(`.text__description`);
-
-
-const hashtagsInputKeyupHandler = function () {
+const hashtagsInputHandler = function (evt) {
+  const {target: hashtagsInput} = evt;
   const hashtagsArr = hashtagsInput.value.replace(/ +/g, ` `).trim().toLowerCase().split(` `);
 
   const isHashtagsLessThanFive = hashtagsArr.length <= HASHTAGS_MAX_COUNT;
@@ -56,31 +52,21 @@ const hashtagsInputKeyupHandler = function () {
   }
 };
 
-hashtagsInput.addEventListener(`input`, hashtagsInputKeyupHandler);
-
-hashtagsInput.addEventListener(`focusin`, function () {
-  document.removeEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
-});
-
-hashtagsInput.addEventListener(`focusout`, function () {
-  document.addEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
-});
-
-commentsField.oninput = function () {
-  const valueLength = commentsField.value.length;
-  if (commentsField.value.length > COMMENTS_MAX) {
-    commentsField.setCustomValidity(`Удалите ` + (COMMENTS_MAX - valueLength) + ` симв.`);
-  } else {
-    commentsField.setCustomValidity(``);
-  }
-  commentsField.reportValidity();
+const commentsInputHandler = function (evt) {
+  const {target: commentsField} = evt;
+  commentsField.oninput = function () {
+    const valueLength = commentsField.value.length;
+    if (commentsField.value.length > COMMENTS_MAX) {
+      commentsField.setCustomValidity(`Удалите ` + (COMMENTS_MAX - valueLength) + ` симв.`);
+    } else {
+      commentsField.setCustomValidity(``);
+    }
+    commentsField.reportValidity();
+  };
 };
 
-commentsField.addEventListener(`focusin`, function () {
-  document.removeEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
-});
-
-commentsField.addEventListener(`focusout`, function () {
-  document.addEventListener(`keydown`, window.modalopenclose.modalEscPressHandler);
-});
+window.validation = {
+  hashtagsInputHandler,
+  commentsInputHandler
+};
 

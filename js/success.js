@@ -9,8 +9,10 @@ const onSuccessUpload = document.querySelector(`#success`)
 const successElement = onSuccessUpload.cloneNode(true);
 const successInner = successElement.querySelector(`.success__inner`);
 const successButton = successElement.querySelector(`.success__button`);
+const closeModal = window.modal.closeModal;
 
 const createSuccessModule = function () {
+  closeModal();
   main.insertAdjacentElement(`afterbegin`, successElement);
   successButton.addEventListener(`click`, successButtonClickHandler);
   document.addEventListener(`click`, successWindowClickHandler);
