@@ -255,7 +255,7 @@ const errorHandler = (errorMessage) => {
 const clickSmallPhoto = (data) => {
   const smallPhotosList = document.querySelectorAll(`.picture`);
   smallPhotosList.forEach((picture, index) => {
-    picture.addEventListener(`click`, function (evt) {
+    picture.addEventListener(`click`, (evt) => {
       evt.preventDefault();
       openBigPicturePopup(data[index]);
     });
@@ -300,17 +300,17 @@ const showDefaultPictures = () => {
   window.cardcreate.clickSmallPhoto(defaultPhotos);
 };
 
-const shuffleArray = (arrayOfPhotos) => {
-  const arrayCopyOfPhotos = arrayOfPhotos.slice();
-  const iterations = MAX_RANDOM_ELEMENTS < arrayCopyOfPhotos.length ? MAX_RANDOM_ELEMENTS : arrayCopyOfPhotos.length - 1;
+const shuffleArray = (photos) => {
+  const photoCopies = photos.slice();
+  const iterations = MAX_RANDOM_ELEMENTS < photoCopies.length ? MAX_RANDOM_ELEMENTS : photoCopies.length - 1;
 
   for (let i = 0; i < iterations; i++) {
-    const randomIndex = Math.floor(Math.random() * (arrayCopyOfPhotos.length - i)) + i;
-    const currentElement = arrayCopyOfPhotos[i];
-    arrayCopyOfPhotos[i] = arrayCopyOfPhotos[randomIndex];
-    arrayCopyOfPhotos[randomIndex] = currentElement;
+    const randomIndex = Math.floor(Math.random() * (photoCopies.length - i)) + i;
+    const currentElement = photoCopies[i];
+    photoCopies[i] = photoCopies[randomIndex];
+    photoCopies[randomIndex] = currentElement;
   }
-  return arrayCopyOfPhotos;
+  return photoCopies;
 };
 
 const showRandomPictures = () => {
@@ -396,8 +396,8 @@ const hashtagsInputHandler = (evt) => {
     return HASHTAG_REG_EXP.test(tag);
   });
 
-  const isHastagsNoDuplicates = hashtagsArr.every((item, index, arrayOfHashtags) => {
-    return arrayOfHashtags.indexOf(item) === index;
+  const isHastagsNoDuplicates = hashtagsArr.every((item, index, hashtags) => {
+    return hashtags.indexOf(item) === index;
   });
 
   hashtagsInput.setCustomValidity(``);
@@ -674,13 +674,13 @@ const successWindowClickHandler = (evt) => {
   }
 };
 
-const escPressHandler = function (evt) {
+const escPressHandler = (evt) => {
   if (evt.key === `Escape`) {
     deleteSuccessModule();
   }
 };
 
-const fortunateUploadHandler = function () {
+const fortunateUploadHandler = () => {
   createSuccessModule();
 };
 
@@ -863,12 +863,12 @@ const effectsLevelPinMouseDownHandler = (evt) => {
 effectLevelPin.addEventListener(`mousedown`, effectsLevelPinMouseDownHandler);
 
 effectsItem.forEach((item) => {
-  item.addEventListener(`click`, function () {
+  item.addEventListener(`click`, () => {
     imgUploadEffectLevel.classList.remove(`hidden`);
   });
 });
 
-effectsItemDefault.addEventListener(`click`, function () {
+effectsItemDefault.addEventListener(`click`, () => {
   imgUploadEffectLevel.classList.add(`hidden`);
 });
 
@@ -911,15 +911,15 @@ scaleControlSmaller.addEventListener(`click`, clickOnMinusScaleHandler);
 
 const clickOnPlusScaleHandler = () => {
   let scale = parseInt(counterValue.value, 10);
-  if (scale >= Value.min && scale < Value.MAX) {
-    scale += Value.min;
+  if (scale >= Value.MIN && scale < Value.MAX) {
+    scale += Value.MIN;
   }
   changeImageStyle(scale);
 };
 
 scaleControlBigger.addEventListener(`click`, clickOnPlusScaleHandler);
 
-const changeImageStyle = function (number) {
+const changeImageStyle = (number) => {
   switch (number) {
     case 25:
       imageUploadPreview.style.transform = `scale(0.25)`;

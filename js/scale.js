@@ -22,15 +22,15 @@ scaleControlSmaller.addEventListener(`click`, clickOnMinusScaleHandler);
 
 const clickOnPlusScaleHandler = () => {
   let scale = parseInt(counterValue.value, 10);
-  if (scale >= Value.min && scale < Value.MAX) {
-    scale += Value.min;
+  if (scale >= Value.MIN && scale < Value.MAX) {
+    scale += Value.MIN;
   }
   changeImageStyle(scale);
 };
 
 scaleControlBigger.addEventListener(`click`, clickOnPlusScaleHandler);
 
-const changeImageStyle = function (number) {
+const changeImageStyle = (number) => {
   switch (number) {
     case 25:
       imageUploadPreview.style.transform = `scale(0.25)`;
