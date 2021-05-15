@@ -9,8 +9,8 @@
 
 
 const REFERENCE = {
-  load: `https://21.javascript.pages.academy/kekstagram/data`,
-  upload: `https://21.javascript.pages.academy/kekstagram`
+  load: `https://javascript.pages.academy/kekstagram/data`,
+  upload: `https://javascript.pages.academy/kekstagram`
 };
 
 const TIMEOUT_IN_MS = 10000;
