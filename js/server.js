@@ -1,7 +1,7 @@
 "use strict";
 
 const REFERENCE = {
-  load: `https://javascript.pages.academy/kekstagram/data`,
+  load: `https://21.javascript.pages.academy/kekstagram/data`,
   upload: `https://javascript.pages.academy/kekstagram`
 };
 
